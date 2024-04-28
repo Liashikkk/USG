@@ -1,0 +1,7 @@
+C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\UGG.exe.config
+C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\UGG.exe
+C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\UGG.pdb
+C:\Users\Юзер\source\repos\UGG\UGG\obj\Debug\UGG.csproj.AssemblyReference.cache
+C:\Users\Юзер\source\repos\UGG\UGG\obj\Debug\UGG.csproj.CoreCompileInputs.cache
+C:\Users\Юзер\source\repos\UGG\UGG\obj\Debug\UGG.exe
+C:\Users\Юзер\source\repos\UGG\UGG\obj\Debug\UGG.pdb
