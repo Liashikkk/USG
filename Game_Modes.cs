@@ -11,20 +11,42 @@ namespace UGG
         
         public void Play_Two_Players_Shotgun_Mode()
         {
-            //Пока я не исправил это в отображении, но если что, красный - PlayerOne, синий - PlayerTwo
+            //Пока я не исправил это в отображении, но если что, красный - PlayerOne, синий - PlayerTwo0
             //Инициализация всех нужных переменных
+            string All_Players_Has_Given_Two_Items_Page = "всем игрокам было выдано два предмета                                                                                                                                                                                                   ";
+
+            string PlayerOne_Menu = "1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                                                                                  ";
+            string PlayerOne_Menu_When_PlayerTwo_Handcuffed = "у вашего соперника связаны руки. 1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                 ";
+            string PlayerTwo_Menu = "1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                                                                                  "; ;
+            string PlayerTwo_Menu_When_PlayerOne_Handcuffed = "у вашего соперника связаны руки. 1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                 "; ;
+
+            string Live_Shot_And_Opponent_Will_Be_Dead = ;
+            string Live_Shot_And_Opponent_Will_Be_Alive = ;
+            string Live_Shot_Yourself_And_You_Will_Be_Dead = ;
+            string Live_Shot_Yourself_And_You_Will_Be_Alive = ;
+
+            string Blank_Shot_Opponent = ;
+            string Blank_Shot_Yourself = ;
+            
+            string Player_Dont_Have_Items_Page = ;
+            string All_Player_Items = ;
+
             Random Random_Number = new Random();
+            
             int PlayerOne_Lives = 3;
             int PlayerTwo_Lives = 3;
             bool PlayerOne_Live_Now = true;
             bool PlayerTwo_Live_Now = true;
+            
             int PlayerOne_HandCuffed = 0;
             int PlayerTwo_HandCuffed = 0;
+            
             string[] PlayerOne_Inventory = new string[6];
             string[] PlayerTwo_Inventory = new string[6];
             int Max_Of_PlayerOne_Inventory = 0;
             int Max_Of_PlayerTwo_Inventory = 0;
             int Num_To_PlayerOne_Items = 0;
+            
             int Num_To_PlayerTwo_Items = 0;
             int Turn_To_Play = Random_Number.Next(1, 2);
             //Начало игры
@@ -48,7 +70,7 @@ namespace UGG
                 int Count_Not_Fired_Shells = 5;
                 int Random_Number_for_Magazine;
                 string Temp_For_Magazine;
-                Console_WriteReadClear("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                        Боевых патронов: " + Count_Of_Live + " - они заряжаются в случайном порядке.                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
+                Console_WriteReadClear("");
                 //Зарядка магазина (6 патронов в общем)
                 for (int i = 0; i < 6; i++)
                 {
@@ -122,28 +144,25 @@ namespace UGG
                         }
                     }
                 }
-                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                          Осуществлена выдача двух предметов каждому игроку                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                Console.ReadLine();
-                Console.Clear();
+                Console_WriteReadClear(All_Players_Has_Given_Two_Items_Page);
                 //Распределение ходов
                 while (Count_Of_Live + Count_Of_Blank > 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
                 {
                     while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_HandCuffed == 0)
                     {
-                        Console.Clear();
                         if (PlayerTwo_HandCuffed - 1 == 0)
                         {
                             Turn_To_Play = 2;
                         }
-                        //ход красного
+                        //ход красного (первого игрока)
                         if (PlayerTwo_HandCuffed > 0)
                         {
                             PlayerTwo_HandCuffed--;
-                            Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                           @@@@@@@@@@@@@@@@                                           \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                  \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                   @@@@@@@  Ваш враг: Синий  @@@@@@     Его руки связаны =)           \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     Кол-во его здоровья: " + PlayerTwo_Lives + "\r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                          @@@@@@@@@@@@@@@@@@@                                         \r\n                                                 @@@@                                                 \r\n                                               @@@@@@@@                                               \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                \r\n------------------------------------------------------------------------------------------------------\r\n 1 - Выстрел в себя                                                                                   \r\n 2 - Выстрел в соперника                                                                              \r\n 3 - Использование предмета                                                                           \r\n---------------------------------------------------------------------------------------------------------\r\n ВВОД: ");
+                            Console.Write(PlayerOne_HandCuffed);
                         }
                         else
                         {
-                            Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                           @@@@@@@@@@@@@@@@                                           \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                  \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                   @@@@@@@  Ваш враг: Синий  @@@@@@                                   \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     Кол-во его здоровья: " + PlayerTwo_Lives + "\r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                          @@@@@@@@@@@@@@@@@@@                                         \r\n                                                 @@@@                                                 \r\n                                               @@@@@@@@                                               \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                \r\n------------------------------------------------------------------------------------------------------\r\n 1 - Выстрел в себя                                                                                   \r\n 2 - Выстрел в соперника                                                                              \r\n 3 - Использование предмета                                                                           \r\n---------------------------------------------------------------------------------------------------------\r\n ВВОД: ");
+                            Console.Write(PlayerOne_Menu_When_PlayerTwo_Handcuffed);
 
                         }
                         switch (Convert.ToInt32(Console.ReadLine()))
