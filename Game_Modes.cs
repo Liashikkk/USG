@@ -9,9 +9,9 @@ namespace UGG
     class Game_Modes : Program
     {
         All_Images Image = new All_Images();
+        
         public void Play_Two_Players_Shotgun_Mode()
         {
-            //Пока я не исправил это в отображении, но если что, красный - PlayerOne, синий - PlayerTwo0
             //Инициализация всех нужных переменных
             
             Random Random_Number = new Random();
@@ -29,9 +29,98 @@ namespace UGG
             int Max_Of_PlayerOne_Inventory = 0;
             int Max_Of_PlayerTwo_Inventory = 0;
             int Num_To_PlayerOne_Items = 0;
-            
+
             int Num_To_PlayerTwo_Items = 0;
             int Turn_To_Play = Random_Number.Next(1, 2);
+
+            //Игроки делятся на первого и второго игрока и вводят свои имена
+            string PlayerOne_Name = Image.PlayerOne_Name_Input();
+            string PlayerTwo_Name = Image.PlayerTwo_Name_Input();
+
+            //Распределение патронов, извучка их игрокам, зарядка их в магазин и выдача 2-х предметов (в первый раз)
+            string[] Magazine = new string[8];
+            int Count_Not_Fired_Shells = 7;
+            int Count_Of_Live = Random_Number.Next(1, 7);
+            int Count_Of_Blank = 8 - Count_Of_Live;
+            int Count_Of_Live_to_Magazine = Count_Of_Live;
+            int Count_Of_Blank_To_Magazine = Count_Of_Blank;
+            int Random_Number_for_Magazine;
+            string Temp_For_Magazine;
+            Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live));
+            //Зарядка магазина (8 патронов в общем)
+            for (int i = 0; i < 8; i++)
+            {
+                if (Count_Of_Live_to_Magazine > 0)
+                {
+                    Magazine[i] = "Боевой";
+                    Count_Of_Live_to_Magazine--;
+                }
+                else
+                {
+                    Magazine[i] = "Холостой";
+                    Count_Of_Live_to_Magazine--;
+                }
+            }
+            for (int i = Magazine.Length - 1; i > 0; i--)
+            {
+                Random_Number_for_Magazine = Random_Number.Next(i + 1);
+                Temp_For_Magazine = Magazine[Random_Number_for_Magazine];
+                Magazine[Random_Number_for_Magazine] = Magazine[i];
+                Magazine[i] = Temp_For_Magazine;
+            }
+            //Bыдача 2-x предметов
+            for (int i = 0; i < 2; i++)
+            {
+                int Number_Of_Item = Random_Number.Next(1, 4);
+                if (Max_Of_PlayerOne_Inventory < 6)
+                {
+                    switch (Number_Of_Item)
+                    {
+                        case 1:
+                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
+                            Max_Of_PlayerOne_Inventory++;
+                            Num_To_PlayerOne_Items++;
+                            break;
+                        case 2:
+                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
+                            Max_Of_PlayerOne_Inventory++;
+                            Num_To_PlayerOne_Items++;
+                            break;
+                        case 3:
+                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
+                            Max_Of_PlayerOne_Inventory++;
+                            Num_To_PlayerOne_Items++;
+                            break;
+                    }
+                }
+
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                int Number_Of_Item = Random_Number.Next(1, 4);
+                if (Max_Of_PlayerTwo_Inventory < 6)
+                {
+                    switch (Number_Of_Item)
+                    {
+                        case 1:
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
+                            Max_Of_PlayerTwo_Inventory++;
+                            Num_To_PlayerTwo_Items++;
+                            break;
+                        case 2:
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
+                            Max_Of_PlayerTwo_Inventory++;
+                            Num_To_PlayerTwo_Items++;
+                            break;
+                        case 3:
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
+                            Max_Of_PlayerTwo_Inventory++;
+                            Num_To_PlayerTwo_Items++;
+                            break;
+                    }
+                }
+            }
+            Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
             //Начало игры
             while (PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
             {
@@ -44,90 +133,89 @@ namespace UGG
                 {
                     Turn_To_Play = 1;
                 }
-                //Распределение типов патронов и озвучка их игрокам
-                string[] Magazine = new string[6];
-                int Count_Of_Live = Random_Number.Next(1, 5);
-                int Count_Of_Blank = 6 - Count_Of_Live;
-                int Count_Of_Live_to_Magazine = Count_Of_Live;
-                int Count_Of_Blank_To_Magazine = Count_Of_Blank;
-                int Count_Not_Fired_Shells = 5;
-                int Random_Number_for_Magazine;
-                string Temp_For_Magazine;
-                Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live));
-                //Зарядка магазина (6 патронов в общем)
-                for (int i = 0; i < 6; i++)
+                if (Count_Not_Fired_Shells == 0)
                 {
-                    if (Count_Of_Live_to_Magazine > 0)
+                    //Распределение патронов, извучка их игрокам, зарядка их в магазин и выдача 2-х предметов (происходит, когда патронов нет)
+                    Count_Of_Live = Random_Number.Next(1, 7);
+                    Count_Of_Blank = 8 - Count_Of_Live;
+                    Count_Of_Live_to_Magazine = Count_Of_Live;
+                    Count_Of_Blank_To_Magazine = Count_Of_Blank;
+                    Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live));
+                    //Зарядка магазина (8 патронов в общем)
+                    for (int i = 0; i < 8; i++)
                     {
-                        Magazine[i] = "Боевой";
-                        Count_Of_Live_to_Magazine--;
-                    }
-                    else
-                    {
-                        Magazine[i] = "Холостой";
-                        Count_Of_Live_to_Magazine--;
-                    }
-                }
-                for (int i = Magazine.Length - 1; i > 0; i--)
-                {
-                    Random_Number_for_Magazine = Random_Number.Next(i + 1);
-                    Temp_For_Magazine = Magazine[Random_Number_for_Magazine];
-                    Magazine[Random_Number_for_Magazine] = Magazine[i];
-                    Magazine[i] = Temp_For_Magazine;
-                }
-                //Bыдача 2-x предметов
-                for (int i = 0; i < 2; i++)
-                {
-                    int Number_Of_Item = Random_Number.Next(1, 4);
-                    if (Max_Of_PlayerOne_Inventory < 6)
-                    {
-                        switch (Number_Of_Item)
+                        if (Count_Of_Live_to_Magazine > 0)
                         {
-                            case 1:
-                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
-                                Max_Of_PlayerOne_Inventory++;
-                                Num_To_PlayerOne_Items++;
-                                break;
-                            case 2:
-                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
-                                Max_Of_PlayerOne_Inventory++;
-                                Num_To_PlayerOne_Items++;
-                                break;
-                            case 3:
-                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
-                                Max_Of_PlayerOne_Inventory++;
-                                Num_To_PlayerOne_Items++;
-                                break;
+                            Magazine[i] = "Боевой";
+                            Count_Of_Live_to_Magazine--;
+                        }
+                        else
+                        {
+                            Magazine[i] = "Холостой";
+                            Count_Of_Live_to_Magazine--;
                         }
                     }
+                    for (int i = Magazine.Length - 1; i > 0; i--)
+                    {
+                        Random_Number_for_Magazine = Random_Number.Next(i + 1);
+                        Temp_For_Magazine = Magazine[Random_Number_for_Magazine];
+                        Magazine[Random_Number_for_Magazine] = Magazine[i];
+                        Magazine[i] = Temp_For_Magazine;
+                    }
+                    //Bыдача 2-x предметов
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int Number_Of_Item = Random_Number.Next(1, 4);
+                        if (Max_Of_PlayerOne_Inventory < 6)
+                        {
+                            switch (Number_Of_Item)
+                            {
+                                case 1:
+                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
+                                    Max_Of_PlayerOne_Inventory++;
+                                    Num_To_PlayerOne_Items++;
+                                    break;
+                                case 2:
+                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
+                                    Max_Of_PlayerOne_Inventory++;
+                                    Num_To_PlayerOne_Items++;
+                                    break;
+                                case 3:
+                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
+                                    Max_Of_PlayerOne_Inventory++;
+                                    Num_To_PlayerOne_Items++;
+                                    break;
+                            }
+                        }
 
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    int Number_Of_Item = Random_Number.Next(1, 4);
-                    if (Max_Of_PlayerTwo_Inventory < 6)
+                    }
+                    for (int i = 0; i < 2; i++)
                     {
-                        switch (Number_Of_Item)
+                        int Number_Of_Item = Random_Number.Next(1, 4);
+                        if (Max_Of_PlayerTwo_Inventory < 6)
                         {
-                            case 1:
-                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
-                                Max_Of_PlayerTwo_Inventory++;
-                                Num_To_PlayerTwo_Items++;
-                                break;
-                            case 2:
-                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
-                                Max_Of_PlayerTwo_Inventory++;
-                                Num_To_PlayerTwo_Items++;
-                                break;
-                            case 3:
-                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
-                                Max_Of_PlayerTwo_Inventory++;
-                                Num_To_PlayerTwo_Items++;
-                                break;
+                            switch (Number_Of_Item)
+                            {
+                                case 1:
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
+                                    Max_Of_PlayerTwo_Inventory++;
+                                    Num_To_PlayerTwo_Items++;
+                                    break;
+                                case 2:
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
+                                    Max_Of_PlayerTwo_Inventory++;
+                                    Num_To_PlayerTwo_Items++;
+                                    break;
+                                case 3:
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
+                                    Max_Of_PlayerTwo_Inventory++;
+                                    Num_To_PlayerTwo_Items++;
+                                    break;
+                            }
                         }
                     }
+                    Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
                 }
-                Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
                 //Распределение ходов
                 while (Turn_To_Play == 1 && Count_Not_Fired_Shells > 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
                 {
@@ -135,17 +223,17 @@ namespace UGG
                     {
                         Turn_To_Play = 2;
                     }
-                    //ход красного (первого игрока)
+                    //ход первого игрока
                     if (PlayerTwo_HandCuffed > 0)
                     {
                         PlayerTwo_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu_When_Opponent_Handcuffed);
+                        Console.Write(Image.PlayerOne_Menu_When_Opponent_Handcuffed(PlayerOne_Name, PlayerTwo_Name));
                     }
                     else
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu);
+                        Console.Write(Image.PlayerOne_Menu(PlayerOne_Name, PlayerTwo_Name));
                     }
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
@@ -266,6 +354,7 @@ namespace UGG
                                                 PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerOne_Inventory--;
                                                 Num_To_PlayerOne_Items--;
+                                                Items_Menu = false;
                                             }
                                             break;
                                         case 4:
@@ -291,12 +380,12 @@ namespace UGG
                     {
                         PlayerOne_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu_When_Opponent_Handcuffed);
+                        Console.Write(Image.PlayerTwo_Menu_When_Opponent_Handcuffed(PlayerOne_Name, PlayerTwo_Name));
                     }
                     else
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu);
+                        Console.Write(Image.PlayerTwo_Menu(PlayerOne_Name, PlayerTwo_Name));
                     }
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
@@ -386,7 +475,7 @@ namespace UGG
                                                 PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerTwo_Inventory--;
                                                 Num_To_PlayerTwo_Items--;
-
+                                                Items_Menu = false;
                                             }
                                             break;
                                         case 2:
@@ -403,6 +492,7 @@ namespace UGG
                                                     PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                     Max_Of_PlayerTwo_Inventory--;
                                                     Num_To_PlayerTwo_Items--;
+                                                    Items_Menu = false;
                                                 }
                                             }
                                             break;
@@ -414,6 +504,7 @@ namespace UGG
                                                 PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerTwo_Inventory--;
                                                 Num_To_PlayerTwo_Items--;
+                                                Items_Menu = false;
                                             }
                                             break;
                                         case 4:
