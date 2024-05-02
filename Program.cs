@@ -40,39 +40,46 @@ namespace UGG
             player.Play();
             player.Dispose();
             */
+
             FullScreen();
-            All_Images Images = new All_Images();
+
+            All_Images Image = new All_Images();
+
             Game_Modes Mode = new Game_Modes();
+
             ConsoleKeyInfo Key = new ConsoleKeyInfo();
+
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
-                Console.Write("главное меню. 1 - начать игру, 3 - выйти из игры (2 - статистика, которой пока что нет)");
+                Console.Write(Image.Main_Menu);
                 Key = Console.ReadKey(true);
                 switch (Key.Key)
                 {
                     case ConsoleKey.D1:
                         Console.SetCursorPosition(0, 0);
-                        Console.Write("тут выбор режима игры. 1 - режим с дробовиком на 6 патронов, каждый раунд дается два предмета.                                                                 ");
+                        Console.Write(Image.Game_Modes_Choose);
                         Key = Console.ReadKey(true);
                         switch (Key.Key)
                         {
                             case ConsoleKey.D1:
                                 Mode.Play_Two_Players_Shotgun_Mode();
                                 break;
+                            case ConsoleKey.D2:
+                                break;
                             default:
-                                Console_WriteReadClear("вы нажали не на ту кнопку. enter для перехода на след. меню                                                                 ");
+                                Console_WriteReadClear(Image.This_Button_Isnt_Exists); 
                                 break;
                         }
                         break;
                     case ConsoleKey.D2:
-                        Console_WriteReadClear("она пока что не работает. enter для перехода на след. меню                                                                 ");
+                        Console_WriteReadClear("она пока что не работает. enter для перехода на следующее меню                                                                 ");
                         break;
                     case ConsoleKey.D3:
                         Environment.Exit(0);
                         break;
                     default:
-                        Console_WriteReadClear("вы нажали не на ту кнопку. enter для перехода на след. меню                                                                 ");
+                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         break;
                 }
 

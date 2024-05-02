@@ -8,29 +8,12 @@ namespace UGG
 {
     class Game_Modes : Program
     {
-        
+        All_Images Image = new All_Images();
         public void Play_Two_Players_Shotgun_Mode()
         {
             //Пока я не исправил это в отображении, но если что, красный - PlayerOne, синий - PlayerTwo0
             //Инициализация всех нужных переменных
-            string All_Players_Has_Given_Two_Items_Page = "всем игрокам было выдано два предмета                                                                                                                                                                                                   ";
-
-            string PlayerOne_Menu = "1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                                                                                  ";
-            string PlayerOne_Menu_When_PlayerTwo_Handcuffed = "у вашего соперника связаны руки. 1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                 ";
-            string PlayerTwo_Menu = "1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                                                                                  "; ;
-            string PlayerTwo_Menu_When_PlayerOne_Handcuffed = "у вашего соперника связаны руки. 1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - воспользоваться предметом                                                                 "; ;
-
-            string Live_Shot_And_Opponent_Will_Be_Dead = ;
-            string Live_Shot_And_Opponent_Will_Be_Alive = ;
-            string Live_Shot_Yourself_And_You_Will_Be_Dead = ;
-            string Live_Shot_Yourself_And_You_Will_Be_Alive = ;
-
-            string Blank_Shot_Opponent = ;
-            string Blank_Shot_Yourself = ;
             
-            string Player_Dont_Have_Items_Page = ;
-            string All_Player_Items = ;
-
             Random Random_Number = new Random();
             
             int PlayerOne_Lives = 3;
@@ -61,7 +44,7 @@ namespace UGG
                 {
                     Turn_To_Play = 1;
                 }
-                //Распределение патронов и озвучка их игрокам
+                //Распределение типов патронов и озвучка их игрокам
                 string[] Magazine = new string[6];
                 int Count_Of_Live = Random_Number.Next(1, 5);
                 int Count_Of_Blank = 6 - Count_Of_Live;
@@ -70,7 +53,7 @@ namespace UGG
                 int Count_Not_Fired_Shells = 5;
                 int Random_Number_for_Magazine;
                 string Temp_For_Magazine;
-                Console_WriteReadClear("");
+                Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live));
                 //Зарядка магазина (6 патронов в общем)
                 for (int i = 0; i < 6; i++)
                 {
@@ -144,429 +127,308 @@ namespace UGG
                         }
                     }
                 }
-                Console_WriteReadClear(All_Players_Has_Given_Two_Items_Page);
+                Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
                 //Распределение ходов
-                while (Count_Of_Live + Count_Of_Blank > 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
+                while (Turn_To_Play == 1 && Count_Not_Fired_Shells > 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
                 {
-                    while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_HandCuffed == 0)
+                    if (PlayerTwo_HandCuffed - 1 == 0)
                     {
-                        if (PlayerTwo_HandCuffed - 1 == 0)
-                        {
-                            Turn_To_Play = 2;
-                        }
-                        //ход красного (первого игрока)
-                        if (PlayerTwo_HandCuffed > 0)
-                        {
-                            PlayerTwo_HandCuffed--;
-                            Console.Write(PlayerOne_HandCuffed);
-                        }
-                        else
-                        {
-                            Console.Write(PlayerOne_Menu_When_PlayerTwo_Handcuffed);
-
-                        }
-                        switch (Convert.ToInt32(Console.ReadLine()))
-                        {
-                            case 1:
-                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                        Turn_To_Play = 2;
+                    }
+                    //ход красного (первого игрока)
+                    if (PlayerTwo_HandCuffed > 0)
+                    {
+                        PlayerTwo_HandCuffed--;
+                        Console.SetCursorPosition(0, 0);
+                        Console.Write(Image.Player_Menu_When_Opponent_Handcuffed);
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(0, 0);
+                        Console.Write(Image.Player_Menu);
+                    }
+                    switch (Convert.ToInt32(Console.ReadLine()))
+                    {
+                        case 1:
+                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            {
+                                PlayerOne_Lives--;
+                                if (PlayerOne_Lives == 0)
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                           Выстрел в себя...                                          \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Console.ReadLine();
-                                    Console.Clear();
-                                    PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Кол-во твоих жизней: 0                                      \r\n                                              0 = проиграл.                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                              Поздравляю =)                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        PlayerOne_Live_Now = false;
-                                        Count_Not_Fired_Shells = -1;
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
-                                    else
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Кол-во твоих жизней: " + PlayerOne_Lives + "                                      \r\n                                               " + PlayerOne_Lives + " != проиграл.                                         \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        Count_Of_Live--;
-                                        if (PlayerTwo_HandCuffed == 0)
-                                        {
-                                            Turn_To_Play = 2;
-                                        }
-                                        Count_Not_Fired_Shells--;
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
+                                    Console_WriteReadClear(Image.Live_Shot_Yourself_And_You_Will_Be_Dead);
+                                    PlayerOne_Live_Now = false;
                                 }
-                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                else
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                      Щелчок... Какое облегчение...                                   \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Count_Of_Blank_To_Magazine--;
+                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_And_You_Will_Alive(PlayerOne_Lives));
+                                    Count_Of_Live--;
+                                    if (PlayerTwo_HandCuffed == 0)
+                                    {
+                                        Turn_To_Play = 2;
+                                    }
                                     Count_Not_Fired_Shells--;
-                                    Console.ReadLine();
-                                    Console.Clear();
                                 }
-                                break;
-                            case 2:
-                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            }
+                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                            {
+                                Console_WriteReadClear(Image.Blank_Shot_Yourself);
+                                Count_Of_Blank_To_Magazine--;
+                                Count_Not_Fired_Shells--;
+                            }
+                            break;
+                        case 2:
+                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            {
+                                PlayerTwo_Lives--;
+                                if (PlayerTwo_Lives == 0)
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         Выстрел в соперника...                                       \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                                    Console.ReadLine();
-                                    PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                           Кол-во его жизней: 0                                       \r\n                                              0 = проиграл.                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                              Поздравляю =)                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        PlayerTwo_Live_Now = false;
-                                        Count_Not_Fired_Shells = -1;
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
-                                    else
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                           Кол-во его жизней: " + PlayerTwo_Lives + "                                       \r\n                                              " + PlayerTwo_Lives + " != проиграл.                                          \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        Count_Of_Live--;
-                                        Count_Not_Fired_Shells--;
-                                        if (PlayerTwo_HandCuffed == 0)
-                                        {
-                                            Turn_To_Play = 2;
-                                        }
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Be_Dead);
+                                    PlayerTwo_Live_Now = false;
+                                    Count_Not_Fired_Shells = -1;
                                 }
-                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                else
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                     Щелчок... Какое разочарование...                                 \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Count_Of_Blank--;
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Alive(PlayerTwo_Lives));
+                                    Count_Of_Live--;
                                     Count_Not_Fired_Shells--;
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
                                         Turn_To_Play = 2;
                                     }
-                                    Console.ReadLine();
-                                    Console.Clear();
                                 }
-                                break;
-                            case 3:
-                                Console.Clear();
-                                if (Max_Of_PlayerOne_Inventory == 0)
+                            }
+                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                            {
+                                Console_WriteReadClear(Image.Blank_Shot_Opponent);
+                                Count_Of_Blank--;
+                                Count_Not_Fired_Shells--;
+                                if (PlayerTwo_HandCuffed == 0)
                                 {
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя нет предметов =)                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Console.ReadLine();
-                                    Console.Clear();
+                                    Turn_To_Play = 2;
                                 }
-                                else if (Max_Of_PlayerOne_Inventory > 0)
+                            }
+                            break;
+                        case 3:
+                            if (Max_Of_PlayerOne_Inventory == 0)
+                            {
+                                Console_WriteReadClear(Image.Player_Dont_Have_Items_Page);
+                            }
+                            else
+                            {
+                                bool Items_Menu = true;
+                                while (Items_Menu)
                                 {
-
-                                    Console.Clear();
-                                    Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                 (1 - Увеличить кол-во хп на 1 единицу)                               \r\n                                  (2 - Заковать соперника в наручники)                                \r\n                                         (3 - Уточнить патрон)                                        \r\n                                      (Любая другая цифра - выход)                                    \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n  У тебя есть: ");
+                                    Console.SetCursorPosition(0, 0);
+                                    Console.Write(Image.All_Player_Items_Page);
                                     for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
                                     {
                                         Console.Write(PlayerOne_Inventory[i] + ", ");
                                     }
-                                    Console.Write("и все =)" + "\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n ВВОД:  ");
+                                    Console.Write(" и все.                                                                                                                              ");
                                     switch (Convert.ToInt32(Console.ReadLine()))
                                     {
                                         case 1:
-                                            if (PlayerOne_Inventory.Contains("+хп") == false)
+                                            if (PlayerOne_Inventory.Contains("+хп") == true)
                                             {
-
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя этого предмета =)                                     \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                                Console.ReadLine();
-                                                Console.Clear();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
                                                 PlayerOne_Lives++;
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Кол - во твоих жизней: " + PlayerOne_Lives + "                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n-------------------------------------------------------------------------------------------------------- -\r\n Enter для перехода на следующее меню...");
+                                                Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
                                                 int numIndex = Array.IndexOf(PlayerOne_Inventory, "+хп");
                                                 PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerOne_Inventory--;
                                                 Num_To_PlayerOne_Items--;
-                                                Console.ReadLine();
-                                                Console.Clear();
+                                                Items_Menu = false;
                                             }
                                             break;
                                         case 2:
-                                            if (PlayerOne_Inventory.Contains("наручники") == false)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя этого предмета =)                                     \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                                Console.ReadLine();
-                                                Console.Clear();
-                                            }
-                                            else
+                                            if (PlayerOne_Inventory.Contains("наручники") == true)
                                             {
                                                 if (PlayerTwo_HandCuffed > 0)
                                                 {
-                                                    Console.Clear();
-                                                    Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Он уже закован =)                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                                                    Console.ReadLine();
-                                                    Console.Clear();
+                                                    Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
                                                 }
                                                 else
                                                 {
-                                                    Console.Clear();
                                                     PlayerTwo_HandCuffed = 2;
                                                     int numIndex = Array.IndexOf(PlayerOne_Inventory, "наручники");
                                                     PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                     Max_Of_PlayerOne_Inventory--;
                                                     Num_To_PlayerOne_Items--;
-                                                    Console.Clear();
+                                                    Items_Menu = false;
                                                 }
 
                                             }
                                             break;
                                         case 3:
-                                            if (PlayerOne_Inventory.Contains("патрончекер") == false)
+                                            if (PlayerOne_Inventory.Contains("патрончекер") == true)
                                             {
-
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя этого предмета =)                                     \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                                Console.ReadLine();
-                                                Console.Clear();
-                                            }
-                                            else
-                                            {
-
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                     Следущим будет - " + Magazine[Count_Not_Fired_Shells] + " патрон." + "\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
+                                                Console_WriteReadClear(Image.What_Is_Shell_Be_Now(Magazine[Count_Not_Fired_Shells]));
                                                 int numIndex = Array.IndexOf(PlayerOne_Inventory, "патрончекер");
                                                 PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerOne_Inventory--;
                                                 Num_To_PlayerOne_Items--;
-                                                Console.ReadLine();
-                                                Console.Clear();
                                             }
                                             break;
+                                        case 4:
+                                            Items_Menu = false;
+                                            break;
                                         default:
-                                            Console.Clear();
-                                            Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                     Такой кнопки не сущетсвует :)                                    \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                                            Console.ReadLine();
-                                            Console.Clear();
+                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             break;
                                     }
                                 }
-                                break;
-                            default:
-                                Console.Clear();
-                                break;
-                        }
+                            }
+                            break;
                     }
-                    while (Turn_To_Play == 2 && Count_Not_Fired_Shells >= 0 && PlayerTwo_HandCuffed == 0)
+                }
+                while (Turn_To_Play == 2 && Count_Not_Fired_Shells >= 0 && PlayerTwo_HandCuffed == 0)
+                {
+                    //ход синего (второго игрока)
+                    if (PlayerOne_HandCuffed - 1 == 0)
                     {
-                        //ход синего
-                        if (PlayerOne_HandCuffed - 1 == 0)
-                        {
-                            Turn_To_Play = 1;
-                        }
-                        Console.Clear();
-                        if (PlayerOne_HandCuffed > 0)
-                        {
-                            PlayerOne_HandCuffed--;
-                            Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                           @@@@@@@@@@@@@@@@                                           \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                  \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                   @@@@@  Ваш враг: Красный  @@@@@@     Его руки связаны =)           \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     Кол-во его здоровья: " + PlayerOne_Lives + "\r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                          @@@@@@@@@@@@@@@@@@@                                         \r\n                                                 @@@@                                                 \r\n                                               @@@@@@@@                                               \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                \r\n------------------------------------------------------------------------------------------------------\r\n 1 - Выстрел в себя                                                                                   \r\n 2 - Выстрел в соперника                                                                              \r\n 3 - Использование предмета                                                                           \r\n---------------------------------------------------------------------------------------------------------\r\n ВВОД: ");
-                        }
-                        else
-                        {
-                            Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                           @@@@@@@@@@@@@@@@                                           \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                  \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                 \r\n                                   @@@@@  Ваш враг: Красный  @@@@@@                                   \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     Кол-во его здоровья: " + PlayerOne_Lives + "\r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                    \r\n                                      @@@@@@@@@@@@@@@@@@@@@@@@@@                                      \r\n                                          @@@@@@@@@@@@@@@@@@@                                         \r\n                                                 @@@@                                                 \r\n                                               @@@@@@@@                                               \r\n                                   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                   \r\n                                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                \r\n------------------------------------------------------------------------------------------------------\r\n 1 - Выстрел в себя                                                                                   \r\n 2 - Выстрел в соперника                                                                              \r\n 3 - Использование предмета                                                                           \r\n---------------------------------------------------------------------------------------------------------\r\n ВВОД: ");
-                        }
-                        switch (Convert.ToInt32(Console.ReadLine()))
-                        {
-                            case 1:
-                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                        Turn_To_Play = 1;
+                    }
+                    if (PlayerOne_HandCuffed > 0)
+                    {
+                        PlayerOne_HandCuffed--;
+                        Console.SetCursorPosition(0, 0);
+                        Console.Write(Image.Player_Menu_When_Opponent_Handcuffed);
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(0, 0);
+                        Console.Write(Image.Player_Menu);
+                    }
+                    switch (Convert.ToInt32(Console.ReadLine()))
+                    {
+                        case 1:
+                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            {
+                                PlayerTwo_Lives--;
+                                if (PlayerTwo_Lives == 0)
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         Прозвучал выстрел...                                         \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Console.ReadLine();
-                                    PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Кол-во твоих жизней: " + PlayerTwo_Lives + "                                      \r\n                                              0 = проиграл.                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                              Поздравляю =)                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        PlayerTwo_Live_Now = false;
-                                        Count_Not_Fired_Shells = -1;
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
-                                    else
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Кол-во твоих жизней: " + PlayerTwo_Lives + "                                      \r\n                                               " + PlayerTwo_Lives + " != проиграл.                                         \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        Count_Of_Live--;
-                                        Count_Not_Fired_Shells--;
-                                        if (PlayerOne_HandCuffed == 0)
-                                        {
-                                            Turn_To_Play = 1;
-                                        }
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
+                                    Console_WriteReadClear(Image.Live_Shot_Yourself_And_You_Will_Be_Dead);
+                                    PlayerTwo_Live_Now = false;
                                 }
-                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                else
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                      Щелчок... Какое облегчение...                                   \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Count_Of_Blank--;
-                                    Count_Not_Fired_Shells--;
-                                    Console.ReadLine();
-                                    Console.Clear();
-                                }
-                                break;
-                            case 2:
-                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         Выстрел в соперника...                                       \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                                    Console.ReadLine();
-                                    PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                           Кол-во его жизней: 0                                       \r\n                                              0 = проиграл.                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                              Поздравляю =)                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        PlayerOne_Live_Now = false;
-                                        Count_Not_Fired_Shells = -1;
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
-                                    else
-                                    {
-                                        Console.Clear();
-                                        Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                           Кол-во его жизней: " + PlayerOne_Lives + "                                       \r\n                                              " + PlayerOne_Lives + " != проиграл.                                          \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                        Count_Of_Live--;
-                                        Count_Not_Fired_Shells--;
-                                        if (PlayerOne_HandCuffed == 0)
-                                        {
-                                            Turn_To_Play = 1;
-                                        }
-                                        Console.ReadLine();
-                                        Console.Clear();
-                                    }
-                                }
-                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                     Щелчок... Какое разочарование...                                 \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Count_Of_Blank--;
+                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_And_You_Will_Alive(PlayerTwo_Lives));
+                                    Count_Of_Live--;
                                     Count_Not_Fired_Shells--;
                                     if (PlayerOne_HandCuffed == 0)
                                     {
                                         Turn_To_Play = 1;
                                     }
-                                    Console.ReadLine();
-                                    Console.Clear();
                                 }
-                                break;
-                            case 3:
-                                Console.Clear();
-                                if (Max_Of_PlayerTwo_Inventory == 0)
+                            }
+                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                            {
+                                Console_WriteReadClear(Image.Blank_Shot_Yourself);
+                                Count_Of_Blank--;
+                                Count_Not_Fired_Shells--;
+                            }
+                            break;
+                        case 2:
+                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            {
+                                PlayerOne_Lives--;
+                                if (PlayerOne_Lives == 0)
                                 {
-                                    Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя нет предметов =)                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                    Console.ReadLine();
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Be_Dead);
+                                    PlayerOne_Live_Now = false;
                                 }
-                                else if (Max_Of_PlayerTwo_Inventory > 0)
+                                else
                                 {
-
-                                    Console.Clear();
-                                    Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                 (1 - Увеличить кол-во хп на 1 единицу)                               \r\n                                  (2 - Заковать соперника в наручники)                                \r\n                                         (3 - Уточнить патрон)                                        \r\n                                      (Любая другая цифра - выход)                                    \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n  У тебя есть: ");
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Alive(PlayerOne_Lives));
+                                    Count_Of_Live--;
+                                    Count_Not_Fired_Shells--;
+                                    if (PlayerOne_HandCuffed == 0)
+                                    {
+                                        Turn_To_Play = 1;
+                                    }
+                                }
+                            }
+                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                            {
+                                Console_WriteReadClear(Image.Blank_Shot_Opponent);
+                                Count_Of_Blank--;
+                                Count_Not_Fired_Shells--;
+                                if (PlayerOne_HandCuffed == 0)
+                                {
+                                    Turn_To_Play = 1;
+                                }
+                            }
+                            break;
+                        case 3:
+                            if (Max_Of_PlayerTwo_Inventory == 0)
+                            {
+                                Console_WriteReadClear(Image.Player_Dont_Have_Items_Page);
+                            }
+                            else if (Max_Of_PlayerTwo_Inventory > 0)
+                            {
+                                bool Items_Menu = true;
+                                while (Items_Menu)
+                                {
+                                    Console.SetCursorPosition(0, 0);
+                                    Console.Write(Image.All_Player_Items_Page);
                                     for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
                                     {
                                         Console.Write(PlayerTwo_Inventory[i] + ", ");
                                     }
-                                    Console.Write("и все =)" + "\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n ВВОД:  ");
-
+                                    Console.Write(" и все.                                                                                                                              ");
                                     switch (Convert.ToInt32(Console.ReadLine()))
                                     {
                                         case 1:
-                                            if (PlayerTwo_Inventory.Contains("+хп") == false)
+                                            if (PlayerTwo_Inventory.Contains("+хп") == true)
                                             {
-
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя этого предмета =)                                     \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                                Console.ReadLine();
-                                                Console.Clear();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
                                                 PlayerTwo_Lives++;
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Кол - во твоих жизней: " + PlayerTwo_Lives + "                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n-------------------------------------------------------------------------------------------------------- -\r\n Enter для перехода на следующее меню...");
+                                                Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
                                                 int numIndex = Array.IndexOf(PlayerTwo_Inventory, "+хп");
                                                 PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerTwo_Inventory--;
                                                 Num_To_PlayerTwo_Items--;
-                                                Console.ReadLine();
-                                                Console.Clear();
+
                                             }
                                             break;
                                         case 2:
-                                            if (PlayerTwo_Inventory.Contains("наручники") == false)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя этого предмета =)                                     \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                                Console.ReadLine();
-                                            }
-                                            else
+                                            if (PlayerTwo_Inventory.Contains("наручники") == true)
                                             {
                                                 if (PlayerOne_HandCuffed > 0)
                                                 {
-                                                    Console.Clear();
-                                                    Console.Write("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                          Он уже закован =)                                           \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                                                    Console.ReadLine();
-                                                    Console.Clear();
+                                                    Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
                                                 }
                                                 else
                                                 {
-                                                    Console.Clear();
                                                     PlayerOne_HandCuffed = 2;
                                                     int numIndex = Array.IndexOf(PlayerTwo_Inventory, "наручники");
                                                     PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                     Max_Of_PlayerTwo_Inventory--;
                                                     Num_To_PlayerTwo_Items--;
-                                                    Console.Clear();
                                                 }
                                             }
                                             break;
                                         case 3:
-                                            if (PlayerTwo_Inventory.Contains("патрончекер") == false)
+                                            if (PlayerTwo_Inventory.Contains("патрончекер") == true)
                                             {
-
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                         У тебя этого предмета =)                                     \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню... ");
-                                                Console.ReadLine();
-                                            }
-                                            else
-                                            {
-
-                                                Console.Clear();
-                                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                     Следущим будет - " + Magazine[Count_Not_Fired_Shells] + " патрон." + "\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
+                                                Console_WriteReadClear(Image.What_Is_Shell_Be_Now(Magazine[Count_Not_Fired_Shells]));
                                                 int numIndex = Array.IndexOf(PlayerTwo_Inventory, "патрончекер");
                                                 PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                 Max_Of_PlayerTwo_Inventory--;
                                                 Num_To_PlayerTwo_Items--;
-                                                Console.ReadLine();
-                                                Console.Clear();
                                             }
                                             break;
+                                        case 4:
+                                            Items_Menu = false;
+                                            break;
                                         default:
-                                            Console.Clear();
+                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             break;
                                     }
                                 }
-                                break;
-                            default:
-                                Console.Clear();
-                                Console.WriteLine("--------------------------------------------------------------------------------------------------------\r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                     Такой кнопки не сущетсвует :)                                    \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n                                                                                                      \r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
-                                Console.ReadLine();
-                                Console.Clear();
-                                break;
-                        }
+                            }
+                            break;
+                        default:
+                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                            break;
                     }
                 }
             }
