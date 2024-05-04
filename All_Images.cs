@@ -42,7 +42,7 @@ namespace UGG
 
         public string How_Live_Shells_Will_Be(int Count_Of_Live_Shells)
         {
-            return $"Боевых патронов {Count_Of_Live_Shells} из 6 в общем количестве. удачи =). Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+            return $"Боевых патронов {Count_Of_Live_Shells} из 8 в общем количестве. удачи =). Еnter для перехода на следующее меню                                                                                                                                                                                                ";
         }
 
         public string Live_Shot_Yoursef_And_You_Will_Alive(int Count_Player_Lives)
