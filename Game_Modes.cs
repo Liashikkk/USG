@@ -125,10 +125,10 @@ namespace UGG
             while (PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
             {
                 //Определение следующего хода
-                
-                if (Count_Not_Fired_Shells == 0)
+                if (Count_Not_Fired_Shells == -1)
                 {
                     //Распределение патронов, извучка их игрокам, зарядка их в магазин и выдача 2-х предметов (происходит, когда патронов нет)
+                    Count_Not_Fired_Shells = 7;
                     Count_Of_Live = Random_Number.Next(1, 7);
                     Count_Of_Blank = 8 - Count_Of_Live;
                     Count_Of_Live_to_Magazine = Count_Of_Live;
@@ -210,7 +210,7 @@ namespace UGG
                     Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
                 }
                 //Распределение ходов
-                while (Turn_To_Play == 1 && Count_Not_Fired_Shells > 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
+                while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
                 {
                     if (PlayerTwo_HandCuffed - 1 == 0)
                     {
