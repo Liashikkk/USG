@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +9,21 @@ namespace UGG
     class Game_Modes : Program
     {
         All_Images Image = new All_Images();
-        
+
         public void Play_Two_Players_Shotgun_Mode()
         {
             //Инициализация всех нужных переменных
-            
+
             Random Random_Number = new Random();
-            
+
             int PlayerOne_Lives = 3;
             int PlayerTwo_Lives = 3;
             bool PlayerOne_Live_Now = true;
             bool PlayerTwo_Live_Now = true;
-            
+
             int PlayerOne_HandCuffed = 0;
             int PlayerTwo_HandCuffed = 0;
-            
+
             string[] PlayerOne_Inventory = new string[6];
             string[] PlayerTwo_Inventory = new string[6];
             int Max_Of_PlayerOne_Inventory = 0;
@@ -125,14 +125,7 @@ namespace UGG
             while (PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
             {
                 //Определение следующего хода
-                if (Turn_To_Play == 1 && PlayerTwo_HandCuffed == 0)
-                {
-                    Turn_To_Play = 2;
-                }
-                else if (Turn_To_Play == 2 && PlayerOne_HandCuffed == 0)
-                {
-                    Turn_To_Play = 1;
-                }
+                
                 if (Count_Not_Fired_Shells == 0)
                 {
                     //Распределение патронов, извучка их игрокам, зарядка их в магазин и выдача 2-х предметов (происходит, когда патронов нет)
@@ -221,7 +214,7 @@ namespace UGG
                 {
                     if (PlayerTwo_HandCuffed - 1 == 0)
                     {
-                        Turn_To_Play = 2;
+                        Turn_To_Play = 1;
                     }
                     //ход первого игрока
                     if (PlayerTwo_HandCuffed > 0)
@@ -250,11 +243,11 @@ namespace UGG
                                 {
                                     Console_WriteReadClear(Image.Live_Shot_Yoursef_And_You_Will_Alive(PlayerOne_Lives));
                                     Count_Of_Live--;
+                                    Count_Not_Fired_Shells--;
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
                                         Turn_To_Play = 2;
                                     }
-                                    Count_Not_Fired_Shells--;
                                 }
                             }
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
@@ -371,10 +364,10 @@ namespace UGG
                 }
                 while (Turn_To_Play == 2 && Count_Not_Fired_Shells >= 0 && PlayerTwo_HandCuffed == 0)
                 {
-                    //ход синего (второго игрока)
+                    //ход второго игрока
                     if (PlayerOne_HandCuffed - 1 == 0)
                     {
-                        Turn_To_Play = 1;
+                        Turn_To_Play = 2;
                     }
                     if (PlayerOne_HandCuffed > 0)
                     {
