@@ -18,8 +18,6 @@ namespace UGG
 
             int PlayerOne_Lives = 3;
             int PlayerTwo_Lives = 3;
-            bool PlayerOne_Live_Now = true;
-            bool PlayerTwo_Live_Now = true;
 
             int PlayerOne_HandCuffed = 0;
             int PlayerTwo_HandCuffed = 0;
@@ -38,27 +36,23 @@ namespace UGG
             string PlayerTwo_Name = Image.PlayerTwo_Name_Input();
 
             //Распределение патронов, извучка их игрокам, зарядка их в магазин и выдача 2-х предметов (в первый раз)
-            string[] Magazine = new string[8];
-            int Count_Not_Fired_Shells = 7;
-            int Count_Of_Live = Random_Number.Next(1, 7);
-            int Count_Of_Blank = 8 - Count_Of_Live;
-            int Count_Of_Live_to_Magazine = Count_Of_Live;
-            int Count_Of_Blank_To_Magazine = Count_Of_Blank;
+            int Count_Not_Fired_Shells = Random_Number.Next(2, 8);
+            string[] Magazine = new string[Count_Not_Fired_Shells];
+            int Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
             int Random_Number_for_Magazine;
             string Temp_For_Magazine;
-            Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live));
-            //Зарядка магазина (8 патронов в общем)
-            for (int i = 0; i < 8; i++)
+            Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live, Count_Not_Fired_Shells));
+            //Зарядка магазина (8 патронов в максимум)
+            for (int i = 0; i < Count_Not_Fired_Shells; i++)
             {
-                if (Count_Of_Live_to_Magazine > 0)
+                if (Count_Of_Live > 0)
                 {
                     Magazine[i] = "Боевой";
-                    Count_Of_Live_to_Magazine--;
+                    Count_Of_Live--;
                 }
                 else
                 {
                     Magazine[i] = "Холостой";
-                    Count_Of_Live_to_Magazine--;
                 }
             }
             for (int i = Magazine.Length - 1; i > 0; i--)
@@ -120,32 +114,29 @@ namespace UGG
                     }
                 }
             }
-            Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
+            Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+            Count_Not_Fired_Shells--;
             //Начало игры
-            while (PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
+            while (PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
             {
-                //Определение следующего хода
                 if (Count_Not_Fired_Shells == -1)
                 {
                     //Распределение патронов, извучка их игрокам, зарядка их в магазин и выдача 2-х предметов (происходит, когда патронов нет)
-                    Count_Not_Fired_Shells = 7;
-                    Count_Of_Live = Random_Number.Next(1, 7);
-                    Count_Of_Blank = 8 - Count_Of_Live;
-                    Count_Of_Live_to_Magazine = Count_Of_Live;
-                    Count_Of_Blank_To_Magazine = Count_Of_Blank;
-                    Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live));
-                    //Зарядка магазина (8 патронов в общем)
-                    for (int i = 0; i < 8; i++)
+                    Count_Not_Fired_Shells = Random_Number.Next(2, 8);
+                    Magazine = new string[Count_Not_Fired_Shells];
+                    Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
+                    Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live, Count_Not_Fired_Shells));
+                    //Зарядка магазина (8 патронов в максимум)
+                    for (int i = 0; i < Count_Not_Fired_Shells; i++)
                     {
-                        if (Count_Of_Live_to_Magazine > 0)
+                        if (Count_Of_Live > 0)
                         {
                             Magazine[i] = "Боевой";
-                            Count_Of_Live_to_Magazine--;
+                            Count_Of_Live--;
                         }
                         else
                         {
                             Magazine[i] = "Холостой";
-                            Count_Of_Live_to_Magazine--;
                         }
                     }
                     for (int i = Magazine.Length - 1; i > 0; i--)
@@ -207,10 +198,11 @@ namespace UGG
                             }
                         }
                     }
-                    Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items_Page);
+                    Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+                    Count_Not_Fired_Shells--;
                 }
                 //Распределение ходов
-                while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_Live_Now == true && PlayerTwo_Live_Now == true)
+                while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
                     if (PlayerTwo_HandCuffed - 1 == 0)
                     {
@@ -221,12 +213,12 @@ namespace UGG
                     {
                         PlayerTwo_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.PlayerOne_Menu_When_Opponent_Handcuffed(PlayerOne_Name, PlayerTwo_Name));
+                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name));
                     }
                     else
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.PlayerOne_Menu(PlayerOne_Name, PlayerTwo_Name));
+                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name));
                     }
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
@@ -236,13 +228,13 @@ namespace UGG
                                 PlayerOne_Lives--;
                                 if (PlayerOne_Lives == 0)
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yourself_And_You_Will_Be_Dead);
-                                    PlayerOne_Live_Now = false;
+                                    Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
+                                    PlayerOne_Lives = -1;
+                                    Turn_To_Play = 3;
                                 }
                                 else
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_And_You_Will_Alive(PlayerOne_Lives));
-                                    Count_Of_Live--;
+                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerOne_Lives));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
@@ -253,7 +245,6 @@ namespace UGG
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
                                 Console_WriteReadClear(Image.Blank_Shot_Yourself);
-                                Count_Of_Blank_To_Magazine--;
                                 Count_Not_Fired_Shells--;
                             }
                             break;
@@ -263,14 +254,13 @@ namespace UGG
                                 PlayerTwo_Lives--;
                                 if (PlayerTwo_Lives == 0)
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Be_Dead);
-                                    PlayerTwo_Live_Now = false;
-                                    Count_Not_Fired_Shells = -1;
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
+                                    PlayerTwo_Lives = -1;
+                                    Turn_To_Play = 3;
                                 }
                                 else
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Alive(PlayerTwo_Lives));
-                                    Count_Of_Live--;
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerTwo_Lives));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
@@ -281,7 +271,6 @@ namespace UGG
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
                                 Console_WriteReadClear(Image.Blank_Shot_Opponent);
-                                Count_Of_Blank--;
                                 Count_Not_Fired_Shells--;
                                 if (PlayerTwo_HandCuffed == 0)
                                 {
@@ -292,7 +281,7 @@ namespace UGG
                         case 3:
                             if (Max_Of_PlayerOne_Inventory == 0)
                             {
-                                Console_WriteReadClear(Image.Player_Dont_Have_Items_Page);
+                                Console_WriteReadClear(Image.Player_Dont_Have_Items);
                             }
                             else
                             {
@@ -300,7 +289,7 @@ namespace UGG
                                 while (Items_Menu)
                                 {
                                     Console.SetCursorPosition(0, 0);
-                                    Console.Write(Image.All_Player_Items_Page);
+                                    Console.Write(Image.All_Player_Items);
                                     for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
                                     {
                                         Console.Write(PlayerOne_Inventory[i] + ", ");
@@ -373,12 +362,12 @@ namespace UGG
                     {
                         PlayerOne_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.PlayerTwo_Menu_When_Opponent_Handcuffed(PlayerOne_Name, PlayerTwo_Name));
+                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name));
                     }
                     else
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.PlayerTwo_Menu(PlayerOne_Name, PlayerTwo_Name));
+                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name));
                     }
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
@@ -388,13 +377,13 @@ namespace UGG
                                 PlayerTwo_Lives--;
                                 if (PlayerTwo_Lives == 0)
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yourself_And_You_Will_Be_Dead);
-                                    PlayerTwo_Live_Now = false;
+                                    Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
+                                    PlayerTwo_Lives = -1;
+                                    Turn_To_Play = 3;
                                 }
                                 else
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_And_You_Will_Alive(PlayerTwo_Lives));
-                                    Count_Of_Live--;
+                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerTwo_Lives));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerOne_HandCuffed == 0)
                                     {
@@ -405,7 +394,6 @@ namespace UGG
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
                                 Console_WriteReadClear(Image.Blank_Shot_Yourself);
-                                Count_Of_Blank--;
                                 Count_Not_Fired_Shells--;
                             }
                             break;
@@ -415,13 +403,13 @@ namespace UGG
                                 PlayerOne_Lives--;
                                 if (PlayerOne_Lives == 0)
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Be_Dead);
-                                    PlayerOne_Live_Now = false;
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
+                                    PlayerOne_Lives = -1;
+                                    Turn_To_Play = 3;
                                 }
                                 else
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_And_He_Will_Alive(PlayerOne_Lives));
-                                    Count_Of_Live--;
+                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerOne_Lives));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerOne_HandCuffed == 0)
                                     {
@@ -432,7 +420,6 @@ namespace UGG
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
                                 Console_WriteReadClear(Image.Blank_Shot_Opponent);
-                                Count_Of_Blank--;
                                 Count_Not_Fired_Shells--;
                                 if (PlayerOne_HandCuffed == 0)
                                 {
@@ -443,7 +430,7 @@ namespace UGG
                         case 3:
                             if (Max_Of_PlayerTwo_Inventory == 0)
                             {
-                                Console_WriteReadClear(Image.Player_Dont_Have_Items_Page);
+                                Console_WriteReadClear(Image.Player_Dont_Have_Items);
                             }
                             else if (Max_Of_PlayerTwo_Inventory > 0)
                             {
@@ -451,7 +438,7 @@ namespace UGG
                                 while (Items_Menu)
                                 {
                                     Console.SetCursorPosition(0, 0);
-                                    Console.Write(Image.All_Player_Items_Page);
+                                    Console.Write(Image.All_Player_Items);
                                     for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
                                     {
                                         Console.Write(PlayerTwo_Inventory[i] + ", ");
