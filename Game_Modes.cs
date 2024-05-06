@@ -10,6 +10,8 @@ namespace UGG
     {
         All_Images Image = new All_Images();
 
+        ConsoleKeyInfo Key = new ConsoleKeyInfo();
+
         public void Play_Two_Players_Shotgun_Mode()
         {
             //Инициализация всех нужных переменных
@@ -30,6 +32,26 @@ namespace UGG
 
             int Num_To_PlayerTwo_Items = 0;
             int Turn_To_Play = Random_Number.Next(1, 2);
+
+            Console_WriteReadClear(Image.Shotgun_Rules);
+
+            //Игроки выбирают кол-во выдаваемых предметов за раз
+            int Count_Of_Items = 0;
+            bool Count_Of_Items_Not_Choosen = true;
+            while (Count_Of_Items_Not_Choosen)
+            {
+                Console.SetCursorPosition(0, 0);
+                Console.Write(Image.Choose_Max_Count_Of_Items);
+                Count_Of_Items = Convert.ToInt32(Console.ReadLine());
+                if (Count_Of_Items > 4 || Count_Of_Items < 0)
+                {
+                    Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                }
+                else
+                {
+                    Count_Of_Items_Not_Choosen = false;
+                }
+            }
 
             //Игроки делятся на первого и второго игрока и вводят свои имена
             string PlayerOne_Name = Image.PlayerOne_Name_Input();
@@ -63,7 +85,7 @@ namespace UGG
                 Magazine[i] = Temp_For_Magazine;
             }
             //Bыдача 2-x предметов
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < Count_Of_Items; i++)
             {
                 int Number_Of_Item = Random_Number.Next(1, 4);
                 if (Max_Of_PlayerOne_Inventory < 6)
@@ -89,7 +111,7 @@ namespace UGG
                 }
 
             }
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < Count_Of_Items; i++)
             {
                 int Number_Of_Item = Random_Number.Next(1, 4);
                 if (Max_Of_PlayerTwo_Inventory < 6)
@@ -114,7 +136,10 @@ namespace UGG
                     }
                 }
             }
-            Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+            if (Count_Of_Items > 0)
+            {
+                Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+            }
             Count_Not_Fired_Shells--;
             //Начало игры
             while (PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
@@ -147,7 +172,7 @@ namespace UGG
                         Magazine[i] = Temp_For_Magazine;
                     }
                     //Bыдача 2-x предметов
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < Count_Of_Items; i++)
                     {
                         int Number_Of_Item = Random_Number.Next(1, 4);
                         if (Max_Of_PlayerOne_Inventory < 6)
@@ -173,7 +198,7 @@ namespace UGG
                         }
 
                     }
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < Count_Of_Items; i++)
                     {
                         int Number_Of_Item = Random_Number.Next(1, 4);
                         if (Max_Of_PlayerTwo_Inventory < 6)
@@ -198,7 +223,10 @@ namespace UGG
                             }
                         }
                     }
-                    Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+                    if (Count_Of_Items > 0)
+                    {
+                        Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+                    }
                     Count_Not_Fired_Shells--;
                 }
                 //Распределение ходов
@@ -213,16 +241,17 @@ namespace UGG
                     {
                         PlayerTwo_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name));
+                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items));
                     }
                     else
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name));
+                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items));
                     }
-                    switch (Convert.ToInt32(Console.ReadLine()))
+                    Key = Console.ReadKey(true);
+                    switch (Key.Key)
                     {
-                        case 1:
+                        case ConsoleKey.D1:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerOne_Lives--;
@@ -248,7 +277,7 @@ namespace UGG
                                 Count_Not_Fired_Shells--;
                             }
                             break;
-                        case 2:
+                        case ConsoleKey.D2:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerTwo_Lives--;
@@ -278,73 +307,77 @@ namespace UGG
                                 }
                             }
                             break;
-                        case 3:
-                            if (Max_Of_PlayerOne_Inventory == 0)
+                        case ConsoleKey.D3:
+                            if (Count_Of_Items != 0)
                             {
-                                Console_WriteReadClear(Image.Player_Dont_Have_Items);
-                            }
-                            else
-                            {
-                                bool Items_Menu = true;
-                                while (Items_Menu)
+                                if (Max_Of_PlayerOne_Inventory == 0)
                                 {
-                                    Console.SetCursorPosition(0, 0);
-                                    Console.Write(Image.All_Player_Items);
-                                    for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
+                                    Console_WriteReadClear(Image.Player_Dont_Have_Items);
+                                }
+                                else
+                                {
+                                    bool Items_Menu = true;
+                                    while (Items_Menu)
                                     {
-                                        Console.Write(PlayerOne_Inventory[i] + ", ");
-                                    }
-                                    Console.Write(" и все.                                                                                                                              ");
-                                    switch (Convert.ToInt32(Console.ReadLine()))
-                                    {
-                                        case 1:
-                                            if (PlayerOne_Inventory.Contains("+хп") == true)
-                                            {
-                                                PlayerOne_Lives++;
-                                                Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
-                                                int numIndex = Array.IndexOf(PlayerOne_Inventory, "+хп");
-                                                PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
-                                                Max_Of_PlayerOne_Inventory--;
-                                                Num_To_PlayerOne_Items--;
-                                                Items_Menu = false;
-                                            }
-                                            break;
-                                        case 2:
-                                            if (PlayerOne_Inventory.Contains("наручники") == true)
-                                            {
-                                                if (PlayerTwo_HandCuffed > 0)
+                                        Console.SetCursorPosition(0, 0);
+                                        Console.Write(Image.All_Player_Items);
+                                        for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
+                                        {
+                                            Console.Write(PlayerOne_Inventory[i] + ", ");
+                                        }
+                                        Console.Write("и все.                                                                                                                              ");
+                                        Key = Console.ReadKey(true);
+                                        switch (Key.Key)
+                                        {
+                                            case ConsoleKey.D1:
+                                                if (PlayerOne_Inventory.Contains("+хп") == true)
                                                 {
-                                                    Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
-                                                }
-                                                else
-                                                {
-                                                    PlayerTwo_HandCuffed = 2;
-                                                    int numIndex = Array.IndexOf(PlayerOne_Inventory, "наручники");
+                                                    PlayerOne_Lives++;
+                                                    Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
+                                                    int numIndex = Array.IndexOf(PlayerOne_Inventory, "+хп");
                                                     PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                     Max_Of_PlayerOne_Inventory--;
                                                     Num_To_PlayerOne_Items--;
                                                     Items_Menu = false;
                                                 }
+                                                break;
+                                            case ConsoleKey.D2:
+                                                if (PlayerOne_Inventory.Contains("наручники") == true)
+                                                {
+                                                    if (PlayerTwo_HandCuffed > 0)
+                                                    {
+                                                        Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerTwo_HandCuffed = 2;
+                                                        int numIndex = Array.IndexOf(PlayerOne_Inventory, "наручники");
+                                                        PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        Max_Of_PlayerOne_Inventory--;
+                                                        Num_To_PlayerOne_Items--;
+                                                        Items_Menu = false;
+                                                    }
 
-                                            }
-                                            break;
-                                        case 3:
-                                            if (PlayerOne_Inventory.Contains("патрончекер") == true)
-                                            {
-                                                Console_WriteReadClear(Image.What_Is_Shell_Be_Now(Magazine[Count_Not_Fired_Shells]));
-                                                int numIndex = Array.IndexOf(PlayerOne_Inventory, "патрончекер");
-                                                PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
-                                                Max_Of_PlayerOne_Inventory--;
-                                                Num_To_PlayerOne_Items--;
+                                                }
+                                                break;
+                                            case ConsoleKey.D3:
+                                                if (PlayerOne_Inventory.Contains("патрончекер") == true)
+                                                {
+                                                    Console_WriteReadClear(Image.What_Is_Shell_Be_Now(Magazine[Count_Not_Fired_Shells]));
+                                                    int numIndex = Array.IndexOf(PlayerOne_Inventory, "патрончекер");
+                                                    PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                    Max_Of_PlayerOne_Inventory--;
+                                                    Num_To_PlayerOne_Items--;
+                                                    Items_Menu = false;
+                                                }
+                                                break;
+                                            case ConsoleKey.D4:
                                                 Items_Menu = false;
-                                            }
-                                            break;
-                                        case 4:
-                                            Items_Menu = false;
-                                            break;
-                                        default:
-                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                            break;
+                                                break;
+                                            default:
+                                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                break;
+                                        }
                                     }
                                 }
                             }
@@ -362,16 +395,17 @@ namespace UGG
                     {
                         PlayerOne_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name));
+                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items));
                     }
                     else
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name));
+                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items));
                     }
-                    switch (Convert.ToInt32(Console.ReadLine()))
+                    Key = Console.ReadKey(true);
+                    switch (Key.Key)
                     {
-                        case 1:
+                        case ConsoleKey.D1:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerTwo_Lives--;
@@ -397,7 +431,7 @@ namespace UGG
                                 Count_Not_Fired_Shells--;
                             }
                             break;
-                        case 2:
+                        case ConsoleKey.D2:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerOne_Lives--;
@@ -427,72 +461,76 @@ namespace UGG
                                 }
                             }
                             break;
-                        case 3:
-                            if (Max_Of_PlayerTwo_Inventory == 0)
+                        case ConsoleKey.D3:
+                            if (Count_Of_Items != 0)
                             {
-                                Console_WriteReadClear(Image.Player_Dont_Have_Items);
-                            }
-                            else if (Max_Of_PlayerTwo_Inventory > 0)
-                            {
-                                bool Items_Menu = true;
-                                while (Items_Menu)
+                                if (Max_Of_PlayerTwo_Inventory == 0)
                                 {
-                                    Console.SetCursorPosition(0, 0);
-                                    Console.Write(Image.All_Player_Items);
-                                    for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
+                                    Console_WriteReadClear(Image.Player_Dont_Have_Items);
+                                }
+                                else if (Max_Of_PlayerTwo_Inventory > 0)
+                                {
+                                    bool Items_Menu = true;
+                                    while (Items_Menu)
                                     {
-                                        Console.Write(PlayerTwo_Inventory[i] + ", ");
-                                    }
-                                    Console.Write(" и все.                                                                                                                              ");
-                                    switch (Convert.ToInt32(Console.ReadLine()))
-                                    {
-                                        case 1:
-                                            if (PlayerTwo_Inventory.Contains("+хп") == true)
-                                            {
-                                                PlayerTwo_Lives++;
-                                                Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
-                                                int numIndex = Array.IndexOf(PlayerTwo_Inventory, "+хп");
-                                                PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
-                                                Max_Of_PlayerTwo_Inventory--;
-                                                Num_To_PlayerTwo_Items--;
-                                                Items_Menu = false;
-                                            }
-                                            break;
-                                        case 2:
-                                            if (PlayerTwo_Inventory.Contains("наручники") == true)
-                                            {
-                                                if (PlayerOne_HandCuffed > 0)
+                                        Console.SetCursorPosition(0, 0);
+                                        Console.Write(Image.All_Player_Items);
+                                        for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
+                                        {
+                                            Console.Write(PlayerTwo_Inventory[i] + ", ");
+                                        }
+                                        Console.Write("и все.                                                                                                                              ");
+                                        Key = Console.ReadKey(true);
+                                        switch (Key.Key)
+                                        {
+                                            case ConsoleKey.D1:
+                                                if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                 {
-                                                    Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
-                                                }
-                                                else
-                                                {
-                                                    PlayerOne_HandCuffed = 2;
-                                                    int numIndex = Array.IndexOf(PlayerTwo_Inventory, "наручники");
+                                                    PlayerTwo_Lives++;
+                                                    Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
+                                                    int numIndex = Array.IndexOf(PlayerTwo_Inventory, "+хп");
                                                     PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
                                                     Max_Of_PlayerTwo_Inventory--;
                                                     Num_To_PlayerTwo_Items--;
                                                     Items_Menu = false;
                                                 }
-                                            }
-                                            break;
-                                        case 3:
-                                            if (PlayerTwo_Inventory.Contains("патрончекер") == true)
-                                            {
-                                                Console_WriteReadClear(Image.What_Is_Shell_Be_Now(Magazine[Count_Not_Fired_Shells]));
-                                                int numIndex = Array.IndexOf(PlayerTwo_Inventory, "патрончекер");
-                                                PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
-                                                Max_Of_PlayerTwo_Inventory--;
-                                                Num_To_PlayerTwo_Items--;
+                                                break;
+                                            case ConsoleKey.D2:
+                                                if (PlayerTwo_Inventory.Contains("наручники") == true)
+                                                {
+                                                    if (PlayerOne_HandCuffed > 0)
+                                                    {
+                                                        Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerOne_HandCuffed = 2;
+                                                        int numIndex = Array.IndexOf(PlayerTwo_Inventory, "наручники");
+                                                        PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        Max_Of_PlayerTwo_Inventory--;
+                                                        Num_To_PlayerTwo_Items--;
+                                                        Items_Menu = false;
+                                                    }
+                                                }
+                                                break;
+                                            case ConsoleKey.D3:
+                                                if (PlayerTwo_Inventory.Contains("патрончекер") == true)
+                                                {
+                                                    Console_WriteReadClear(Image.What_Is_Shell_Be_Now(Magazine[Count_Not_Fired_Shells]));
+                                                    int numIndex = Array.IndexOf(PlayerTwo_Inventory, "патрончекер");
+                                                    PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                    Max_Of_PlayerTwo_Inventory--;
+                                                    Num_To_PlayerTwo_Items--;
+                                                    Items_Menu = false;
+                                                }
+                                                break;
+                                            case ConsoleKey.D4:
                                                 Items_Menu = false;
-                                            }
-                                            break;
-                                        case 4:
-                                            Items_Menu = false;
-                                            break;
-                                        default:
-                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                            break;
+                                                break;
+                                            default:
+                                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                break;
+                                        }
                                     }
                                 }
                             }

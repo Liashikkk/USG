@@ -22,10 +22,18 @@ namespace UGG
         public string Blank_Shot_Yourself = "щелчок... какое облегчение =). Еnter для перехода на следующее меню                                                                                                                                                                                                ";
 
         public string Player_Dont_Have_Items = "у тебя нет предметов =/. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
-        public string All_Player_Items = "1+Enter - использовать +хп, 2+Enter - использовать наручники (соперник пропустит ход, т.е. вы походите два раза), 3+Enter - использовать патрончекер (покажет какой патрон будет выстрелен), 4+Enter - выйти из этого меню. у тебя есть: ";
+        public string All_Player_Items = "1 - использовать +хп, 2- использовать наручники (соперник пропустит ход, т.е. вы походите два раза), 3 - использовать патрончекер (покажет какой патрон будет выстрелен), 4 - выйти из этого меню. у тебя есть: ";
 
         public string Opponent_Already_HandCuffed = "его руки уже связаны =). Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+
+        public string Choose_Max_Count_Of_Items = "выберите кол-во предметов, которые вы будете получать после зарядка магазина, максимум 4.                                                                                                                                                                         ";
+
+        public string Wrong_Num_For_Count_Of_Items = "вы выбрали неверное кол-во предметов. Еnter для перехода на следующее меню                                                                                                                                                                                                                                              ";
         
+        public string Shotgun_Rules = "правила игры для дробовика...Еnter для перехода на следующее меню                                                                                                                                                                                                                                 ";
+
+        public string SawOfShotgun_Rules = "правила игры для обреза...Еnter для перехода на следующее меню                                                                                                                                                                                            ";
+
         public string PlayerOne_Name_Input()
         {
             Console.Clear();
@@ -65,15 +73,19 @@ namespace UGG
             return $"В патроннике сейчас находится - {Shell_Type} патрон. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
         }
 
-        public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, bool Opponent_HandCuffed = false)
+        public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, int Count_Of_Items, bool Opponent_HandCuffed = false)
         {
-            if (Opponent_HandCuffed)
+            if (Count_Of_Items == 0)
             {
-                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - меню предметов                                                                                                                                                                  ";
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1 - выстрел в себя, 2 - выстрел в соперника.                                                                                                                                                                                                                       ";
+            }
+            else if (Opponent_HandCuffed)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. кол-во ваших жизней {Count_Of_Player_Lives}. 1 - выстрел в себя, 2 - выстрел в соперника, 3 - меню предметов.                                                                                                                                                                                               ";
             }
             else
             {
-                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Enter - выстрел в себя, 2+Enter - выстрел в соперника, 3+Enter - меню предметов                                                                                                                                                                                          ";
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1 - выстрел в себя, 2 - выстрел в соперника, 3 - меню предметов.                                                                                                                                                                                                                       ";
             }
         }
         
