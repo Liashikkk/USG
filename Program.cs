@@ -49,6 +49,8 @@ namespace USG
 
             ConsoleKeyInfo Key = new ConsoleKeyInfo();
 
+            Random Random_Number = new Random();
+
             while (true)
             {
                 Console.SetCursorPosition(0, 0);

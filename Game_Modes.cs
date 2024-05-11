@@ -236,44 +236,81 @@ namespace USG
                     switch (Key.Key)
                     {
                         case ConsoleKey.D1:
-                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                            if (Who_To_Shoot_At == 1)
                             {
-                                PlayerOne_Lives--;
-                                if (PlayerOne_Lives == 0)
+                                Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
-                                    PlayerOne_Lives = -1;
-                                    Turn_To_Play = 3;
+                                    PlayerOne_Lives--;
+                                    if (PlayerOne_Lives == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                        Count_Not_Fired_Shells--;
+                                        if (PlayerTwo_HandCuffed == 0)
+                                        {
+                                            Turn_To_Play = 2;
+                                        }
+                                    }
                                 }
-                                else
+                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerOne_Lives));
+                                    Console_WriteReadClear(Image.Blank_Shoot());
+                                    Count_Not_Fired_Shells--;
+                                }
+                            }
+                            else if (Who_To_Shoot_At == 2)
+                            {
+                                Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                                {
+                                    PlayerTwo_Lives--;
+                                    if (PlayerTwo_Lives == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                        Count_Not_Fired_Shells--;
+                                        if (PlayerTwo_HandCuffed == 0)
+                                        {
+                                            Turn_To_Play = 2;
+                                        }
+                                    }
+                                }
+                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                {
+                                    Console_WriteReadClear(Image.Blank_Shoot(true));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
                                         Turn_To_Play = 2;
                                     }
                                 }
-                            }
-                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
-                            {
-                                Console_WriteReadClear(Image.Blank_Shot_Yourself);
-                                Count_Not_Fired_Shells--;
                             }
                             break;
                         case ConsoleKey.D2:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
-                                PlayerTwo_Lives--;
-                                if (PlayerTwo_Lives == 0)
+                                PlayerOne_Lives--;
+                                if (PlayerOne_Lives == 0)
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
-                                    PlayerTwo_Lives = -1;
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                    PlayerOne_Lives = -1;
                                     Turn_To_Play = 3;
                                 }
                                 else
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerTwo_Lives));
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
@@ -283,7 +320,33 @@ namespace USG
                             }
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
-                                Console_WriteReadClear(Image.Blank_Shot_Opponent);
+                                Console_WriteReadClear(Image.Blank_Shoot());
+                                Count_Not_Fired_Shells--;
+                            }
+                            break;
+                        case ConsoleKey.D3:
+                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            {
+                                PlayerTwo_Lives--;
+                                if (PlayerTwo_Lives == 0)
+                                {
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                    PlayerTwo_Lives = -1;
+                                    Turn_To_Play = 3;
+                                }
+                                else
+                                {
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                    Count_Not_Fired_Shells--;
+                                    if (PlayerTwo_HandCuffed == 0)
+                                    {
+                                        Turn_To_Play = 2;
+                                    }
+                                }
+                            }
+                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                            {
+                                Console_WriteReadClear(Image.Blank_Shoot(true));
                                 Count_Not_Fired_Shells--;
                                 if (PlayerTwo_HandCuffed == 0)
                                 {
@@ -291,7 +354,7 @@ namespace USG
                                 }
                             }
                             break;
-                        case ConsoleKey.D3:
+                        case ConsoleKey.D4:
                             if (Count_Of_Items != 0)
                             {
                                 if (Max_Of_PlayerOne_Inventory == 0)
@@ -317,7 +380,6 @@ namespace USG
                                                 if (PlayerOne_Inventory.Contains("+хп") == true)
                                                 {
                                                     PlayerOne_Lives++;
-                                                    Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
                                                     List<string> Remove_List = new List<string>(PlayerOne_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
                                                     Remove_List.Add("");
@@ -409,44 +471,81 @@ namespace USG
                     switch (Key.Key)
                     {
                         case ConsoleKey.D1:
-                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                            if (Who_To_Shoot_At == 1)
                             {
-                                PlayerTwo_Lives--;
-                                if (PlayerTwo_Lives == 0)
+                                Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
-                                    PlayerTwo_Lives = -1;
-                                    Turn_To_Play = 3;
+                                    PlayerTwo_Lives--;
+                                    if (PlayerTwo_Lives == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                        Count_Not_Fired_Shells--;
+                                        if (PlayerOne_HandCuffed == 0)
+                                        {
+                                            Turn_To_Play = 1;
+                                        }
+                                    }
                                 }
-                                else
+                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerTwo_Lives));
+                                    Console_WriteReadClear(Image.Blank_Shoot());
+                                    Count_Not_Fired_Shells--;
+                                }
+                            }
+                            else if (Who_To_Shoot_At == 2)
+                            {
+                                Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                                if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                                {
+                                    PlayerOne_Lives--;
+                                    if (PlayerOne_Lives == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                        Count_Not_Fired_Shells--;
+                                        if (PlayerOne_HandCuffed == 0)
+                                        {
+                                            Turn_To_Play = 1;
+                                        }
+                                    }
+                                }
+                                else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                {
+                                    Console_WriteReadClear(Image.Blank_Shoot(true));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerOne_HandCuffed == 0)
                                     {
                                         Turn_To_Play = 1;
                                     }
                                 }
-                            }
-                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
-                            {
-                                Console_WriteReadClear(Image.Blank_Shot_Yourself);
-                                Count_Not_Fired_Shells--;
                             }
                             break;
                         case ConsoleKey.D2:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
-                                PlayerOne_Lives--;
-                                if (PlayerOne_Lives == 0)
+                                PlayerTwo_Lives--;
+                                if (PlayerTwo_Lives == 0)
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
-                                    PlayerOne_Lives = -1;
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                    PlayerTwo_Lives = -1;
                                     Turn_To_Play = 3;
                                 }
                                 else
                                 {
-                                    Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerOne_Lives));
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                     Count_Not_Fired_Shells--;
                                     if (PlayerOne_HandCuffed == 0)
                                     {
@@ -456,7 +555,33 @@ namespace USG
                             }
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
-                                Console_WriteReadClear(Image.Blank_Shot_Opponent);
+                                Console_WriteReadClear(Image.Blank_Shoot());
+                                Count_Not_Fired_Shells--;
+                            }
+                            break;
+                        case ConsoleKey.D3:
+                            if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                            {
+                                PlayerOne_Lives--;
+                                if (PlayerOne_Lives == 0)
+                                {
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                    PlayerOne_Lives = -1;
+                                    Turn_To_Play = 3;
+                                }
+                                else
+                                {
+                                    Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                    Count_Not_Fired_Shells--;
+                                    if (PlayerOne_HandCuffed == 0)
+                                    {
+                                        Turn_To_Play = 1;
+                                    }
+                                }
+                            }
+                            else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
+                            {
+                                Console_WriteReadClear(Image.Blank_Shoot(true));
                                 Count_Not_Fired_Shells--;
                                 if (PlayerOne_HandCuffed == 0)
                                 {
@@ -464,7 +589,7 @@ namespace USG
                                 }
                             }
                             break;
-                        case ConsoleKey.D3:
+                        case ConsoleKey.D4:
                             if (Count_Of_Items != 0)
                             {
                                 if (Max_Of_PlayerTwo_Inventory == 0)
@@ -490,7 +615,6 @@ namespace USG
                                                 if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                 {
                                                     PlayerTwo_Lives++;
-                                                    Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
                                                     List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
                                                     Remove_List.Add("");
@@ -1025,19 +1149,136 @@ namespace USG
                         switch (Key.Key)
                         {
                             case ConsoleKey.D1:
+                                int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                                if (Who_To_Shoot_At == 1)
+                                {
+                                    Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerOne_Lives -= 2;
+                                        if (PlayerOne_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            if (PlayerTwo_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 2;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerOne_Lives--;
+                                        if (PlayerOne_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            if (PlayerTwo_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 2;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
+                                    {
+                                        Console_WriteReadClear(Image.Blank_Shoot());
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                }
+                                else if (Who_To_Shoot_At == 2)
+                                {
+                                    Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerTwo_Lives -= 2;
+                                        if (PlayerTwo_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            if (PlayerTwo_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 2;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerTwo_Lives--;
+                                        if (PlayerTwo_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            if (PlayerTwo_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 2;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
+                                    {
+                                        Console_WriteReadClear(Image.Blank_Shoot(true));
+                                        if (PlayerTwo_HandCuffed == 0)
+                                        {
+                                            Turn_To_Play = 2;
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                }
+                                break;
+                            case ConsoleKey.D2:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives -= 2;
                                     if (PlayerOne_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                         PlayerOne_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerOne_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                         if (PlayerTwo_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 2;
@@ -1052,14 +1293,14 @@ namespace USG
                                     PlayerOne_Lives--;
                                     if (PlayerOne_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                         PlayerOne_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerOne_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                         if (PlayerTwo_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 2;
@@ -1071,26 +1312,26 @@ namespace USG
                                 }
                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
-                                    Console_WriteReadClear(Image.Blank_Shot_Yourself);
+                                    Console_WriteReadClear(Image.Blank_Shoot());
                                     DBShotgun[0] = "null";
                                     DBShotgun[1] = "null";
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D2:
+                            case ConsoleKey.D3:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives -= 2;
                                     if (PlayerTwo_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
                                         PlayerTwo_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerTwo_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
                                         if (PlayerTwo_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 2;
@@ -1105,14 +1346,14 @@ namespace USG
                                     PlayerTwo_Lives--;
                                     if (PlayerTwo_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
                                         PlayerTwo_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerTwo_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
                                         if (PlayerTwo_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 2;
@@ -1124,7 +1365,7 @@ namespace USG
                                 }
                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
-                                    Console_WriteReadClear(Image.Blank_Shot_Opponent);
+                                    Console_WriteReadClear(Image.Blank_Shoot(true));
                                     if (PlayerTwo_HandCuffed == 0)
                                     {
                                         Turn_To_Play = 2;
@@ -1134,7 +1375,7 @@ namespace USG
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D3:
+                            case ConsoleKey.D4:
                                 if (Count_Of_Items != 0)
                                 {
                                     if (Max_Of_PlayerOne_Inventory == 0)
@@ -1160,7 +1401,6 @@ namespace USG
                                                     if (PlayerOne_Inventory.Contains("+хп") == true)
                                                     {
                                                         PlayerOne_Lives++;
-                                                        Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
                                                         List<string> Remove_List = new List<string>(PlayerOne_Inventory);
                                                         Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
                                                         Remove_List.Add("");
@@ -1496,19 +1736,134 @@ namespace USG
                         switch (Key.Key)
                         {
                             case ConsoleKey.D1:
+                                int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                                if (Who_To_Shoot_At == 1)
+                                {
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerTwo_Lives -= 2;
+                                        if (PlayerTwo_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            if (PlayerOne_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 1;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerTwo_Lives--;
+                                        if (PlayerTwo_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            if (PlayerOne_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 1;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
+                                    {
+                                        Console_WriteReadClear(Image.Blank_Shoot());
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                }
+                                else if (Who_To_Shoot_At == 2)
+                                {
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerOne_Lives -= 2;
+                                        if (PlayerOne_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            if (PlayerOne_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 1;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
+                                    {
+                                        PlayerOne_Lives--;
+                                        if (PlayerOne_Lives <= 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Menu = false;
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            if (PlayerOne_HandCuffed == 0)
+                                            {
+                                                Turn_To_Play = 1;
+                                            }
+                                        }
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        Menu = false;
+                                    }
+                                    else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
+                                    {
+                                        Console_WriteReadClear(Image.Blank_Shoot(true));
+                                        DBShotgun[0] = "null";
+                                        DBShotgun[1] = "null";
+                                        if (PlayerOne_HandCuffed == 0)
+                                        {
+                                            Turn_To_Play = 1;
+                                        }
+                                        Menu = false;
+                                    }
+                                }
+                                break;
+                            case ConsoleKey.D2:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives -= 2;
                                     if (PlayerTwo_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                         PlayerTwo_Lives = -1;
                                         Turn_To_Play = 3; 
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerTwo_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                         if (PlayerOne_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 1;
@@ -1523,14 +1878,14 @@ namespace USG
                                     PlayerTwo_Lives--;
                                     if (PlayerTwo_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                         PlayerTwo_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Yoursef_Alive(PlayerTwo_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                         if (PlayerOne_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 1;
@@ -1542,26 +1897,26 @@ namespace USG
                                 }
                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
-                                    Console_WriteReadClear(Image.Blank_Shot_Yourself);
+                                    Console_WriteReadClear(Image.Blank_Shoot());
                                     DBShotgun[0] = "null";
                                     DBShotgun[1] = "null";
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D2:
+                            case ConsoleKey.D3:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives -= 2;
                                     if (PlayerOne_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
                                         PlayerOne_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerOne_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
                                         if (PlayerOne_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 1;
@@ -1576,14 +1931,14 @@ namespace USG
                                     PlayerOne_Lives--;
                                     if (PlayerOne_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
                                         PlayerOne_Lives = -1;
                                         Turn_To_Play = 3;
                                         Menu = false;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerOne_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
                                         if (PlayerOne_HandCuffed == 0)
                                         {
                                             Turn_To_Play = 1;
@@ -1595,13 +1950,17 @@ namespace USG
                                 }
                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
-                                    Console_WriteReadClear(Image.Blank_Shot_Opponent);
+                                    Console_WriteReadClear(Image.Blank_Shoot(true));
                                     DBShotgun[0] = "null";
                                     DBShotgun[1] = "null";
+                                    if (PlayerOne_HandCuffed == 0)
+                                    {
+                                        Turn_To_Play = 1;
+                                    }
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D3:
+                            case ConsoleKey.D4:
                                 if (Count_Of_Items != 0)
                                 {
                                     if (Max_Of_PlayerTwo_Inventory == 0)
@@ -1627,7 +1986,6 @@ namespace USG
                                                     if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                     {
                                                         PlayerTwo_Lives++;
-                                                        Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
                                                         List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
                                                         Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
                                                         Remove_List.Add("");
