@@ -28,9 +28,6 @@ namespace USG
             string[] PlayerTwo_Inventory = new string[6];
             int Max_Of_PlayerOne_Inventory = 0;
             int Max_Of_PlayerTwo_Inventory = 0;
-            int Num_To_PlayerOne_Items = 0;
-
-            int Num_To_PlayerTwo_Items = 0;
             int Turn_To_Play = Random_Number.Next(1, 2);
 
             Console_WriteReadClear(Image.Shotgun_Rules);
@@ -88,24 +85,21 @@ namespace USG
             for (int i = 0; i < Count_Of_Items; i++)
             {
                 int Number_Of_Item = Random_Number.Next(1, 4);
-                if (Max_Of_PlayerOne_Inventory < 6)
+                if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                 {
                     switch (Number_Of_Item)
                     {
                         case 1:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
                             Max_Of_PlayerOne_Inventory++;
-                            Num_To_PlayerOne_Items++;
                             break;
                         case 2:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
                             Max_Of_PlayerOne_Inventory++;
-                            Num_To_PlayerOne_Items++;
                             break;
                         case 3:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
                             Max_Of_PlayerOne_Inventory++;
-                            Num_To_PlayerOne_Items++;
                             break;
                     }
                 }
@@ -114,29 +108,26 @@ namespace USG
             for (int i = 0; i < Count_Of_Items; i++)
             {
                 int Number_Of_Item = Random_Number.Next(1, 4);
-                if (Max_Of_PlayerTwo_Inventory < 6)
+                if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                 {
                     switch (Number_Of_Item)
                     {
                         case 1:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
                             Max_Of_PlayerTwo_Inventory++;
-                            Num_To_PlayerTwo_Items++;
                             break;
                         case 2:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
                             Max_Of_PlayerTwo_Inventory++;
-                            Num_To_PlayerTwo_Items++;
                             break;
                         case 3:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
                             Max_Of_PlayerTwo_Inventory++;
-                            Num_To_PlayerTwo_Items++;
                             break;
                     }
                 }
             }
-            if (Count_Of_Items > 0)
+            if (Max_Of_PlayerOne_Inventory == 5 && Max_Of_PlayerTwo_Inventory == 5)
             {
                 Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
             }
@@ -175,24 +166,21 @@ namespace USG
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
                         int Number_Of_Item = Random_Number.Next(1, 4);
-                        if (Max_Of_PlayerOne_Inventory < 6)
+                        if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                         {
                             switch (Number_Of_Item)
                             {
                                 case 1:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
                                     Max_Of_PlayerOne_Inventory++;
-                                    Num_To_PlayerOne_Items++;
                                     break;
                                 case 2:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
                                     Max_Of_PlayerOne_Inventory++;
-                                    Num_To_PlayerOne_Items++;
                                     break;
                                 case 3:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
                                     Max_Of_PlayerOne_Inventory++;
-                                    Num_To_PlayerOne_Items++;
                                     break;
                             }
                         }
@@ -201,29 +189,26 @@ namespace USG
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
                         int Number_Of_Item = Random_Number.Next(1, 4);
-                        if (Max_Of_PlayerTwo_Inventory < 6)
+                        if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                         {
                             switch (Number_Of_Item)
                             {
                                 case 1:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
                                     Max_Of_PlayerTwo_Inventory++;
-                                    Num_To_PlayerTwo_Items++;
                                     break;
                                 case 2:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
                                     Max_Of_PlayerTwo_Inventory++;
-                                    Num_To_PlayerTwo_Items++;
                                     break;
                                 case 3:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
                                     Max_Of_PlayerTwo_Inventory++;
-                                    Num_To_PlayerTwo_Items++;
                                     break;
                             }
                         }
                     }
-                    if (Count_Of_Items > 0)
+                    if (Max_Of_PlayerOne_Inventory == 5 && Max_Of_PlayerTwo_Inventory == 5)
                     {
                         Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
                     }
@@ -333,11 +318,16 @@ namespace USG
                                                 {
                                                     PlayerOne_Lives++;
                                                     Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
-                                                    int numIndex = Array.IndexOf(PlayerOne_Inventory, "+хп");
-                                                    PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                    List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
+                                                    Remove_List.Add("");
+                                                    PlayerOne_Inventory = Remove_List.ToArray();
                                                     Max_Of_PlayerOne_Inventory--;
-                                                    Num_To_PlayerOne_Items--;
                                                     Items_Menu = false;
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case ConsoleKey.D2:
@@ -350,24 +340,34 @@ namespace USG
                                                     else
                                                     {
                                                         PlayerTwo_HandCuffed = 2;
-                                                        int numIndex = Array.IndexOf(PlayerOne_Inventory, "наручники");
-                                                        PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("наручники"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerOne_Inventory--;
-                                                        Num_To_PlayerOne_Items--;
                                                         Items_Menu = false;
                                                     }
 
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case ConsoleKey.D3:
                                                 if (PlayerOne_Inventory.Contains("патрончекер") == true)
                                                 {
                                                     Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells]));
-                                                    int numIndex = Array.IndexOf(PlayerOne_Inventory, "патрончекер");
-                                                    PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                    List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                    Remove_List.Add("");
+                                                    PlayerOne_Inventory = Remove_List.ToArray();
                                                     Max_Of_PlayerOne_Inventory--;
-                                                    Num_To_PlayerOne_Items--;
                                                     Items_Menu = false;
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case ConsoleKey.D4:
@@ -491,11 +491,16 @@ namespace USG
                                                 {
                                                     PlayerTwo_Lives++;
                                                     Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
-                                                    int numIndex = Array.IndexOf(PlayerTwo_Inventory, "+хп");
-                                                    PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                    List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
+                                                    Remove_List.Add("");
+                                                    PlayerTwo_Inventory = Remove_List.ToArray();
                                                     Max_Of_PlayerTwo_Inventory--;
-                                                    Num_To_PlayerTwo_Items--;
                                                     Items_Menu = false;
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case ConsoleKey.D2:
@@ -508,23 +513,33 @@ namespace USG
                                                     else
                                                     {
                                                         PlayerOne_HandCuffed = 2;
-                                                        int numIndex = Array.IndexOf(PlayerTwo_Inventory, "наручники");
-                                                        PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("наручники"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerTwo_Inventory--;
-                                                        Num_To_PlayerTwo_Items--;
                                                         Items_Menu = false;
                                                     }
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case ConsoleKey.D3:
                                                 if (PlayerTwo_Inventory.Contains("патрончекер") == true)
                                                 {
                                                     Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells]));
-                                                    int numIndex = Array.IndexOf(PlayerTwo_Inventory, "патрончекер");
-                                                    PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                    List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                    Remove_List.Add("");
+                                                    PlayerTwo_Inventory = Remove_List.ToArray();
                                                     Max_Of_PlayerTwo_Inventory--;
-                                                    Num_To_PlayerTwo_Items--;
                                                     Items_Menu = false;
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case ConsoleKey.D4:
@@ -565,9 +580,6 @@ namespace USG
             string[] PlayerTwo_Inventory = new string[6];
             int Max_Of_PlayerOne_Inventory = 0;
             int Max_Of_PlayerTwo_Inventory = 0;
-            int Num_To_PlayerOne_Items = 0;
-
-            int Num_To_PlayerTwo_Items = 0;
             int Turn_To_Play = Random_Number.Next(1, 2);
 
             Console_WriteReadClear(Image.DoubleBarreledShotgun_Rules);
@@ -629,24 +641,21 @@ namespace USG
             for (int i = 0; i < Count_Of_Items; i++)
             {
                 int Number_Of_Item = Random_Number.Next(1, 4);
-                if (Max_Of_PlayerOne_Inventory < 6)
+                if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                 {
                     switch (Number_Of_Item)
                     {
                         case 1:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
                             Max_Of_PlayerOne_Inventory++;
-                            Num_To_PlayerOne_Items++;
                             break;
                         case 2:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
                             Max_Of_PlayerOne_Inventory++;
-                            Num_To_PlayerOne_Items++;
                             break;
                         case 3:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
                             Max_Of_PlayerOne_Inventory++;
-                            Num_To_PlayerOne_Items++;
                             break;
                     }
                 }
@@ -655,29 +664,26 @@ namespace USG
             for (int i = 0; i < Count_Of_Items; i++)
             {
                 int Number_Of_Item = Random_Number.Next(1, 4);
-                if (Max_Of_PlayerTwo_Inventory < 6)
+                if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                 {
                     switch (Number_Of_Item)
                     {
                         case 1:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
                             Max_Of_PlayerTwo_Inventory++;
-                            Num_To_PlayerTwo_Items++;
                             break;
                         case 2:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
                             Max_Of_PlayerTwo_Inventory++;
-                            Num_To_PlayerTwo_Items++;
                             break;
                         case 3:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
                             Max_Of_PlayerTwo_Inventory++;
-                            Num_To_PlayerTwo_Items++;
                             break;
                     }
                 }
             }
-            if (Count_Of_Items > 0)
+            if (Max_Of_PlayerOne_Inventory == 5 && Max_Of_PlayerTwo_Inventory == 5)
             {
                 Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
             }
@@ -719,24 +725,21 @@ namespace USG
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
                         int Number_Of_Item = Random_Number.Next(1, 4);
-                        if (Max_Of_PlayerOne_Inventory < 6)
+                        if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                         {
                             switch (Number_Of_Item)
                             {
                                 case 1:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
                                     Max_Of_PlayerOne_Inventory++;
-                                    Num_To_PlayerOne_Items++;
                                     break;
                                 case 2:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
                                     Max_Of_PlayerOne_Inventory++;
-                                    Num_To_PlayerOne_Items++;
                                     break;
                                 case 3:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "патрончекер";
                                     Max_Of_PlayerOne_Inventory++;
-                                    Num_To_PlayerOne_Items++;
                                     break;
                             }
                         }
@@ -745,29 +748,26 @@ namespace USG
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
                         int Number_Of_Item = Random_Number.Next(1, 4);
-                        if (Max_Of_PlayerTwo_Inventory < 6)
+                        if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                         {
                             switch (Number_Of_Item)
                             {
                                 case 1:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
                                     Max_Of_PlayerTwo_Inventory++;
-                                    Num_To_PlayerTwo_Items++;
                                     break;
                                 case 2:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
                                     Max_Of_PlayerTwo_Inventory++;
-                                    Num_To_PlayerTwo_Items++;
                                     break;
                                 case 3:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "патрончекер";
                                     Max_Of_PlayerTwo_Inventory++;
-                                    Num_To_PlayerTwo_Items++;
                                     break;
                             }
                         }
                     }
-                    if (Count_Of_Items > 0)
+                    if (Max_Of_PlayerOne_Inventory == 5 && Max_Of_PlayerTwo_Inventory == 5)
                     {
                         Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
                     }
@@ -1028,7 +1028,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives = -2;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
                                         PlayerOne_Lives = -1;
@@ -1050,7 +1050,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
                                         PlayerOne_Lives = -1;
@@ -1081,7 +1081,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives = -2;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
                                         PlayerTwo_Lives = -1;
@@ -1103,7 +1103,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
                                         PlayerTwo_Lives = -1;
@@ -1161,11 +1161,16 @@ namespace USG
                                                     {
                                                         PlayerOne_Lives++;
                                                         Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerOne_Lives));
-                                                        int numIndex = Array.IndexOf(PlayerOne_Inventory, "+хп");
-                                                        PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerOne_Inventory--;
-                                                        Num_To_PlayerOne_Items--;
                                                         Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case ConsoleKey.D2:
@@ -1178,13 +1183,18 @@ namespace USG
                                                         else
                                                         {
                                                             PlayerTwo_HandCuffed = 2;
-                                                            int numIndex = Array.IndexOf(PlayerOne_Inventory, "наручники");
-                                                            PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                            List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                            Remove_List.RemoveAt(Remove_List.IndexOf("наручники"));
+                                                            Remove_List.Add("");
+                                                            PlayerOne_Inventory = Remove_List.ToArray();
                                                             Max_Of_PlayerOne_Inventory--;
-                                                            Num_To_PlayerOne_Items--;
                                                             Items_Menu = false;
                                                         }
 
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case ConsoleKey.D3:
@@ -1204,11 +1214,16 @@ namespace USG
                                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                                 break;
                                                         }
-                                                        int numIndex = Array.IndexOf(PlayerOne_Inventory, "патрончекер");
-                                                        PlayerOne_Inventory = PlayerOne_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerOne_Inventory--;
-                                                        Num_To_PlayerOne_Items--;
                                                         Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case ConsoleKey.D4:
@@ -1484,7 +1499,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives = -2;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
                                         PlayerTwo_Lives = -1;
@@ -1506,7 +1521,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
                                         PlayerTwo_Lives = -1;
@@ -1537,7 +1552,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives = -2;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
                                         PlayerOne_Lives = -1;
@@ -1559,7 +1574,7 @@ namespace USG
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
                                         PlayerOne_Lives = -1;
@@ -1613,11 +1628,16 @@ namespace USG
                                                     {
                                                         PlayerTwo_Lives++;
                                                         Console_WriteReadClear(Image.Count_Player_Lives_After_Heal(PlayerTwo_Lives));
-                                                        int numIndex = Array.IndexOf(PlayerTwo_Inventory, "+хп");
-                                                        PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerTwo_Inventory--;
-                                                        Num_To_PlayerTwo_Items--;
                                                         Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case ConsoleKey.D2:
@@ -1630,13 +1650,18 @@ namespace USG
                                                         else
                                                         {
                                                             PlayerOne_HandCuffed = 2;
-                                                            int numIndex = Array.IndexOf(PlayerTwo_Inventory, "наручники");
-                                                            PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                            List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                            Remove_List.RemoveAt(Remove_List.IndexOf("наручники"));
+                                                            Remove_List.Add("");
+                                                            PlayerTwo_Inventory = Remove_List.ToArray();
                                                             Max_Of_PlayerTwo_Inventory--;
-                                                            Num_To_PlayerTwo_Items--;
                                                             Items_Menu = false;
                                                         }
 
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case ConsoleKey.D3:
@@ -1656,11 +1681,16 @@ namespace USG
                                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                                 break;
                                                         }
-                                                        int numIndex = Array.IndexOf(PlayerTwo_Inventory, "патрончекер");
-                                                        PlayerTwo_Inventory = PlayerTwo_Inventory.Where((val, idx) => idx != numIndex).ToArray();
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerTwo_Inventory--;
-                                                        Num_To_PlayerTwo_Items--;
                                                         Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case ConsoleKey.D4:

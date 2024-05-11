@@ -13,7 +13,7 @@ namespace USG
         public string Main_Menu = "главное меню. 1 - начать игру, 3 - выйти из игры (2 - статистика, которой пока что нет).                                                                                                                                                                        ";
         public string Game_Modes_Choose = "тут выбор режима игры и предыстория. 1 - режим с дробовиком, 2 - режим с двустволкой, 3 - вернуться в главное меню.                                                                                                                                                                 ";
 
-        public string This_Button_Isnt_Exists = "такой кнопки не существует =). Еnter для перехода на следующее меню                                                                                                                                                                                          ";
+        public string This_Button_Isnt_Exists = "вы ошиблись кнопкой =). Еnter для перехода на следующее меню                                                                                                                                                                                          ";
 
         public string All_Players_Has_Given_Two_Items = "некоторые свободные слоты ваших инвентарей заполучили предметы. Еnter для перехода на следующее меню                                                                                                                                                                                                   ";
 

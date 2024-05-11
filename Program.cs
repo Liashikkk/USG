@@ -40,7 +40,7 @@ namespace USG
             player.Play();
             player.Dispose();
             */
-
+            
             FullScreen();
 
             All_Images Image = new All_Images();
