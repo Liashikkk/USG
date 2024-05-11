@@ -18,22 +18,44 @@ namespace USG
         public string All_Players_Has_Given_Two_Items = "некоторые свободные слоты ваших инвентарей заполучили предметы. Еnter для перехода на следующее меню                                                                                                                                                                                                   ";
 
         public string Player_Dont_Have_Items = "у тебя нет предметов =/. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
-        public string All_Player_Items = "1 - использовать +хп, 2- использовать наручники (соперник пропустит ход, т.е. вы походите два раза), 3 - использовать патрончекер (покажет тип патрона), 4 - выйти из этого меню. у тебя есть: ";
-
+        
         public string Opponent_Already_HandCuffed = "его руки уже связаны =). Еnter для перехода на следующее меню                                                                                                                                                                                                ";
 
         public string Choose_Max_Count_Of_Items = "выберите кол-во предметов, которые вы будете получать после зарядки магазина, максимум 4.                                                                                                                                                                         ";
 
         public string Wrong_Num_For_Count_Of_Items = "вы выбрали неверное кол-во предметов. Еnter для перехода на следующее меню                                                                                                                                                                                                                                              ";
         
-        public string Shotgun_Rules = "правила игры для дробовика...Еnter для перехода на следующее меню                                                                                                                                                                                                                                 ";
+        public string Shotgun_Rules = "правила игры для дробовика...Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                               ";
 
         public string DoubleBarreledShotgun_Rules = "правила игры для двустволки. напоминание для меня: если остается один патрон, то он автоматически заряжается в оружие...Еnter для перехода на следующее меню                                                                                                                                                                                            ";
 
-        public string Last_Shell_Was_Inserted = "последний патрон был автоматически заряжен.Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+        public string Last_Shell_Was_Inserted = "последний патрон был автоматически заряжен. Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                     ";
 
-        public string Which_Shell_You_Want_To_Check = "выбери интересующй тебя патрон: 1 или 2                                                                                                                                                                                         ";
-        
+        public string Which_Shell_You_Want_To_Check = "выбери интересующй тебя патрон: 1 или 2                                                                                                                                                                                                                                                                                     ";
+
+        public string Choose_Shell_That_You_Check(int Count_Of_Shells)
+        {
+            return $"выбери один патрон из {Count_Of_Shells}, нажатием на цифру на клавиатуре, соответсвующую цифре патрона                                                                                                                                                                                                                                                           ";
+        }
+        public string Will_You_Use_Items(string Player_Name)
+        {
+            return $"{Player_Name}, время зарядить оружие. Перед этим, не хочешь использовать полезные для такого случая предметы ? 1 - да, 2 - нет.                                                                                                                                                                                                                                                                                 ";
+        }
+        public string All_Player_Items(bool Double_Barrel_Insert = false, bool Double_Barrel_After_Insert = false)
+        {
+            if (Double_Barrel_Insert)
+            {
+                return "сводка об предметах (чтобы их использовать, жми на цифру на клавиатуре, соответсвующую цифре предмета): 1 - использовать патрончекер (покажет тип выбранного тобой патрона из всех имеющихся), 2 - рандомный патрончекер (укажет тип случано выбранного патрона из всех имеющихся). 3 - приступить к зарядке двустволки. у тебя есть: ";
+            }
+            else if (Double_Barrel_After_Insert)
+            {
+                return "сводка об предметах (чтобы их использовать, жми на цифру на клавиатуре, соответсвующую цифре предмета): 1 - использовать +хп, 2 - использовать наручники (соперник пропустит ход, т.е. вы походите два раза). 3 - выйти из этого меню. у тебя есть: ";
+            }
+            else
+            {
+                return "сводка об предметах (чтобы их использовать, жми на цифру на клавиатуре, соответсвующую цифре предмета): 1 - использовать +хп, 2 - использовать наручники (соперник пропустит ход, т.е. вы походите два раза), 3 - использовать патрончекер (покажет тип патрона), 4 - рандомный патрончекер (укажет тип случано выбранного патрона). 5 - выйти из этого меню. у тебя есть: ";
+            }
+        }
         public string Blank_Shoot(bool Shoot_At_Opponent = false)
         {
             Random Random_Number = new Random();
@@ -85,19 +107,15 @@ namespace USG
                 return "ствол оружия был направлен в сторону соперника. вы стреляете в него. Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                   ";
             }
         }
-        public string Time_To_Load_Shotgun(string PlayerName, int Count_Of_Shells, string[] Shotgun, bool Player_Have_Shells = false)
+        public string Time_To_Load_Shotgun(string Player_Name, int Count_Of_Shells, string[] Shotgun)
         {
-            if (Player_Have_Shells)
+            if (Shotgun[0].Contains("Холостой") || Shotgun[0].Contains("Боевой"))
             {
-                return $"{PlayerName}, в твоем инвентаре имеются патроны - будешь их заряжать в оружие? 1 - да, 2 - нет .                                                                                                                                                                                                                                                                                        ";
-            }
-            else if (Shotgun[0].Contains("Холостой") || Shotgun[0].Contains("Боевой"))
-            {
-                return $"{PlayerName}, выбери один патрон из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                        ";
+                return $"{Player_Name}, выбери один патрон из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                        ";
             }
             else
             {
-                return $"{PlayerName}, выбери два патрона из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                                                                                                        ";
+                return $"{Player_Name}, выбери два патрона из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                                                                                                        ";
             }
         }
         public string PlayerOne_Name_Input()
@@ -148,9 +166,20 @@ namespace USG
             return $"Боевых патронов {Count_Of_Live_Shells} из {Count_All_Posible_Shells}. удачи =). Еnter для перехода на следующее меню                                                                                                                                                                                                ";
         }
 
-        public string What_Is_Shell_In_Shotgun(string Shell_Type)
+        public string What_Is_Shell_In_Shotgun(string Shell_Type, int Shell_Number, bool Random_Shell = false, bool Double_Barrel = false)
         {
-            return $"Заряженный сейчас патрон - это {Shell_Type} патрон. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+            if (Random_Shell)
+            {
+                return $"Патрон под номером {Shell_Number} - это {Shell_Type} патрон. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+            }
+            else if (Double_Barrel)
+            {
+                return $"Выбранный тобой патрон - это {Shell_Type} патрон. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+            }
+            else
+            {
+                return $"Выстрелить сейчас должен {Shell_Type} патрон. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+            }
         }
         public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, int Count_Of_Items, bool Opponent_HandCuffed = false)
         {
