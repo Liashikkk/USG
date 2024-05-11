@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace UGG
+namespace USG
 {
     /* Это статитстика - её надо доработать
         public class Statistics
@@ -47,7 +47,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void BlueWins(string database, string uid, int pwd, int port)
             {
@@ -61,7 +61,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void RedLiveShoots(string database, string uid, int pwd, int port)
             {
@@ -75,7 +75,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void BlueLiveShoots(string database, string uid, int pwd, int port)
             {
@@ -89,7 +89,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void RedBlankShoots(string database, string uid, int pwd, int port)
             {
@@ -103,7 +103,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void BlueBlankShoots(string database, string uid, int pwd, int port)
             {
@@ -117,7 +117,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void CheckStats(string database, string uid, int pwd, int port)
             {
@@ -138,7 +138,7 @@ namespace UGG
                     reader.Close();
                     Console.Write("\r\n---------------------------------------------------------------------------------------------------------\r\n Enter для перехода на следующее меню...");
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void RedItems(string database, string uid, int pwd, int port)
             {
@@ -152,7 +152,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
             public void BlueItems(string database, string uid, int pwd, int port)
             {
@@ -166,7 +166,7 @@ namespace UGG
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(); }
+                catch (Exception e) { Console.WriteLine("error"); }
             }
         }
         */

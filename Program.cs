@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
 
-namespace UGG
+namespace USG
 {
     internal class Program
     {
@@ -63,9 +63,12 @@ namespace UGG
                         switch (Key.Key)
                         {
                             case ConsoleKey.D1:
-                                Mode.Play_Two_Players_Shotgun_Mode();
+                                Mode.Shotgun_Mode();
                                 break;
                             case ConsoleKey.D2:
+                                Mode.DoubleBarreledShotgun_Mode();
+                                break;
+                            case ConsoleKey.D3:
                                 break;
                             default:
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists); 
@@ -82,7 +85,6 @@ namespace UGG
                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         break;
                 }
-
             }
         }
     }
