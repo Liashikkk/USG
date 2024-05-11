@@ -828,7 +828,7 @@ namespace USG
                         else
                         {
                             Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Time_To_Load_Shotgun(Count_Not_Fired_Shells + 1, DBShotgun));
+                            Console.Write(Image.Time_To_Load_Shotgun(PlayerOne_Name, Count_Not_Fired_Shells + 1, DBShotgun));
                             Key = Console.ReadKey(true);
                             switch (Key.Key)
                             {
@@ -1027,7 +1027,7 @@ namespace USG
                             case ConsoleKey.D1:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
-                                    PlayerOne_Lives = -2;
+                                    PlayerOne_Lives -= 2;
                                     if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
@@ -1069,7 +1069,7 @@ namespace USG
                                     DBShotgun[1] = "null";
                                     Menu = false;
                                 }
-                                else
+                                else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
                                     Console_WriteReadClear(Image.Blank_Shot_Yourself);
                                     DBShotgun[0] = "null";
@@ -1080,7 +1080,7 @@ namespace USG
                             case ConsoleKey.D2:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
-                                    PlayerTwo_Lives = -2;
+                                    PlayerTwo_Lives -= 2;
                                     if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
@@ -1122,7 +1122,7 @@ namespace USG
                                     DBShotgun[1] = "null";
                                     Menu = false;
                                 }
-                                else
+                                else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
                                     Console_WriteReadClear(Image.Blank_Shot_Opponent);
                                     if (PlayerTwo_HandCuffed == 0)
@@ -1299,7 +1299,7 @@ namespace USG
                         else
                         {
                             Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Time_To_Load_Shotgun(Count_Not_Fired_Shells + 1, DBShotgun));
+                            Console.Write(Image.Time_To_Load_Shotgun(PlayerTwo_Name, Count_Not_Fired_Shells + 1, DBShotgun));
                             Key = Console.ReadKey(true);
                             switch (Key.Key)
                             {
@@ -1498,7 +1498,7 @@ namespace USG
                             case ConsoleKey.D1:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
-                                    PlayerTwo_Lives = -2;
+                                    PlayerTwo_Lives -= 2;
                                     if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Yourself_Dead);
@@ -1540,7 +1540,7 @@ namespace USG
                                     DBShotgun[1] = "null";
                                     Menu = false;
                                 }
-                                else
+                                else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
                                     Console_WriteReadClear(Image.Blank_Shot_Yourself);
                                     DBShotgun[0] = "null";
@@ -1551,7 +1551,7 @@ namespace USG
                             case ConsoleKey.D2:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
-                                    PlayerOne_Lives = -2;
+                                    PlayerOne_Lives -= 2;
                                     if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Dead);
@@ -1564,7 +1564,7 @@ namespace USG
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerOne_Lives));
                                         if (PlayerOne_HandCuffed == 0)
                                         {
-                                            Turn_To_Play = 2;
+                                            Turn_To_Play = 1;
                                         }
                                     }
                                     DBShotgun[0] = "null";
@@ -1586,14 +1586,14 @@ namespace USG
                                         Console_WriteReadClear(Image.Live_Shot_Opponent_Alive(PlayerOne_Lives));
                                         if (PlayerOne_HandCuffed == 0)
                                         {
-                                            Turn_To_Play = 2;
+                                            Turn_To_Play = 1;
                                         }
                                     }
                                     DBShotgun[0] = "null";
                                     DBShotgun[1] = "null";
                                     Menu = false;
                                 }
-                                else
+                                else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
                                     Console_WriteReadClear(Image.Blank_Shot_Opponent);
                                     DBShotgun[0] = "null";

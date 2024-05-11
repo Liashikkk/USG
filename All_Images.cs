@@ -39,19 +39,20 @@ namespace USG
         public string Last_Shell_Was_Inserted = "последний патрон был автоматически заряжен.Еnter для перехода на следующее меню                                                                                                                                                                                                ";
 
         public string Which_Shell_You_Want_To_Check = "выбери интересующй тебя патрон: 1 или 2                                                                                                                                                                                         ";
-        public string Time_To_Load_Shotgun(int Count_Of_Shells, string[] Shotgun, bool Player_Have_Shells = false)
+        
+        public string Time_To_Load_Shotgun(string PlayerName, int Count_Of_Shells, string[] Shotgun, bool Player_Have_Shells = false)
         {
             if (Player_Have_Shells)
             {
-                return "в твоем инвентаре имеются патроны - будешь их заряжать в оружие? 1 - да, 2 - нет .                                                                                                                                                                                                                                                                                        ";
+                return $"{PlayerName}, в твоем инвентаре имеются патроны - будешь их заряжать в оружие? 1 - да, 2 - нет .                                                                                                                                                                                                                                                                                        ";
             }
             else if (Shotgun[0].Contains("Холостой") || Shotgun[0].Contains("Боевой"))
             {
-                return $"выбери один патрон из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                        ";
+                return $"{PlayerName}, выбери один патрон из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                        ";
             }
             else
             {
-                return $"выбери два патрона из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                                                                                                        ";
+                return $"{PlayerName}, выбери два патрона из {Count_Of_Shells} нажатием на цифру, соответсвующей номеру выбранного патрона.                                                                                                                                                                                                                                                                                        ";
             }
         }
         public string PlayerOne_Name_Input()
