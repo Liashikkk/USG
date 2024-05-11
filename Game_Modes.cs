@@ -236,7 +236,7 @@ namespace USG
                     switch (Key.Key)
                     {
                         case ConsoleKey.D1:
-                            int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                            int Who_To_Shoot_At = Random_Number.Next(1, 3);
                             if (Who_To_Shoot_At == 1)
                             {
                                 Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
@@ -471,7 +471,7 @@ namespace USG
                     switch (Key.Key)
                     {
                         case ConsoleKey.D1:
-                            int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                            int Who_To_Shoot_At = Random_Number.Next(1, 3);
                             if (Who_To_Shoot_At == 1)
                             {
                                 Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
@@ -1149,7 +1149,7 @@ namespace USG
                         switch (Key.Key)
                         {
                             case ConsoleKey.D1:
-                                int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                                int Who_To_Shoot_At = Random_Number.Next(1, 3);
                                 if (Who_To_Shoot_At == 1)
                                 {
                                     Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
@@ -1736,7 +1736,7 @@ namespace USG
                         switch (Key.Key)
                         {
                             case ConsoleKey.D1:
-                                int Who_To_Shoot_At = Random_Number.Next(1, 2);
+                                int Who_To_Shoot_At = Random_Number.Next(1, 3);
                                 if (Who_To_Shoot_At == 1)
                                 {
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
