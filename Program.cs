@@ -47,40 +47,36 @@ namespace USG
 
             Game_Modes Mode = new Game_Modes();
 
-            ConsoleKeyInfo Key = new ConsoleKeyInfo();
-
             Random Random_Number = new Random();
 
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
                 Console.Write(Image.Main_Menu);
-                Key = Console.ReadKey(true);
-                switch (Key.Key)
+                switch (Convert.ToInt32(Console.ReadLine()))
                 {
-                    case ConsoleKey.D1:
+                    case 1:
                         Console.SetCursorPosition(0, 0);
                         Console.Write(Image.Game_Modes_Choose);
-                        Key = Console.ReadKey(true);
-                        switch (Key.Key)
+                        switch (Convert.ToInt32(Console.ReadLine()))
                         {
-                            case ConsoleKey.D1:
+                            case 1:
                                 Mode.Shotgun_Mode();
                                 break;
-                            case ConsoleKey.D2:
+                            case 2:
                                 Mode.DoubleBarreledShotgun_Mode();
                                 break;
-                            case ConsoleKey.D3:
+                            case 3:
                                 break;
                             default:
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists); 
                                 break;
                         }
                         break;
-                    case ConsoleKey.D2:
+                    case 2:
                         Console_WriteReadClear("она пока что не работает. enter для перехода на следующее меню                                                                 ");
                         break;
-                    case ConsoleKey.D3:
+                    case 3:
                         Environment.Exit(0);
                         break;
                     default:

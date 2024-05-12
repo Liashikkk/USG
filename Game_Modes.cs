@@ -11,8 +11,6 @@ namespace USG
     class Game_Modes : Program
     {
         All_Images Image = new All_Images();
-
-        ConsoleKeyInfo Key = new ConsoleKeyInfo();
         public void Shotgun_Mode()
         {
             //Инициализация всех нужных переменных
@@ -265,10 +263,9 @@ namespace USG
                         Console.SetCursorPosition(0, 0);
                         Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items));
                     }
-                    Key = Console.ReadKey(true);
-                    switch (Key.Key)
+                    switch (Convert.ToInt32(Console.ReadLine()))
                     {
-                        case ConsoleKey.D1:
+                        case 1:
                             int Who_To_Shoot_At = Random_Number.Next(1, 3);
                             if (Who_To_Shoot_At == 1)
                             {
@@ -331,7 +328,7 @@ namespace USG
                                 }
                             }
                             break;
-                        case ConsoleKey.D2:
+                        case 2:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerOne_Lives--;
@@ -357,7 +354,7 @@ namespace USG
                                 Count_Not_Fired_Shells--;
                             }
                             break;
-                        case ConsoleKey.D3:
+                        case 3:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerTwo_Lives--;
@@ -387,7 +384,7 @@ namespace USG
                                 }
                             }
                             break;
-                        case ConsoleKey.D4:
+                        case 4:
                             if (Count_Of_Items != 0)
                             {
                                 if (Max_Of_PlayerOne_Inventory == 0)
@@ -406,10 +403,9 @@ namespace USG
                                             Console.Write(PlayerOne_Inventory[i] + ", ");
                                         }
                                         Console.Write("и все.                                                                                                                              ");
-                                        Key = Console.ReadKey(true);
-                                        switch (Key.Key)
+                                        switch (Convert.ToInt32(Console.ReadLine()))
                                         {
-                                            case ConsoleKey.D1:
+                                            case 1:
                                                 if (PlayerOne_Inventory.Contains("+хп") == true)
                                                 {
                                                     PlayerOne_Lives++;
@@ -425,7 +421,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D2:
+                                            case 2:
                                                 if (PlayerOne_Inventory.Contains("наручники") == true)
                                                 {
                                                     if (PlayerTwo_HandCuffed > 0)
@@ -449,7 +445,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D3:
+                                            case 3:
                                                 if (PlayerOne_Inventory.Contains("патрончекер") == true)
                                                 {
                                                     Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells], 0));
@@ -465,7 +461,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D4:
+                                            case 4:
                                                 if (PlayerOne_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
                                                     int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
@@ -482,7 +478,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D5:
+                                            case 5:
                                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой" || Magazine[Count_Not_Fired_Shells] == "Холостой")
                                                 {
                                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
@@ -505,7 +501,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D6:
+                                            case 6:
                                                 Items_Menu = false;
                                                 break;
                                             default:
@@ -540,10 +536,9 @@ namespace USG
                         Console.SetCursorPosition(0, 0);
                         Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items));
                     }
-                    Key = Console.ReadKey(true);
-                    switch (Key.Key)
+                    switch (Convert.ToInt32(Console.ReadLine()))
                     {
-                        case ConsoleKey.D1:
+                        case 1:
                             int Who_To_Shoot_At = Random_Number.Next(1, 3);
                             if (Who_To_Shoot_At == 1)
                             {
@@ -606,7 +601,7 @@ namespace USG
                                 }
                             }
                             break;
-                        case ConsoleKey.D2:
+                        case 2:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerTwo_Lives--;
@@ -632,7 +627,7 @@ namespace USG
                                 Count_Not_Fired_Shells--;
                             }
                             break;
-                        case ConsoleKey.D3:
+                        case 3:
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerOne_Lives--;
@@ -662,7 +657,7 @@ namespace USG
                                 }
                             }
                             break;
-                        case ConsoleKey.D4:
+                        case 4:
                             if (Count_Of_Items != 0)
                             {
                                 if (Max_Of_PlayerTwo_Inventory == 0)
@@ -681,10 +676,9 @@ namespace USG
                                             Console.Write(PlayerTwo_Inventory[i] + ", ");
                                         }
                                         Console.Write("и все.                                                                                                                              ");
-                                        Key = Console.ReadKey(true);
-                                        switch (Key.Key)
+                                        switch (Convert.ToInt32(Console.ReadLine()))
                                         {
-                                            case ConsoleKey.D1:
+                                            case 1:
                                                 if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                 {
                                                     PlayerTwo_Lives++;
@@ -700,7 +694,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D2:
+                                            case 2:
                                                 if (PlayerTwo_Inventory.Contains("наручники") == true)
                                                 {
                                                     if (PlayerOne_HandCuffed > 0)
@@ -723,7 +717,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D3:
+                                            case 3:
                                                 if (PlayerTwo_Inventory.Contains("патрончекер") == true)
                                                 {
                                                     Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells], 0));
@@ -739,7 +733,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D4:
+                                            case 4:
                                                 if (PlayerTwo_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
                                                     int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
@@ -756,7 +750,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D5:
+                                            case 5:
                                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой" || Magazine[Count_Not_Fired_Shells] == "Холостой")
                                                 {
                                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
@@ -779,7 +773,7 @@ namespace USG
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
-                                            case ConsoleKey.D6:
+                                            case 6:
                                                 Items_Menu = false;
                                                 break;
                                             default:
@@ -1073,10 +1067,9 @@ namespace USG
                             {
                                 Console.SetCursorPosition(0, 0);
                                 Console.Write(Image.Will_You_Use_Items(PlayerOne_Name));
-                                Key = Console.ReadKey(true);
-                                switch (Key.Key)
+                                switch (Convert.ToInt32(Console.ReadLine()))
                                 {
-                                    case ConsoleKey.D1:
+                                    case 1:
                                         bool Items_Menu = true;
                                         if (PlayerOne_Inventory.Contains("Холостой патрон") || PlayerOne_Inventory.Contains("Боевой патрон") || PlayerOne_Inventory.Contains("рандомный патрончекер") || PlayerOne_Inventory.Contains("патрончекер"))
                                         {
@@ -1092,10 +1085,9 @@ namespace USG
                                                     }
                                                 }
                                                 Console.Write("и все.                                                                                                                              ");
-                                                Key = Console.ReadKey(true);
-                                                switch (Key.Key)
+                                                switch (Convert.ToInt32(Console.ReadLine()))
                                                 {
-                                                    case ConsoleKey.D1:
+                                                    case 1:
                                                         if (PlayerOne_Inventory.Contains("патрончекер") == true)
                                                         {
                                                             bool Number_Has_Choosen = false;
@@ -1103,10 +1095,9 @@ namespace USG
                                                             {
                                                                 Console.SetCursorPosition(0, 0);
                                                                 Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells + 1));
-                                                                Key = Console.ReadKey(true);
-                                                                switch (Key.Key)
+                                                                switch (Convert.ToInt32(Console.ReadLine()))
                                                                 {
-                                                                    case ConsoleKey.D1:
+                                                                    case 1:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
@@ -1114,7 +1105,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D2:
+                                                                    case 2:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
@@ -1122,7 +1113,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D3:
+                                                                    case 3:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
@@ -1130,7 +1121,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D4:
+                                                                    case 4:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
@@ -1138,7 +1129,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D5:
+                                                                    case 5:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
@@ -1146,7 +1137,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D6:
+                                                                    case 6:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
@@ -1154,7 +1145,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D7:
+                                                                    case 7:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
@@ -1162,7 +1153,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D8:
+                                                                    case 8:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
@@ -1187,7 +1178,7 @@ namespace USG
                                                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                         }
                                                         break;
-                                                    case ConsoleKey.D2:
+                                                    case 2:
                                                         int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
                                                         Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell++, true));
                                                         List<string> RemoveList = new List<string>(PlayerOne_Inventory);
@@ -1197,7 +1188,7 @@ namespace USG
                                                         Max_Of_PlayerOne_Inventory--;
                                                         Items_Menu = false;
                                                         break;
-                                                    case ConsoleKey.D3:
+                                                    case 3:
                                                         Player_Want_Use_Items = false;
                                                         Items_Menu = false;
                                                         break;
@@ -1208,7 +1199,7 @@ namespace USG
                                             }
                                         }
                                         break;
-                                    case ConsoleKey.D2:
+                                    case 2:
                                         Player_Want_Use_Items = false;
                                         break;
                                     default:
@@ -1234,10 +1225,9 @@ namespace USG
                         {
                             Console.SetCursorPosition(0, 0);
                             Console.Write(Image.Time_To_Load_Shotgun(PlayerOne_Name, Count_Not_Fired_Shells + 1, DBShotgun));
-                            Key = Console.ReadKey(true);
-                            switch (Key.Key)
+                            switch (Convert.ToInt32(Console.ReadLine()))
                             {
-                                case ConsoleKey.D1:
+                                case 1:
                                     try
                                     {
                                         if (Handful_Of_Shells[0].Contains("Холостой") || Handful_Of_Shells[0].Contains("Боевой"))
@@ -1258,7 +1248,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D2:
+                                case 2:
                                     try
                                     {
                                         if (Handful_Of_Shells[1].Contains("Холостой") || Handful_Of_Shells[1].Contains("Боевой"))
@@ -1279,7 +1269,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D3:
+                                case 3:
                                     try
                                     {
                                         if (Handful_Of_Shells[2].Contains("Холостой") || Handful_Of_Shells[2].Contains("Боевой"))
@@ -1300,7 +1290,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D4:
+                                case 4:
                                     try
                                     {
                                         if (Handful_Of_Shells[3].Contains("Холостой") || Handful_Of_Shells[3].Contains("Боевой"))
@@ -1321,7 +1311,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D5:
+                                case 5:
                                     try
                                     {
                                         if (Handful_Of_Shells[4].Contains("Холостой") || Handful_Of_Shells[4].Contains("Боевой"))
@@ -1342,7 +1332,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D6:
+                                case 6:
                                     try
                                     {
                                         if (Handful_Of_Shells[5].Contains("Холостой") || Handful_Of_Shells[5].Contains("Боевой"))
@@ -1363,7 +1353,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D7:
+                                case 7:
                                     try
                                     {
                                         if (Handful_Of_Shells[6].Contains("Холостой") || Handful_Of_Shells[6].Contains("Боевой"))
@@ -1384,7 +1374,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D8:
+                                case 8:
                                     try
                                     {
                                         if (Handful_Of_Shells[7].Contains("Холостой") || Handful_Of_Shells[7].Contains("Боевой"))
@@ -1426,10 +1416,9 @@ namespace USG
                             Console.SetCursorPosition(0, 0);
                             Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items));
                         }
-                        Key = Console.ReadKey(true);
-                        switch (Key.Key)
+                        switch (Convert.ToInt32(Console.ReadLine()))
                         {
-                            case ConsoleKey.D1:
+                            case 1:
                                 int Who_To_Shoot_At = Random_Number.Next(1, 3);
                                 if (Who_To_Shoot_At == 1)
                                 {
@@ -1546,7 +1535,7 @@ namespace USG
                                     }
                                 }
                                 break;
-                            case ConsoleKey.D2:
+                            case 2:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives -= 2;
@@ -1599,7 +1588,7 @@ namespace USG
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D3:
+                            case 3:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives -= 2;
@@ -1656,7 +1645,7 @@ namespace USG
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D4:
+                            case 4:
                                 if (Count_Of_Items != 0)
                                 {
                                     if (Max_Of_PlayerOne_Inventory == 0)
@@ -1675,10 +1664,9 @@ namespace USG
                                                 Console.Write(PlayerOne_Inventory[i] + ", ");
                                             }
                                             Console.Write("и все.                                                                                                                              ");
-                                            Key = Console.ReadKey(true);
-                                            switch (Key.Key)
+                                            switch (Convert.ToInt32(Console.ReadLine()))
                                             {
-                                                case ConsoleKey.D1:
+                                                case 1:
                                                     if (PlayerOne_Inventory.Contains("+хп") == true)
                                                     {
                                                         PlayerOne_Lives++;
@@ -1694,7 +1682,7 @@ namespace USG
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
-                                                case ConsoleKey.D2:
+                                                case 2:
                                                     if (PlayerOne_Inventory.Contains("наручники") == true)
                                                     {
                                                         if (PlayerTwo_HandCuffed > 0)
@@ -1718,7 +1706,7 @@ namespace USG
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
-                                                case ConsoleKey.D3:
+                                                case 3:
                                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                                     {
                                                         DBShotgun[0] = "Холостой";
@@ -1771,7 +1759,7 @@ namespace USG
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
-                                                case ConsoleKey.D4:
+                                                case 4:
                                                     Items_Menu = false;
                                                     break;
                                                 default:
@@ -1819,10 +1807,9 @@ namespace USG
                             {
                                 Console.SetCursorPosition(0, 0);
                                 Console.Write(Image.Will_You_Use_Items(PlayerTwo_Name));
-                                Key = Console.ReadKey(true);
-                                switch (Key.Key)
+                                switch (Convert.ToInt32(Console.ReadLine()))
                                 {
-                                    case ConsoleKey.D1:
+                                    case 1:
                                         if (PlayerTwo_Inventory.Contains("Холостой патрон") || PlayerTwo_Inventory.Contains("Боевой патрон") || PlayerTwo_Inventory.Contains("рандомный патрончекер") || PlayerTwo_Inventory.Contains("патрончекер"))
                                         {
                                             bool Items_Menu = true;
@@ -1838,10 +1825,9 @@ namespace USG
                                                     }
                                                 }
                                                 Console.Write("и все.                                                                                                                              ");
-                                                Key = Console.ReadKey(true);
-                                                switch (Key.Key)
+                                                switch (Convert.ToInt32(Console.ReadLine()))
                                                 {
-                                                    case ConsoleKey.D1:
+                                                    case 1:
                                                         if (PlayerTwo_Inventory.Contains("патрончекер") == true)
                                                         {
                                                             bool Number_Has_Choosen = false;
@@ -1849,10 +1835,9 @@ namespace USG
                                                             {
                                                                 Console.SetCursorPosition(0, 0);
                                                                 Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells + 1));
-                                                                Key = Console.ReadKey(true);
-                                                                switch (Key.Key)
+                                                                switch (Convert.ToInt32(Console.ReadLine()))
                                                                 {
-                                                                    case ConsoleKey.D1:
+                                                                    case 1:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
@@ -1860,7 +1845,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D2:
+                                                                    case 2:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
@@ -1868,7 +1853,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D3:
+                                                                    case 3:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
@@ -1876,7 +1861,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D4:
+                                                                    case 4:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
@@ -1884,7 +1869,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D5:
+                                                                    case 5:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
@@ -1892,7 +1877,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D6:
+                                                                    case 6:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
@@ -1900,7 +1885,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D7:
+                                                                    case 7:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
@@ -1908,7 +1893,7 @@ namespace USG
                                                                         }
                                                                         catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
-                                                                    case ConsoleKey.D8:
+                                                                    case 8:
                                                                         try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
@@ -1933,7 +1918,7 @@ namespace USG
                                                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                         }
                                                         break;
-                                                    case ConsoleKey.D2:
+                                                    case 2:
                                                         int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
                                                         Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell++, true));
                                                         List<string> RemoveList = new List<string>(PlayerTwo_Inventory);
@@ -1943,7 +1928,7 @@ namespace USG
                                                         Max_Of_PlayerTwo_Inventory--;
                                                         Items_Menu = false;
                                                         break;
-                                                    case ConsoleKey.D3:
+                                                    case 3:
                                                         Items_Menu = false;
                                                         Player_Want_Use_Items = false;
                                                         break;
@@ -1954,7 +1939,7 @@ namespace USG
                                             }
                                         }
                                         break;
-                                    case ConsoleKey.D2:
+                                    case 2:
                                         Player_Want_Use_Items = false;
                                         break;
                                     default:
@@ -1980,10 +1965,9 @@ namespace USG
                         {
                             Console.SetCursorPosition(0, 0);
                             Console.Write(Image.Time_To_Load_Shotgun(PlayerTwo_Name, Count_Not_Fired_Shells + 1, DBShotgun));
-                            Key = Console.ReadKey(true);
-                            switch (Key.Key)
+                            switch (Convert.ToInt32(Console.ReadLine()))
                             {
-                                case ConsoleKey.D1:
+                                case 1:
                                     try
                                     {
                                         if (Handful_Of_Shells[0].Contains("Холостой") || Handful_Of_Shells[0].Contains("Боевой"))
@@ -2004,7 +1988,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D2:
+                                case 2:
                                     try
                                     {
                                         if (Handful_Of_Shells[1].Contains("Холостой") || Handful_Of_Shells[1].Contains("Боевой"))
@@ -2025,7 +2009,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D3:
+                                case 3:
                                     try
                                     {
                                         if (Handful_Of_Shells[2].Contains("Холостой") || Handful_Of_Shells[2].Contains("Боевой"))
@@ -2046,7 +2030,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D4:
+                                case 4:
                                     try
                                     {
                                         if (Handful_Of_Shells[3].Contains("Холостой") || Handful_Of_Shells[3].Contains("Боевой"))
@@ -2067,7 +2051,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D5:
+                                case 5:
                                     try
                                     {
                                         if (Handful_Of_Shells[4].Contains("Холостой") || Handful_Of_Shells[4].Contains("Боевой"))
@@ -2088,7 +2072,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D6:
+                                case 6:
                                     try
                                     {
                                         if (Handful_Of_Shells[5].Contains("Холостой") || Handful_Of_Shells[5].Contains("Боевой"))
@@ -2109,7 +2093,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D7:
+                                case 7:
                                     try
                                     {
                                         if (Handful_Of_Shells[6].Contains("Холостой") || Handful_Of_Shells[6].Contains("Боевой"))
@@ -2130,7 +2114,7 @@ namespace USG
                                     }
                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                     break;
-                                case ConsoleKey.D8:
+                                case 8:
                                     try
                                     {
                                         if (Handful_Of_Shells[7].Contains("Холостой") || Handful_Of_Shells[7].Contains("Боевой"))
@@ -2172,10 +2156,9 @@ namespace USG
                             Console.SetCursorPosition(0, 0);
                             Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items));
                         }
-                        Key = Console.ReadKey(true);
-                        switch (Key.Key)
+                        switch (Convert.ToInt32(Console.ReadLine()))
                         {
-                            case ConsoleKey.D1:
+                            case 1:
                                 int Who_To_Shoot_At = Random_Number.Next(1, 3);
                                 if (Who_To_Shoot_At == 1)
                                 {
@@ -2290,7 +2273,7 @@ namespace USG
                                     }
                                 }
                                 break;
-                            case ConsoleKey.D2:
+                            case 2:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerTwo_Lives -= 2;
@@ -2343,7 +2326,7 @@ namespace USG
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D3:
+                            case 3:
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
                                     PlayerOne_Lives -= 2;
@@ -2400,7 +2383,7 @@ namespace USG
                                     Menu = false;
                                 }
                                 break;
-                            case ConsoleKey.D4:
+                            case 4:
                                 if (Count_Of_Items != 0)
                                 {
                                     if (Max_Of_PlayerTwo_Inventory == 0)
@@ -2419,10 +2402,9 @@ namespace USG
                                                 Console.Write(PlayerTwo_Inventory[i] + ", ");
                                             }
                                             Console.Write("и все.                                                                                                                              ");
-                                            Key = Console.ReadKey(true);
-                                            switch (Key.Key)
+                                            switch (Convert.ToInt32(Console.ReadLine()))
                                             {
-                                                case ConsoleKey.D1:
+                                                case 1:
                                                     if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                     {
                                                         PlayerTwo_Lives++;
@@ -2438,7 +2420,7 @@ namespace USG
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
-                                                case ConsoleKey.D2:
+                                                case 2:
                                                     if (PlayerTwo_Inventory.Contains("наручники") == true)
                                                     {
                                                         if (PlayerOne_HandCuffed > 0)
@@ -2462,7 +2444,7 @@ namespace USG
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
-                                                case ConsoleKey.D3:
+                                                case 3:
                                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                                     {
                                                         DBShotgun[0] = "Холостой";
@@ -2515,7 +2497,7 @@ namespace USG
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
-                                                case ConsoleKey.D4:
+                                                case 4:
                                                     Items_Menu = false;
                                                     break;
                                                 default:
