@@ -85,7 +85,7 @@ namespace USG
             //Bыдача 2-x предметов
             for (int i = 0; i < Count_Of_Items; i++)
             {
-                int Number_Of_Item = Random_Number.Next(1, 5);
+                int Number_Of_Item = Random_Number.Next(1, 6);
                 if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                 {
                     switch (Number_Of_Item)
@@ -106,13 +106,17 @@ namespace USG
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
                             Max_Of_PlayerOne_Inventory++;
                             break;
+                        case 5:
+                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                            Max_Of_PlayerOne_Inventory++;
+                            break;
                     }
                 }
 
             }
             for (int i = 0; i < Count_Of_Items; i++)
             {
-                int Number_Of_Item = Random_Number.Next(1, 5);
+                int Number_Of_Item = Random_Number.Next(1, 6);
                 if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                 {
                     switch (Number_Of_Item)
@@ -131,6 +135,10 @@ namespace USG
                             break;
                         case 4:
                             PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                            Max_Of_PlayerTwo_Inventory++;
+                            break;
+                        case 5:
+                            PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                     }
@@ -174,7 +182,7 @@ namespace USG
                     //Bыдача 2-x предметов
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
-                        int Number_Of_Item = Random_Number.Next(1, 5);
+                        int Number_Of_Item = Random_Number.Next(1, 6);
                         if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                         {
                             switch (Number_Of_Item)
@@ -195,13 +203,17 @@ namespace USG
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
                                     Max_Of_PlayerOne_Inventory++;
                                     break;
+                                case 5:
+                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                                    Max_Of_PlayerOne_Inventory++;
+                                    break;
                             }
                         }
 
                     }
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
-                        int Number_Of_Item = Random_Number.Next(1, 5);
+                        int Number_Of_Item = Random_Number.Next(1, 6);
                         if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                         {
                             switch (Number_Of_Item)
@@ -220,7 +232,11 @@ namespace USG
                                     break;
                                 case 4:
                                     PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
-                                    Max_Of_PlayerOne_Inventory++;
+                                    Max_Of_PlayerTwo_Inventory++;
+                                    break;
+                                case 5:
+                                    PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                                    Max_Of_PlayerTwo_Inventory++;
                                     break;
                             }
                         }
@@ -467,6 +483,29 @@ namespace USG
                                                 }
                                                 break;
                                             case ConsoleKey.D5:
+                                                if (Magazine[Count_Not_Fired_Shells] == "Боевой" || Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                                {
+                                                    if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                                                    {
+                                                        Magazine[Count_Not_Fired_Shells] = "Холостой";
+                                                    }
+                                                    else
+                                                    {
+                                                        Magazine[Count_Not_Fired_Shells] = "Боевой";
+                                                    }
+                                                    List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                    Remove_List.Add("");
+                                                    PlayerOne_Inventory = Remove_List.ToArray();
+                                                    Max_Of_PlayerOne_Inventory--;
+                                                    Items_Menu = false;
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                }
+                                                break;
+                                            case ConsoleKey.D6:
                                                 Items_Menu = false;
                                                 break;
                                             default:
@@ -718,6 +757,29 @@ namespace USG
                                                 }
                                                 break;
                                             case ConsoleKey.D5:
+                                                if (Magazine[Count_Not_Fired_Shells] == "Боевой" || Magazine[Count_Not_Fired_Shells] == "Холостой")
+                                                {
+                                                    if (Magazine[Count_Not_Fired_Shells] == "Боевой")
+                                                    {
+                                                        Magazine[Count_Not_Fired_Shells] = "Холостой";
+                                                    }
+                                                    else
+                                                    {
+                                                        Magazine[Count_Not_Fired_Shells] = "Боевой";
+                                                    }
+                                                    List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                    Remove_List.Add("");
+                                                    PlayerTwo_Inventory = Remove_List.ToArray();
+                                                    Max_Of_PlayerTwo_Inventory--;
+                                                    Items_Menu = false;
+                                                }
+                                                else
+                                                {
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                }
+                                                break;
+                                            case ConsoleKey.D6:
                                                 Items_Menu = false;
                                                 break;
                                             default:
@@ -817,7 +879,7 @@ namespace USG
             //Bыдача 2-x предметов
             for (int i = 0; i < Count_Of_Items; i++)
             {
-                int Number_Of_Item = Random_Number.Next(1, 5);
+                int Number_Of_Item = Random_Number.Next(1, 6);
                 if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                 {
                     switch (Number_Of_Item)
@@ -838,13 +900,17 @@ namespace USG
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
                             Max_Of_PlayerOne_Inventory++;
                             break;
+                        case 5:
+                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                            Max_Of_PlayerOne_Inventory++;
+                            break;
                     }
                 }
 
             }
             for (int i = 0; i < Count_Of_Items; i++)
             {
-                int Number_Of_Item = Random_Number.Next(1, 5);
+                int Number_Of_Item = Random_Number.Next(1, 6);
                 if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                 {
                     switch (Number_Of_Item)
@@ -863,6 +929,10 @@ namespace USG
                             break;
                         case 4:
                             PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                            Max_Of_PlayerTwo_Inventory++;
+                            break;
+                        case 5:
+                            PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                     }
@@ -909,7 +979,7 @@ namespace USG
                     //Bыдача 2-x предметов
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
-                        int Number_Of_Item = Random_Number.Next(1, 5);
+                        int Number_Of_Item = Random_Number.Next(1, 6);
                         if (Max_Of_PlayerOne_Inventory < PlayerOne_Inventory.Length)
                         {
                             switch (Number_Of_Item)
@@ -930,13 +1000,17 @@ namespace USG
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
                                     Max_Of_PlayerOne_Inventory++;
                                     break;
+                                case 5:
+                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                                    Max_Of_PlayerOne_Inventory++;
+                                    break;
                             }
                         }
 
                     }
                     for (int i = 0; i < Count_Of_Items; i++)
                     {
-                        int Number_Of_Item = Random_Number.Next(1, 5);
+                        int Number_Of_Item = Random_Number.Next(1, 6);
                         if (Max_Of_PlayerTwo_Inventory < PlayerTwo_Inventory.Length)
                         {
                             switch (Number_Of_Item)
@@ -955,6 +1029,10 @@ namespace USG
                                     break;
                                 case 4:
                                     PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                                    Max_Of_PlayerTwo_Inventory++;
+                                    break;
+                                case 5:
+                                    PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                             }
@@ -1641,6 +1719,59 @@ namespace USG
                                                     }
                                                     break;
                                                 case ConsoleKey.D3:
+                                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
+                                                    {
+                                                        DBShotgun[0] = "Холостой";
+                                                        DBShotgun[1] = "Холостой";
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerOne_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else if (DBShotgun[0] == "Холостой" || DBShotgun[1] == "Боевой" && DBShotgun[0] == "Боевой" || DBShotgun[1] == "Холостой")
+                                                    {
+                                                        if (DBShotgun[0] == "Холостой")
+                                                        {
+                                                            DBShotgun[1] = "Боевой";
+                                                        }
+                                                        else
+                                                        {
+                                                            DBShotgun[1] = "Холостой";
+                                                        }
+                                                        if (DBShotgun[1] == "Холостой")
+                                                        {
+                                                            DBShotgun[1] = "Боевой";
+                                                        }
+                                                        else
+                                                        {
+                                                            DBShotgun[1] = "Холостой";
+                                                        }
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerOne_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
+                                                    {
+                                                        DBShotgun[0] = "Боевой";
+                                                        DBShotgun[1] = "Боевой";
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerOne_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                    }
+                                                    break;
+                                                case ConsoleKey.D4:
                                                     Items_Menu = false;
                                                     break;
                                                 default:
@@ -2332,6 +2463,59 @@ namespace USG
                                                     }
                                                     break;
                                                 case ConsoleKey.D3:
+                                                    if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
+                                                    {
+                                                        DBShotgun[0] = "Холостой";
+                                                        DBShotgun[1] = "Холостой";
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerTwo_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else if (DBShotgun[0] == "Холостой" || DBShotgun[1] == "Боевой" && DBShotgun[0] == "Боевой" || DBShotgun[1] == "Холостой")
+                                                    {
+                                                        if (DBShotgun[0] == "Холостой")
+                                                        {
+                                                            DBShotgun[1] = "Боевой";
+                                                        }
+                                                        else
+                                                        {
+                                                            DBShotgun[1] = "Холостой";
+                                                        }
+                                                        if (DBShotgun[1] == "Холостой")
+                                                        {
+                                                            DBShotgun[1] = "Боевой";
+                                                        }
+                                                        else
+                                                        {
+                                                            DBShotgun[1] = "Холостой";
+                                                        }
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerTwo_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
+                                                    {
+                                                        DBShotgun[0] = "Боевой";
+                                                        DBShotgun[1] = "Боевой";
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerTwo_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                    }
+                                                    break;
+                                                case ConsoleKey.D4:
                                                     Items_Menu = false;
                                                     break;
                                                 default:
