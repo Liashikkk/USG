@@ -453,7 +453,7 @@ namespace USG
                                                 if (PlayerOne_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
                                                     int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell, true));
+                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell++, true));
                                                     List<string> Remove_List = new List<string>(PlayerOne_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                     Remove_List.Add("");
@@ -704,7 +704,7 @@ namespace USG
                                                 if (PlayerTwo_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
                                                     int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell, true));
+                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell++, true));
                                                     List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                     Remove_List.Add("");
@@ -1023,97 +1023,74 @@ namespace USG
                                                             bool Number_Has_Choosen = false;
                                                             while (!Number_Has_Choosen)
                                                             {
-                                                                Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells++));
+                                                                Console.SetCursorPosition(0, 0);
+                                                                Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells + 1));
                                                                 Key = Console.ReadKey(true);
                                                                 switch (Key.Key)
                                                                 {
                                                                     case ConsoleKey.D1:
-                                                                        if (Count_Not_Fired_Shells >= 0)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D2:
-                                                                        if (Count_Not_Fired_Shells >= 1)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D3:
-                                                                        if (Count_Not_Fired_Shells >= 2)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D4:
-                                                                        if (Count_Not_Fired_Shells >= 3)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D5:
-                                                                        if (Count_Not_Fired_Shells >= 4)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D6:
-                                                                        if (Count_Not_Fired_Shells >= 5)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D7:
-                                                                        if (Count_Not_Fired_Shells >= 6)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D8:
-                                                                        if (Count_Not_Fired_Shells >= 7)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     default:
                                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
@@ -1739,97 +1716,74 @@ namespace USG
                                                             bool Number_Has_Choosen = false;
                                                             while (!Number_Has_Choosen)
                                                             {
-                                                                Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells++));
+                                                                Console.SetCursorPosition(0, 0);
+                                                                Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells + 1));
                                                                 Key = Console.ReadKey(true);
                                                                 switch (Key.Key)
                                                                 {
                                                                     case ConsoleKey.D1:
-                                                                        if (Count_Not_Fired_Shells >= 0)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D2:
-                                                                        if (Count_Not_Fired_Shells >= 1)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D3:
-                                                                        if (Count_Not_Fired_Shells >= 2)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D4:
-                                                                        if (Count_Not_Fired_Shells >= 3)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D5:
-                                                                        if (Count_Not_Fired_Shells >= 4)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D6:
-                                                                        if (Count_Not_Fired_Shells >= 5)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D7:
-                                                                        if (Count_Not_Fired_Shells >= 6)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     case ConsoleKey.D8:
-                                                                        if (Count_Not_Fired_Shells >= 7)
+                                                                        try
                                                                         {
                                                                             Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
                                                                             Number_Has_Choosen = true;
                                                                         }
-                                                                        else
-                                                                        {
-                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                        }
+                                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                         break;
                                                                     default:
                                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
