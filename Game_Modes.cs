@@ -989,171 +989,177 @@ namespace USG
                     //зарядка двустволки игроком
                     while (DBShotgun[0].Contains("null") || DBShotgun[1].Contains("null"))
                     {
-                        if (PlayerOne_Inventory.Contains("Холостой патрон") || PlayerOne_Inventory.Contains("Боевой патрон") || PlayerOne_Inventory.Contains("рандомный патрончекер") || PlayerOne_Inventory.Contains("патрончекер") && Player_Want_Use_Items)
+                        if (Player_Want_Use_Items)
                         {
-                            Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Will_You_Use_Items(PlayerOne_Name));
-                            Key = Console.ReadKey(true);
-                            switch (Key.Key)
+                            if (PlayerOne_Inventory.Contains("Холостой патрон") || PlayerOne_Inventory.Contains("Боевой патрон") || PlayerOne_Inventory.Contains("рандомный патрончекер") || PlayerOne_Inventory.Contains("патрончекер"))
                             {
-                                case ConsoleKey.D1:
-                                    bool Items_Menu = true;
-                                    while (Items_Menu && PlayerOne_Inventory.Contains("Холостой патрон") || PlayerOne_Inventory.Contains("Боевой патрон") || PlayerOne_Inventory.Contains("рандомный патрончекер") || PlayerOne_Inventory.Contains("патрончекер"))
-                                    {
-                                        Console.SetCursorPosition(0, 0);
-                                        Console.Write(Image.All_Player_Items(true, false));
-                                        for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
+                                Console.SetCursorPosition(0, 0);
+                                Console.Write(Image.Will_You_Use_Items(PlayerOne_Name));
+                                Key = Console.ReadKey(true);
+                                switch (Key.Key)
+                                {
+                                    case ConsoleKey.D1:
+                                        bool Items_Menu = true;
+                                        if (PlayerOne_Inventory.Contains("Холостой патрон") || PlayerOne_Inventory.Contains("Боевой патрон") || PlayerOne_Inventory.Contains("рандомный патрончекер") || PlayerOne_Inventory.Contains("патрончекер"))
                                         {
-                                            if (PlayerOne_Inventory[i].Contains("рандомный патрончекер") || PlayerOne_Inventory[i].Contains("патрончекер"))
+                                            while (Items_Menu)
                                             {
-                                                Console.Write(PlayerOne_Inventory[i] + ", ");
+                                                Console.SetCursorPosition(0, 0);
+                                                Console.Write(Image.All_Player_Items(true, false));
+                                                for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
+                                                {
+                                                    if (PlayerOne_Inventory[i].Contains("рандомный патрончекер") || PlayerOne_Inventory[i].Contains("патрончекер"))
+                                                    {
+                                                        Console.Write(PlayerOne_Inventory[i] + ", ");
+                                                    }
+                                                }
+                                                Console.Write("и все.                                                                                                                              ");
+                                                Key = Console.ReadKey(true);
+                                                switch (Key.Key)
+                                                {
+                                                    case ConsoleKey.D1:
+                                                        if (PlayerOne_Inventory.Contains("патрончекер") == true)
+                                                        {
+                                                            bool Number_Has_Choosen = false;
+                                                            while (!Number_Has_Choosen)
+                                                            {
+                                                                Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells++));
+                                                                Key = Console.ReadKey(true);
+                                                                switch (Key.Key)
+                                                                {
+                                                                    case ConsoleKey.D1:
+                                                                        if (Count_Not_Fired_Shells >= 0)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D2:
+                                                                        if (Count_Not_Fired_Shells >= 1)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D3:
+                                                                        if (Count_Not_Fired_Shells >= 2)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D4:
+                                                                        if (Count_Not_Fired_Shells >= 3)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D5:
+                                                                        if (Count_Not_Fired_Shells >= 4)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D6:
+                                                                        if (Count_Not_Fired_Shells >= 5)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D7:
+                                                                        if (Count_Not_Fired_Shells >= 6)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D8:
+                                                                        if (Count_Not_Fired_Shells >= 7)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    default:
+                                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        break;
+                                                                }
+                                                            }
+                                                            List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                            Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                            Remove_List.Add("");
+                                                            PlayerOne_Inventory = Remove_List.ToArray();
+                                                            Max_Of_PlayerOne_Inventory--;
+                                                            Items_Menu = false;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                        }
+                                                        break;
+                                                    case ConsoleKey.D2:
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
+                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell++, true));
+                                                        List<string> RemoveList = new List<string>(PlayerOne_Inventory);
+                                                        RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
+                                                        RemoveList.Add("");
+                                                        PlayerOne_Inventory = RemoveList.ToArray();
+                                                        Max_Of_PlayerOne_Inventory--;
+                                                        Items_Menu = false;
+                                                        break;
+                                                    case ConsoleKey.D3:
+                                                        Player_Want_Use_Items = false;
+                                                        Items_Menu = false;
+                                                        break;
+                                                    default:
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                        break;
+                                                }
                                             }
                                         }
-                                        Console.Write("и все.                                                                                                                              ");
-                                        Key = Console.ReadKey(true);
-                                        switch (Key.Key)
-                                        {
-                                            case ConsoleKey.D1:
-                                                if (PlayerOne_Inventory.Contains("патрончекер") == true)
-                                                {
-                                                    bool Number_Has_Choosen = false;
-                                                    while (!Number_Has_Choosen)
-                                                    {
-                                                        Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells));
-                                                        Key = Console.ReadKey(true);
-                                                        switch (Key.Key) 
-                                                        {
-                                                            case ConsoleKey.D1:
-                                                                if (Count_Not_Fired_Shells >= 0)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D2:
-                                                                if (Count_Not_Fired_Shells >= 1)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D3:
-                                                                if (Count_Not_Fired_Shells >= 2)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D4:
-                                                                if (Count_Not_Fired_Shells >= 3)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D5:
-                                                                if (Count_Not_Fired_Shells >= 4)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D6:
-                                                                if (Count_Not_Fired_Shells >= 5)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D7:
-                                                                if (Count_Not_Fired_Shells >= 6)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D8:
-                                                                if (Count_Not_Fired_Shells >= 7)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            default:
-                                                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                break;
-                                                        }
-                                                    }
-                                                    List<string> Remove_List = new List<string>(PlayerOne_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
-                                                    Remove_List.Add("");
-                                                    PlayerOne_Inventory = Remove_List.ToArray();
-                                                    Max_Of_PlayerOne_Inventory--;
-                                                    Items_Menu = false;
-                                                }
-                                                else
-                                                {
-                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                }
-                                                break;
-                                            case ConsoleKey.D2:
-                                                int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell, true));
-                                                List<string> RemoveList = new List<string>(PlayerOne_Inventory);
-                                                RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
-                                                RemoveList.Add("");
-                                                PlayerOne_Inventory = RemoveList.ToArray();
-                                                Max_Of_PlayerOne_Inventory--;
-                                                Items_Menu = false;
-                                                break;
-                                            case ConsoleKey.D3:
-                                                Player_Want_Use_Items = false;
-                                                Items_Menu = false;
-                                                break;
-                                            default:
-                                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                break;
-                                        }
-                                    } 
-                                    break;
-                                case ConsoleKey.D2:
-                                    Player_Want_Use_Items = false;
-                                    break;
-                                default:
-                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                    break;
+                                        break;
+                                    case ConsoleKey.D2:
+                                        Player_Want_Use_Items = false;
+                                        break;
+                                    default:
+                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                        break;
+                                }
                             }
                         }
                         else if (Count_Not_Fired_Shells == 0)
@@ -1699,171 +1705,177 @@ namespace USG
                     //зарядка двустволки игроком
                     while (DBShotgun[0].Contains("null") || DBShotgun[1].Contains("null"))
                     {
-                        if (&& PlayerTwo_Inventory.Contains("Холостой патрон") || PlayerTwo_Inventory.Contains("Боевой патрон") || PlayerTwo_Inventory.Contains("рандомный патрончекер") || PlayerTwo_Inventory.Contains("патрончекер") && Player_Want_Use_Items)
+                        if (Player_Want_Use_Items)
                         {
-                            Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Will_You_Use_Items(PlayerTwo_Name));
-                            Key = Console.ReadKey(true);
-                            switch (Key.Key)
+                            if (PlayerTwo_Inventory.Contains("Холостой патрон") || PlayerTwo_Inventory.Contains("Боевой патрон") || PlayerTwo_Inventory.Contains("рандомный патрончекер") || PlayerTwo_Inventory.Contains("патрончекер"))
                             {
-                                case ConsoleKey.D1:
-                                    bool Items_Menu = true;
-                                    while (Items_Menu && PlayerTwo_Inventory.Contains("Холостой патрон") || PlayerTwo_Inventory.Contains("Боевой патрон") || PlayerTwo_Inventory.Contains("рандомный патрончекер") || PlayerTwo_Inventory.Contains("патрончекер"))
-                                    {
-                                        Console.SetCursorPosition(0, 0);
-                                        Console.Write(Image.All_Player_Items(true, false));
-                                        for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
+                                Console.SetCursorPosition(0, 0);
+                                Console.Write(Image.Will_You_Use_Items(PlayerTwo_Name));
+                                Key = Console.ReadKey(true);
+                                switch (Key.Key)
+                                {
+                                    case ConsoleKey.D1:
+                                        if (PlayerTwo_Inventory.Contains("Холостой патрон") || PlayerTwo_Inventory.Contains("Боевой патрон") || PlayerTwo_Inventory.Contains("рандомный патрончекер") || PlayerTwo_Inventory.Contains("патрончекер"))
                                         {
-                                            if (PlayerTwo_Inventory[i].Contains("рандомный патрончекер") || PlayerTwo_Inventory[i].Contains("патрончекер"))
+                                            bool Items_Menu = true;
+                                            while (Items_Menu)
                                             {
-                                                Console.Write(PlayerTwo_Inventory[i] + ", ");
+                                                Console.SetCursorPosition(0, 0);
+                                                Console.Write(Image.All_Player_Items(true, false));
+                                                for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
+                                                {
+                                                    if (PlayerTwo_Inventory[i].Contains("рандомный патрончекер") || PlayerTwo_Inventory[i].Contains("патрончекер"))
+                                                    {
+                                                        Console.Write(PlayerTwo_Inventory[i] + ", ");
+                                                    }
+                                                }
+                                                Console.Write("и все.                                                                                                                              ");
+                                                Key = Console.ReadKey(true);
+                                                switch (Key.Key)
+                                                {
+                                                    case ConsoleKey.D1:
+                                                        if (PlayerTwo_Inventory.Contains("патрончекер") == true)
+                                                        {
+                                                            bool Number_Has_Choosen = false;
+                                                            while (!Number_Has_Choosen)
+                                                            {
+                                                                Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells++));
+                                                                Key = Console.ReadKey(true);
+                                                                switch (Key.Key)
+                                                                {
+                                                                    case ConsoleKey.D1:
+                                                                        if (Count_Not_Fired_Shells >= 0)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D2:
+                                                                        if (Count_Not_Fired_Shells >= 1)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D3:
+                                                                        if (Count_Not_Fired_Shells >= 2)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D4:
+                                                                        if (Count_Not_Fired_Shells >= 3)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D5:
+                                                                        if (Count_Not_Fired_Shells >= 4)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D6:
+                                                                        if (Count_Not_Fired_Shells >= 5)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D7:
+                                                                        if (Count_Not_Fired_Shells >= 6)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    case ConsoleKey.D8:
+                                                                        if (Count_Not_Fired_Shells >= 7)
+                                                                        {
+                                                                            Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
+                                                                            Number_Has_Choosen = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        }
+                                                                        break;
+                                                                    default:
+                                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                                        break;
+                                                                }
+                                                            }
+                                                            List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                            Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                            Remove_List.Add("");
+                                                            PlayerTwo_Inventory = Remove_List.ToArray();
+                                                            Max_Of_PlayerTwo_Inventory--;
+                                                            Items_Menu = false;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                        }
+                                                        break;
+                                                    case ConsoleKey.D2:
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
+                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell++, true));
+                                                        List<string> RemoveList = new List<string>(PlayerTwo_Inventory);
+                                                        RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
+                                                        RemoveList.Add("");
+                                                        PlayerTwo_Inventory = RemoveList.ToArray();
+                                                        Max_Of_PlayerTwo_Inventory--;
+                                                        Items_Menu = false;
+                                                        break;
+                                                    case ConsoleKey.D3:
+                                                        Items_Menu = false;
+                                                        Player_Want_Use_Items = false;
+                                                        break;
+                                                    default:
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                        break;
+                                                }
                                             }
                                         }
-                                        Console.Write("и все.                                                                                                                              ");
-                                        Key = Console.ReadKey(true);
-                                        switch (Key.Key)
-                                        {
-                                            case ConsoleKey.D1:
-                                                if (PlayerTwo_Inventory.Contains("патрончекер") == true)
-                                                {
-                                                    bool Number_Has_Choosen = false;
-                                                    while (!Number_Has_Choosen)
-                                                    {
-                                                        Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells));
-                                                        Key = Console.ReadKey(true);
-                                                        switch (Key.Key)
-                                                        {
-                                                            case ConsoleKey.D1:
-                                                                if (Count_Not_Fired_Shells >= 0)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D2:
-                                                                if (Count_Not_Fired_Shells >= 1)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D3:
-                                                                if (Count_Not_Fired_Shells >= 2)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D4:
-                                                                if (Count_Not_Fired_Shells >= 3)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D5:
-                                                                if (Count_Not_Fired_Shells >= 4)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D6:
-                                                                if (Count_Not_Fired_Shells >= 5)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D7:
-                                                                if (Count_Not_Fired_Shells >= 6)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            case ConsoleKey.D8:
-                                                                if (Count_Not_Fired_Shells >= 7)
-                                                                {
-                                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
-                                                                    Number_Has_Choosen = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                }
-                                                                break;
-                                                            default:
-                                                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                                break;
-                                                        }
-                                                    }
-                                                    List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
-                                                    Remove_List.Add("");
-                                                    PlayerTwo_Inventory = Remove_List.ToArray();
-                                                    Max_Of_PlayerTwo_Inventory--;
-                                                    Items_Menu = false;
-                                                }
-                                                else
-                                                {
-                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                }
-                                                break;
-                                            case ConsoleKey.D2:
-                                                int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell, true));
-                                                List<string> RemoveList = new List<string>(PlayerTwo_Inventory);
-                                                RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
-                                                RemoveList.Add("");
-                                                PlayerTwo_Inventory = RemoveList.ToArray();
-                                                Max_Of_PlayerTwo_Inventory--;
-                                                Items_Menu = false;
-                                                break;
-                                            case ConsoleKey.D3:
-                                                Items_Menu = false;
-                                                Player_Want_Use_Items = false;
-                                                break;
-                                            default:
-                                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                                break;
-                                        }
-                                    }
-                                    break;
-                                case ConsoleKey.D2:
-                                    Player_Want_Use_Items = false;
-                                    break;
-                                default:
-                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                    break;
+                                        break;
+                                    case ConsoleKey.D2:
+                                        Player_Want_Use_Items = false;
+                                        break;
+                                    default:
+                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                        break;
+                                }
                             }
                         }
                         else if (Count_Not_Fired_Shells == 0)
