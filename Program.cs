@@ -40,9 +40,9 @@ namespace USG
             player.Play();
             player.Dispose();
             */
-            
-            FullScreen();
 
+            FullScreen();
+            
             All_Images Image = new All_Images();
 
             Game_Modes Mode = new Game_Modes();
@@ -83,7 +83,7 @@ namespace USG
                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         break;
                 }
-            }
+            } 
         }
     }
 }

@@ -132,11 +132,11 @@ namespace USG
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                         case 4:
-                            PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "рандомный патрончекер";
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                         case 5:
-                            PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "инвертор";
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                     }
@@ -229,11 +229,11 @@ namespace USG
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                                 case 4:
-                                    PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "рандомный патрончекер";
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                                 case 5:
-                                    PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "инвертор";
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                             }
@@ -464,8 +464,8 @@ namespace USG
                                             case 4:
                                                 if (PlayerOne_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
-                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell++, true));
+                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                     List<string> Remove_List = new List<string>(PlayerOne_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                     Remove_List.Add("");
@@ -736,8 +736,8 @@ namespace USG
                                             case 4:
                                                 if (PlayerTwo_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
-                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell++, true));
+                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                     List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                     Remove_List.Add("");
@@ -922,11 +922,11 @@ namespace USG
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                         case 4:
-                            PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "рандомный патрончекер";
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                         case 5:
-                            PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "инвертор";
                             Max_Of_PlayerTwo_Inventory++;
                             break;
                     }
@@ -1022,11 +1022,11 @@ namespace USG
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                                 case 4:
-                                    PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "рандомный патрончекер";
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "рандомный патрончекер";
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                                 case 5:
-                                    PlayerTwo_Inventory[Max_Of_PlayerOne_Inventory] = "инвертор";
+                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "инвертор";
                                     Max_Of_PlayerTwo_Inventory++;
                                     break;
                             }
@@ -1059,6 +1059,7 @@ namespace USG
                         Turn_To_Play = 1;
                     }
                     //зарядка двустволки игроком
+                    Player_Want_Use_Items = true;
                     while (DBShotgun[0].Contains("null") || DBShotgun[1].Contains("null"))
                     {
                         if (Player_Want_Use_Items)
@@ -1179,8 +1180,8 @@ namespace USG
                                                         }
                                                         break;
                                                     case 2:
-                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell++, true));
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                         List<string> RemoveList = new List<string>(PlayerOne_Inventory);
                                                         RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
                                                         RemoveList.Add("");
@@ -1206,6 +1207,10 @@ namespace USG
                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                         break;
                                 }
+                            }
+                            else
+                            {
+                                Player_Want_Use_Items = false;
                             }
                         }
                         else if (Count_Not_Fired_Shells == 0)
@@ -1799,6 +1804,7 @@ namespace USG
                         Turn_To_Play = 1;
                     }
                     //зарядка двустволки игроком
+                    Player_Want_Use_Items = true;
                     while (DBShotgun[0].Contains("null") || DBShotgun[1].Contains("null"))
                     {
                         if (Player_Want_Use_Items)
@@ -1919,8 +1925,8 @@ namespace USG
                                                         }
                                                         break;
                                                     case 2:
-                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells++);
-                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell++, true));
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                         List<string> RemoveList = new List<string>(PlayerTwo_Inventory);
                                                         RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
                                                         RemoveList.Add("");
@@ -1946,6 +1952,10 @@ namespace USG
                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                         break;
                                 }
+                            }
+                            else
+                            {
+                                Player_Want_Use_Items = false;
                             }
                         }
                         else if (Count_Not_Fired_Shells == 0)
