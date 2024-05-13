@@ -41,7 +41,7 @@ namespace USG
             player.Dispose();
             */
 
-            //FullScreen();
+            FullScreen();
             
             All_Images Image = new All_Images();
 
@@ -52,37 +52,41 @@ namespace USG
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Main_Menu);
-                switch (Convert.ToInt32(Console.ReadLine()))
+                Console.Write(Image.Main_Menu); 
+                try
                 {
-                    case 1:
-                        Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Game_Modes_Choose);
-                        switch (Convert.ToInt32(Console.ReadLine()))
-                        {
-                            case 1:
-                                Mode.Shotgun_Mode();
-                                break;
-                            case 2:
-                                Mode.DoubleBarreledShotgun_Mode();
-                                break;
-                            case 3:
-                                break;
-                            default:
-                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                break;
-                        }
-                        break;
-                    case 2:
-                        Console_WriteReadClear("она пока что не работает. enter для перехода на следующее меню                                                                 ");
-                        break;
-                    case 3:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                        break;
+                    switch (Convert.ToInt32(Console.ReadLine()))
+                    {
+                        case 1:
+                            Console.SetCursorPosition(0, 0);
+                            Console.Write(Image.Game_Modes_Choose);
+                            switch (Convert.ToInt32(Console.ReadLine()))
+                            {
+                                case 1:
+                                    Mode.Shotgun_Mode();
+                                    break;
+                                case 2:
+                                    Mode.DoubleBarreledShotgun_Mode();
+                                    break;
+                                case 3:
+                                    break;
+                                default:
+                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            Console_WriteReadClear("она пока что не работает. enter для перехода на следующее меню                                                                 ");
+                            break;
+                        case 3:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                            break;
+                    }
                 }
+                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             } 
         }
     }

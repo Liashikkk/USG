@@ -190,7 +190,7 @@ namespace USG
                 return $"Выстрелить сейчас должен {Shell_Type} патрон. Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ";
             }
         }
-        public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, int Count_Of_Items, bool Opponent_HandCuffed = false)
+        public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, int Count_Of_Items, bool Opponent_HandCuffed = false, bool Player_Bleeding_Out = false, int Count_Of_Turns = 0)
         {
             if (Count_Of_Items == 0 && Count_Of_Player_Lives == 1)
             {
@@ -211,7 +211,18 @@ namespace USG
             else if (Opponent_HandCuffed)
             {
                 return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                               ";
-
+            }
+            else if (Count_Of_Items == 0 && Player_Bleeding_Out)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника.                                                                                                                                                                                                                       ";
+            }
+            else if (Opponent_HandCuffed && Player_Bleeding_Out)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки.  у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                               ";
+            }
+            else if (Player_Bleeding_Out)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить.  1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                                                       ";
             }
             else
             {
