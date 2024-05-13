@@ -36,17 +36,21 @@ namespace USG
             bool Count_Of_Items_Not_Choosen = true;
             while (Count_Of_Items_Not_Choosen)
             {
-                Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Choose_Max_Count_Of_Items);
-                Count_Of_Items = Convert.ToInt32(Console.ReadLine());
-                if (Count_Of_Items > 4 || Count_Of_Items < 0)
+                try
                 {
-                    Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write(Image.Choose_Max_Count_Of_Items);
+                    Count_Of_Items = Convert.ToInt32(Console.ReadLine());
+                    if (Count_Of_Items > 4 || Count_Of_Items < 0)
+                    {
+                        Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                    }
+                    else
+                    {
+                        Count_Of_Items_Not_Choosen = false;
+                    }
                 }
-                else
-                {
-                    Count_Of_Items_Not_Choosen = false;
-                }
+                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
 
             //Игроки делятся на первого и второго игрока и вводят свои имена
@@ -245,18 +249,18 @@ namespace USG
                     }
                     Count_Not_Fired_Shells--;
                 }
-                while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
+                while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
+                    /*
                     if (PlayerTwo_HandCuffed - 1 == 0)
                     {
-                        Turn_To_Play = 1;
-                    }
+                        Turn_To_Play = 2;
+                    } */
                     //ход первого игрока
                     if (PlayerTwo_HandCuffed > 0)
                     {
-                        PlayerTwo_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items));
+                        Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items, true));
                     }
                     else
                     {
@@ -266,6 +270,10 @@ namespace USG
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
                         case 1:
+                            if (PlayerTwo_HandCuffed > 0)
+                            {
+                                PlayerTwo_HandCuffed--;
+                            }
                             int Who_To_Shoot_At = Random_Number.Next(1, 3);
                             if (Who_To_Shoot_At == 1)
                             {
@@ -273,7 +281,7 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                         PlayerOne_Lives = -1;
@@ -301,7 +309,7 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
                                         PlayerTwo_Lives = -1;
@@ -329,10 +337,14 @@ namespace USG
                             }
                             break;
                         case 2:
+                            if (PlayerTwo_HandCuffed > 0)
+                            {
+                                PlayerTwo_HandCuffed--;
+                            }
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerOne_Lives--;
-                                if (PlayerOne_Lives == 0)
+                                if (PlayerOne_Lives <= 0)
                                 {
                                     Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
                                     PlayerOne_Lives = -1;
@@ -355,6 +367,10 @@ namespace USG
                             }
                             break;
                         case 3:
+                            if (PlayerTwo_HandCuffed > 0)
+                            {
+                                PlayerTwo_HandCuffed--;
+                            }
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerTwo_Lives--;
@@ -464,7 +480,7 @@ namespace USG
                                             case 4:
                                                 if (PlayerOne_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
-                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
                                                     Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                     List<string> Remove_List = new List<string>(PlayerOne_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
@@ -516,20 +532,35 @@ namespace USG
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             }
                             break;
+                        case 0:
+                            if (PlayerOne_Lives == 1)
+                            {
+                                Console_WriteReadClear(Image.You_Choose_To_Die());
+                                PlayerOne_Lives = -1;
+                                Turn_To_Play = 3;
+                            }
+                            else
+                            {
+                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                            }
+                            break;
+                        default:
+                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                            break;
                     }
                 }
-                while (Turn_To_Play == 2 && Count_Not_Fired_Shells >= 0 && PlayerTwo_HandCuffed == 0)
+                while (Turn_To_Play == 2 && Count_Not_Fired_Shells >= 0 && PlayerTwo_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
                     //ход второго игрока
+                    /*
                     if (PlayerOne_HandCuffed - 1 == 0)
                     {
-                        Turn_To_Play = 2;
-                    }
+                        Turn_To_Play = 1;
+                    }*/
                     if (PlayerOne_HandCuffed > 0)
                     {
-                        PlayerOne_HandCuffed--;
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items));
+                        Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items, true));
                     }
                     else
                     {
@@ -539,6 +570,10 @@ namespace USG
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
                         case 1:
+                            if (PlayerOne_HandCuffed > 0)
+                            {
+                                PlayerOne_HandCuffed--;
+                            }
                             int Who_To_Shoot_At = Random_Number.Next(1, 3);
                             if (Who_To_Shoot_At == 1)
                             {
@@ -546,7 +581,7 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                         PlayerTwo_Lives = -1;
@@ -574,7 +609,7 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Lives <= 0)
                                     {
                                         Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
                                         PlayerOne_Lives = -1;
@@ -602,10 +637,14 @@ namespace USG
                             }
                             break;
                         case 2:
+                            if (PlayerOne_HandCuffed > 0)
+                            {
+                                PlayerOne_HandCuffed--;
+                            }
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerTwo_Lives--;
-                                if (PlayerTwo_Lives == 0)
+                                if (PlayerTwo_Lives <= 0)
                                 {
                                     Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
                                     PlayerTwo_Lives = -1;
@@ -628,6 +667,10 @@ namespace USG
                             }
                             break;
                         case 3:
+                            if (PlayerOne_HandCuffed > 0)
+                            {
+                                PlayerOne_HandCuffed--;
+                            }
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 PlayerOne_Lives--;
@@ -736,7 +779,7 @@ namespace USG
                                             case 4:
                                                 if (PlayerTwo_Inventory.Contains("рандомный патрончекер") == true)
                                                 {
-                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
                                                     Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                     List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
@@ -788,6 +831,18 @@ namespace USG
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             }
                             break;
+                        case 0:
+                            if (PlayerTwo_Lives == 1)
+                            {
+                                Console_WriteReadClear(Image.You_Choose_To_Die());
+                                PlayerTwo_Lives = -1;
+                                Turn_To_Play = 3;
+                            }
+                            else
+                            {
+                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                            }
+                            break;
                         default:
                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             break;
@@ -822,17 +877,21 @@ namespace USG
             bool Count_Of_Items_Not_Choosen = true;
             while (Count_Of_Items_Not_Choosen)
             {
-                Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Choose_Max_Count_Of_Items);
-                Count_Of_Items = Convert.ToInt32(Console.ReadLine());
-                if (Count_Of_Items > 4 || Count_Of_Items < 0)
+                try
                 {
-                    Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write(Image.Choose_Max_Count_Of_Items);
+                    Count_Of_Items = Convert.ToInt32(Console.ReadLine());
+                    if (Count_Of_Items > 4 || Count_Of_Items < 0)
+                    {
+                        Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                    }
+                    else
+                    {
+                        Count_Of_Items_Not_Choosen = false;
+                    }
                 }
-                else
-                {
-                    Count_Of_Items_Not_Choosen = false;
-                }
+                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
 
             //Игроки делятся на первого и второго игрока и вводят свои имена
@@ -1051,7 +1110,7 @@ namespace USG
                     }
                     Count_Not_Fired_Shells--;
                 }
-                while (Turn_To_Play == 1 && Count_Not_Fired_Shells > 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
+                while (Turn_To_Play == 1 && Count_Not_Fired_Shells > 0 && PlayerOne_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
                     //ход первого игрока
                     if (PlayerTwo_HandCuffed - 1 == 0)
@@ -1180,7 +1239,7 @@ namespace USG
                                                         }
                                                         break;
                                                     case 2:
-                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
                                                         Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                         List<string> RemoveList = new List<string>(PlayerOne_Inventory);
                                                         RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
@@ -1414,7 +1473,7 @@ namespace USG
                         {
                             PlayerTwo_HandCuffed--;
                             Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items));
+                            Console.Write(Image.Player_Menu(PlayerOne_Name, PlayerOne_Lives, PlayerTwo_Name, Count_Of_Items, true));
                         }
                         else
                         {
@@ -1779,6 +1838,9 @@ namespace USG
                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                 }
                                 break;
+                            default:
+                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                break;
                         }
                     }
                 }
@@ -1796,7 +1858,7 @@ namespace USG
                     Count_Not_Fired_Shells--;
                 }
                 Player_Want_Use_Items = true;
-                while (Turn_To_Play == 2 && Count_Not_Fired_Shells > 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
+                while (Turn_To_Play == 2 && Count_Not_Fired_Shells > 0 && PlayerTwo_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
                     //ход второго игрока
                     if (PlayerOne_HandCuffed - 1 == 0)
@@ -1925,7 +1987,7 @@ namespace USG
                                                         }
                                                         break;
                                                     case 2:
-                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells + 1);
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
                                                         Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true));
                                                         List<string> RemoveList = new List<string>(PlayerTwo_Inventory);
                                                         RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
@@ -2159,7 +2221,7 @@ namespace USG
                         {
                             PlayerOne_HandCuffed--;
                             Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items));
+                            Console.Write(Image.Player_Menu(PlayerTwo_Name, PlayerTwo_Lives, PlayerOne_Name, Count_Of_Items, true));
                         }
                         else
                         {
@@ -2521,6 +2583,9 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                 }
+                                break;
+                            default:
+                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                 break;
                         }
                     }

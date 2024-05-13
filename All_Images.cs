@@ -10,10 +10,12 @@ namespace USG
 {
     class All_Images : Program
     {
+        Random Random_Number = new Random();
+
         public string Main_Menu = "главное меню. 1+Еnter - начать игру, 3+Еnter - выйти из игры (2+Еnter - статистика, которой пока что нет).                                                                                                                                                                        ";
         public string Game_Modes_Choose = "тут выбор режима игры и предыстория. 1+Еnter - режим с дробовиком, 2+Еnter - режим с двустволкой, 3+Еnter - вернуться в главное меню.                                                                                                                                                                 ";
 
-        public string This_Button_Isnt_Exists = "вы ошиблись кнопкой =). Еnter для перехода на следующее меню                                                                                                                                                                                          ";
+        public string This_Button_Isnt_Exists = "вы сделали что-то неправильно - помните про инструкции =). Еnter для перехода на следующее меню                                                                                                                                                                                          ";
 
         public string All_Players_Has_Given_Two_Items = "некоторые свободные слоты ваших инвентарей заполучили предметы. Еnter для перехода на следующее меню                                                                                                                                                                                                   ";
 
@@ -31,11 +33,15 @@ namespace USG
 
         public string Last_Shell_Was_Inserted = "последний патрон был автоматически заряжен. Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                     ";
 
-        public string Which_Shell_You_Want_To_Check = "выбери интересующй тебя патрон: 1 или 2                                                                                                                                                                                                                                                                                     ";
-
+        public string You_Choose_To_Die()
+        {
+            string[] Comentary = {"это была твоя последняя капля..", "ты сдался", "кто-то сегодня не вернется домой..", "ты выбрал легкий путь", "ты поддался сопернику, эхх =("};
+            int Comm_Number = Random_Number.Next(0, 5);
+            return "ты разряжаешь оружие, заряжая боевой патрон... твое тело падает замертво - " + Comentary[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                                                                                                        ";
+        }
         public string Choose_Shell_That_You_Check(int Count_Of_Shells)
         {
-            return $"выбери один патрон из {Count_Of_Shells}, нажатием на цифру на клавиатуре, соответсвующую цифре патрона +Еnter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ";
+            return $"выбери один патрон из {Count_Of_Shells}, нажатием на цифру на клавиатуре, соответсвующую цифре патрона + Еnter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ";
         }
         public string Will_You_Use_Items(string Player_Name)
         {
@@ -58,9 +64,8 @@ namespace USG
         }
         public string Blank_Shoot(bool Shoot_At_Opponent = false)
         {
-            Random Random_Number = new Random();
-            string[] Yourself_Commentaries = {"какое облегчение =)", "как же легко стало теперь =)", "=)", "ты заслужил возможность походить ещё раз"  };
-            string[] Opponent_Commentaries = {"какое разочарование =(", "эххх..", "щит опонента не тронут..", "как-то...неприятно, да?",  };
+            string[] Yourself_Commentaries = {"какое облегчение =)", "как же легко стало теперь =)", "=)", "ты заслужил возможность походить ещё раз", "приятный звук, правда?"  };
+            string[] Opponent_Commentaries = {"какое разочарование =(", "эххх..", "щит опонента не тронут..", "как-то...неприятно, да?", "повезло твоему сопернику" };
             if (Shoot_At_Opponent)
             {
                 int Comm_Number = Random_Number.Next(0, 5);
@@ -74,7 +79,6 @@ namespace USG
         }
         public string Live_Shoot(int Count_Player_Lives, int Count_Opponent_Lives, bool Shoot_At_Opponent = false)
         {
-            Random Random_Number = new Random();
             string[] You_Dead_Commentaries = {"как жаль =(", "бывает же такое =/", "кто-то сегодня не вернется домой..", "=(", "ты проиграл =(" };
             string[] Opponent_Dead_Commentaries = {"поздравляю =)", "кто-то сегодня не вернется домой..", "ты победил =)", "ты рад, победитель?", "кому-то сегодня сказачно повезло, да? =)" };
             if (Shoot_At_Opponent && Count_Opponent_Lives > 0)
@@ -84,7 +88,7 @@ namespace USG
             else if (Shoot_At_Opponent && Count_Opponent_Lives <= 0)
             {
                 int Comm_Number = Random_Number.Next(0, 5);
-                return "прозвучал выстрел... его тело падает замертво." + You_Dead_Commentaries[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                     "; ;
+                return "прозвучал выстрел... его тело падает замертво. " + Opponent_Dead_Commentaries[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                     "; ;
             }
             else if (Count_Player_Lives > 0)
             {
@@ -93,7 +97,7 @@ namespace USG
             else
             {
                 int Comm_Number = Random_Number.Next(0, 5);
-                return "прозвучал выстрел... ваше тело падает замертво..." + You_Dead_Commentaries[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                     "; ;
+                return "прозвучал выстрел... ваше тело падает замертво... " + You_Dead_Commentaries[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                     "; ;
             }
         }
         public string Will_Be_Fired_At(int Who_To_Shoot_At)
@@ -124,39 +128,44 @@ namespace USG
             string Name = "";
             while (!Name_Has_Choosen)
             {
-                Console.Clear();
-                Console.Write("выбирайте свою позицию: первый и второй. первый игрок, введи своё имя: ");
-                Name = Console.ReadLine();
-                if (Name.Length > 6)
+                try
                 {
-                    Console_WriteReadClear("имя слишком длинное - укоротите его до 6 букв минимум)    ");
+                    Console.Clear();
+                    Console.Write("выбирайте свою позицию: первый и второй. первый игрок, введи своё имя: ");
+                    Name = Console.ReadLine();
+                    if (Name.Length > 6)
+                    {
+                        Console_WriteReadClear("имя слишком длинное - укоротите его до 6 букв минимум)    ");
+                    }
+                    else
+                    {
+                        Name_Has_Choosen = true;
+                    }
                 }
-                else
-                {
-                    Name_Has_Choosen = true;
-                }
+                catch (Exception e) { Console_WriteReadClear(This_Button_Isnt_Exists); }
             }
             return Name; 
         }
         public string PlayerTwo_Name_Input()
         {
-            Console.Write("теперь второй игрок, введи своё имя: ");
             bool Name_Has_Choosen = false;
             string Name = "";
             while (!Name_Has_Choosen)
             {
-                Console.Clear();
-                Console.Write("теперь второй игрок, введи своё имя: ");
-
-                Name = Console.ReadLine();
-                if (Name.Length > 6)
+                try
                 {
-                    Console_WriteReadClear("имя слишком длинное - укоротите его до 6 букв минимум)");
+                    Console.Write("теперь второй игрок, введи своё имя: ");
+                    Name = Console.ReadLine();
+                    if (Name.Length > 6)
+                    {
+                        Console_WriteReadClear("имя слишком длинное - укоротите его до 6 букв минимум)");
+                    }
+                    else
+                    {
+                        Name_Has_Choosen = true;
+                    }
                 }
-                else
-                {
-                    Name_Has_Choosen = true;
-                }
+                catch (Exception e) { Console_WriteReadClear(This_Button_Isnt_Exists); }
             }
             return Name;
         }
@@ -183,13 +192,26 @@ namespace USG
         }
         public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, int Count_Of_Items, bool Opponent_HandCuffed = false)
         {
-            if (Count_Of_Items == 0)
+            if (Count_Of_Items == 0 && Count_Of_Player_Lives == 1)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника. 0+Еnter - сдаться, если тебе нечего терять...                                                                                                                                                                                                                      ";
+            }
+            else if (Opponent_HandCuffed && Count_Of_Player_Lives == 1)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов. 0+Еnter - сдаться, если тебе нечего терять...                                                                                                                                                                                               ";
+            }
+            else if (Count_Of_Player_Lives == 1)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов. 0+Еnter - сдаться если тебе нечего терять...                                                                                                                                                                                                                       ";
+            }
+            else if (Count_Of_Items == 0)
             {
                 return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника.                                                                                                                                                                                                                       ";
             }
             else if (Opponent_HandCuffed)
             {
                 return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                               ";
+
             }
             else
             {

@@ -41,7 +41,7 @@ namespace USG
             player.Dispose();
             */
 
-            FullScreen();
+            //FullScreen();
             
             All_Images Image = new All_Images();
 
@@ -69,7 +69,7 @@ namespace USG
                             case 3:
                                 break;
                             default:
-                                Console_WriteReadClear(Image.This_Button_Isnt_Exists); 
+                                Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                 break;
                         }
                         break;
