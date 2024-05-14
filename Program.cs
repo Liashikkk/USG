@@ -14,7 +14,6 @@ namespace USG
 {
     internal class Program
     {
-
         const int STD_OUTPUT_HANDLE = -11;
 
         [DllImport("kernel32.dll")]

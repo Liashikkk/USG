@@ -283,17 +283,31 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerOne_Lives--;
-                                        if (PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            PlayerOne_Bleeding_Phase = true;
+                                            PlayerOne_Bleeding_Turns = 8;
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            if (PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -301,6 +315,14 @@ namespace USG
                                     }
                                     else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                                     {
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
                                         Console_WriteReadClear(Image.Blank_Shoot());
                                         Count_Not_Fired_Shells--;
                                     }
@@ -311,17 +333,31 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerTwo_Lives--;
-                                        if (PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            PlayerTwo_Bleeding_Phase = true;
+                                            PlayerTwo_Bleeding_Turns = 8;
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            if (PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -331,7 +367,15 @@ namespace USG
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot(true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerTwo_HandCuffed == 0)
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 2;
                                         }
@@ -346,17 +390,31 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Lives <= 0)
+                                    if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                        PlayerOne_Bleeding_Phase = true;
+                                        PlayerOne_Bleeding_Turns = 8;
+                                        PlayerOne_Lives = 1;
+                                    }
+                                    if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                         PlayerOne_Lives = -1;
                                         Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerTwo_HandCuffed == 0)
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 2;
                                         }
@@ -364,6 +422,14 @@ namespace USG
                                 }
                                 else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                                 {
+                                    if (PlayerOne_Bleeding_Phase)
+                                    {
+                                        PlayerOne_Bleeding_Turns--;
+                                    }
+                                    if (PlayerTwo_Bleeding_Phase)
+                                    {
+                                        PlayerTwo_Bleeding_Turns--;
+                                    }
                                     Console_WriteReadClear(Image.Blank_Shoot());
                                     Count_Not_Fired_Shells--;
                                 }
@@ -376,17 +442,31 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives == 0)
+                                    if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                        PlayerTwo_Bleeding_Phase = true;
+                                        PlayerTwo_Bleeding_Turns = 8;
+                                        PlayerTwo_Lives = 1;
+                                    }
+                                    if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                         PlayerTwo_Lives = -1;
                                         Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerTwo_HandCuffed == 0)
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 2;
                                         }
@@ -396,7 +476,15 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.Blank_Shoot(true));
                                     Count_Not_Fired_Shells--;
-                                    if (PlayerTwo_HandCuffed == 0)
+                                    if (PlayerOne_Bleeding_Phase)
+                                    {
+                                        PlayerOne_Bleeding_Turns--;
+                                    }
+                                    if (PlayerTwo_Bleeding_Phase)
+                                    {
+                                        PlayerTwo_Bleeding_Turns--;
+                                    }
+                                    if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                     {
                                         Turn_To_Play = 2;
                                     }
@@ -582,17 +670,31 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerTwo_Lives--;
-                                        if (PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            PlayerTwo_Bleeding_Phase = true;
+                                            PlayerTwo_Bleeding_Turns = 8;
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerOne_HandCuffed == 0)
+                                            if (PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -602,6 +704,14 @@ namespace USG
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot());
                                         Count_Not_Fired_Shells--;
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
                                     }
                                 }
                                 else if (Who_To_Shoot_At == 2)
@@ -610,17 +720,31 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerOne_Lives--;
-                                        if (PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            PlayerOne_Bleeding_Phase = true;
+                                            PlayerOne_Bleeding_Turns = 8;
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerOne_HandCuffed == 0)
+                                            if (PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -630,7 +754,15 @@ namespace USG
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot(true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_HandCuffed == 0)
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 1;
                                         }
@@ -645,17 +777,31 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Lives <= 0)
+                                    if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                        PlayerTwo_Bleeding_Phase = true;
+                                        PlayerTwo_Bleeding_Turns = 8;
+                                        PlayerTwo_Lives = 1;
+                                    }
+                                    if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                         PlayerTwo_Lives = -1;
                                         Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_HandCuffed == 0)
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 1;
                                         }
@@ -665,6 +811,14 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.Blank_Shoot());
                                     Count_Not_Fired_Shells--;
+                                    if (PlayerOne_Bleeding_Phase)
+                                    {
+                                        PlayerOne_Bleeding_Turns--;
+                                    }
+                                    if (PlayerTwo_Bleeding_Phase)
+                                    {
+                                        PlayerTwo_Bleeding_Turns--;
+                                    }
                                 }
                                 break;
                             case 3:
@@ -675,17 +829,31 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Lives == 0)
+                                    if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                        PlayerOne_Bleeding_Phase = true;
+                                        PlayerOne_Bleeding_Turns = 8;
+                                        PlayerOne_Lives = 1;
+                                    }
+                                    if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                         PlayerOne_Lives = -1;
                                         Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_HandCuffed == 0)
+                                        if (PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 1;
                                         }
@@ -695,7 +863,15 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.Blank_Shoot(true));
                                     Count_Not_Fired_Shells--;
-                                    if (PlayerOne_HandCuffed == 0)
+                                    if (PlayerOne_Bleeding_Phase)
+                                    {
+                                        PlayerOne_Bleeding_Turns--;
+                                    }
+                                    if (PlayerTwo_Bleeding_Phase)
+                                    {
+                                        PlayerTwo_Bleeding_Turns--;
+                                    }
+                                    if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                     {
                                         Turn_To_Play = 1;
                                     }
@@ -870,6 +1046,11 @@ namespace USG
             int Max_Of_PlayerOne_Inventory = 0;
             int Max_Of_PlayerTwo_Inventory = 0;
             int Turn_To_Play = Random_Number.Next(1, 2);
+
+            bool PlayerOne_Bleeding_Phase = false;
+            bool PlayerTwo_Bleeding_Phase = false;
+            int PlayerOne_Bleeding_Turns = 0;
+            int PlayerTwo_Bleeding_Turns = 0;
 
             bool Player_Want_Use_Items = true;
 
@@ -1504,14 +1685,14 @@ namespace USG
                                             PlayerOne_Lives -= 2;
                                             if (PlayerOne_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                                 if (PlayerTwo_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 2;
@@ -1526,14 +1707,14 @@ namespace USG
                                             PlayerOne_Lives--;
                                             if (PlayerOne_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                                 if (PlayerTwo_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 2;
@@ -1559,14 +1740,14 @@ namespace USG
                                             PlayerTwo_Lives -= 2;
                                             if (PlayerTwo_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                                 if (PlayerTwo_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 2;
@@ -1581,14 +1762,14 @@ namespace USG
                                             PlayerTwo_Lives--;
                                             if (PlayerTwo_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                                 if (PlayerTwo_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 2;
@@ -1621,14 +1802,14 @@ namespace USG
                                         PlayerOne_Lives -= 2;
                                         if (PlayerOne_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                             if (PlayerTwo_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 2;
@@ -1643,14 +1824,14 @@ namespace USG
                                         PlayerOne_Lives--;
                                         if (PlayerOne_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
                                             if (PlayerTwo_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 2;
@@ -1678,14 +1859,14 @@ namespace USG
                                         PlayerTwo_Lives -= 2;
                                         if (PlayerTwo_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                             if (PlayerTwo_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 2;
@@ -1700,14 +1881,14 @@ namespace USG
                                         PlayerTwo_Lives--;
                                         if (PlayerTwo_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
                                             if (PlayerTwo_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 2;
@@ -2270,14 +2451,14 @@ namespace USG
                                             PlayerTwo_Lives -= 2;
                                             if (PlayerTwo_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                                 if (PlayerOne_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 1;
@@ -2292,14 +2473,14 @@ namespace USG
                                             PlayerTwo_Lives--;
                                             if (PlayerTwo_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                                 if (PlayerOne_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 1;
@@ -2324,14 +2505,14 @@ namespace USG
                                             PlayerOne_Lives -= 2;
                                             if (PlayerOne_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                                 if (PlayerOne_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 1;
@@ -2346,14 +2527,14 @@ namespace USG
                                             PlayerOne_Lives--;
                                             if (PlayerOne_Lives <= 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                                 if (PlayerOne_HandCuffed == 0)
                                                 {
                                                     Turn_To_Play = 1;
@@ -2386,14 +2567,14 @@ namespace USG
                                         PlayerTwo_Lives -= 2;
                                         if (PlayerTwo_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                             if (PlayerOne_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 1;
@@ -2408,14 +2589,14 @@ namespace USG
                                         PlayerTwo_Lives--;
                                         if (PlayerTwo_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
                                             if (PlayerOne_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 1;
@@ -2443,14 +2624,14 @@ namespace USG
                                         PlayerOne_Lives -= 2;
                                         if (PlayerOne_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                             if (PlayerOne_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 1;
@@ -2465,14 +2646,14 @@ namespace USG
                                         PlayerOne_Lives--;
                                         if (PlayerOne_Lives <= 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, true));
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
                                             if (PlayerOne_HandCuffed == 0)
                                             {
                                                 Turn_To_Play = 1;

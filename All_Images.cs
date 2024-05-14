@@ -77,22 +77,30 @@ namespace USG
                 return "щелчок... " + Yourself_Commentaries[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                     ";
             }
         }
-        public string Live_Shoot(int Count_Player_Lives, int Count_Opponent_Lives, bool Shoot_At_Opponent = false)
+        public string Live_Shoot(int Count_Player_Lives, int Count_Opponent_Lives, bool Player_Bleeding_Phase, bool Opponent_Bleeding_Phase, int Count_Opponent_Turns, int Count_Player_Turns, bool Shoot_At_Opponent = false)
         {
             string[] You_Dead_Commentaries = {"как жаль =(", "бывает же такое =/", "кто-то сегодня не вернется домой..", "=(", "ты проиграл =(" };
             string[] Opponent_Dead_Commentaries = {"поздравляю =)", "кто-то сегодня не вернется домой..", "ты победил =)", "ты рад, победитель?", "кому-то сегодня сказачно повезло, да? =)" };
-            if (Shoot_At_Opponent && Count_Opponent_Lives > 0)
+            if (Shoot_At_Opponent && Opponent_Bleeding_Phase && Count_Opponent_Lives == 1 && Count_Opponent_Turns > 0)
             {
-                return $"прозвучал выстрел... количество его жизней = {Count_Opponent_Lives}. Еnter для перехода на следующее меню                                                                                                                                                                ";
+                return $"прозвучал выстрел... его тело падает на пол, но ему хватает сил встать. из него течет кровь...";
             }
-            else if (Shoot_At_Opponent && Count_Opponent_Lives <= 0)
+            else if (Shoot_At_Opponent && Count_Opponent_Lives >= 1)
+            {
+                return $"прозвучал выстрел... количество зарядов его щита = {Count_Opponent_Lives}. Еnter для перехода на следующее меню                                                                                                                                                                ";
+            }
+            else if (Shoot_At_Opponent && Opponent_Bleeding_Phase && Count_Opponent_Turns <= 0 && Count_Opponent_Lives <= 0)
             {
                 int Comm_Number = Random_Number.Next(0, 5);
                 return "прозвучал выстрел... его тело падает замертво. " + Opponent_Dead_Commentaries[Comm_Number] + ". Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                     "; ;
             }
-            else if (Count_Player_Lives > 0)
+            else if (Player_Bleeding_Phase && Count_Player_Turns > 0 && Count_Player_Lives == 1)
             {
-                return $"прозвучал выстрел... количество твоих жизней = {Count_Player_Lives}. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
+                return $"прозвучал выстрел... твое тело падает на пол, но тебе хватает сил встать. у тебя кровотечение...";
+            }
+            else if (Count_Player_Lives >= 1)
+            {
+                return $"прозвучал выстрел... количество зарядов твоего щита = {Count_Player_Lives}. Еnter для перехода на следующее меню                                                                                                                                                                                                ";
             }
             else
             {
@@ -192,7 +200,11 @@ namespace USG
         }
         public string Player_Menu(string Player_Name, int Count_Of_Player_Lives, string Opponent_Name, int Count_Of_Items, bool Opponent_HandCuffed = false, bool Player_Bleeding_Out = false, int Count_Of_Turns = 0)
         {
-            if (Count_Of_Items == 0 && Count_Of_Player_Lives == 1)
+            if (Count_Of_Items == 0 && Player_Bleeding_Out)
+            {
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника.                                                                                                                                                                                                                       ";
+            }
+            else if (Count_Of_Items == 0 && Count_Of_Player_Lives == 1)
             {
                 return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника. 0+Еnter - сдаться, если тебе нечего терять...                                                                                                                                                                                                                      ";
             }
@@ -212,13 +224,9 @@ namespace USG
             {
                 return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. кол-во ваших жизней {Count_Of_Player_Lives}. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                               ";
             }
-            else if (Count_Of_Items == 0 && Player_Bleeding_Out)
-            {
-                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}. у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника.                                                                                                                                                                                                                       ";
-            }
             else if (Opponent_HandCuffed && Player_Bleeding_Out)
             {
-                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки.  у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                               ";
+                return $"Ходит {Player_Name}. перед вашим лицом {Opponent_Name}, у него связаны руки. у вас кровотечение. через {Count_Of_Turns} ходов крови в вас будет недостаточно, чтобы вы могли жить. 1+Еnter - прокрутить оружие на столе, 2+Еnter - выстрел в себя, 3+Еnter - выстрел в соперника, 4+Еnter - меню предметов.                                                                                                                                                                                               ";
             }
             else if (Player_Bleeding_Out)
             {
