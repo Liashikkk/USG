@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Tls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
@@ -15,6 +17,11 @@ namespace USG
     internal class Program
     {
         const int STD_OUTPUT_HANDLE = -11;
+
+
+        [DllImport("winmm.dll")]
+        static extern Int32 mciSendString(string command, StringBuilder buffer, int bufferSize, IntPtr hwndCallback);
+
 
         [DllImport("kernel32.dll")]
         static extern IntPtr GetStdHandle(int handle);
@@ -33,13 +40,56 @@ namespace USG
             Console.WriteLine(text);
             Console.ReadLine();
         }
+        public static void play()
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("..\\console\\1.wav");
+            player.Load();
+            player.PlaySync();
+        }
         static void Main(string[] args)
         {
-            /*System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+            /*System.Media.SoundPlayer player = new System.Media.SoundPlayer("..\\console\\1.wav");
             player.Play();
-            player.Dispose();
-            */
+            player.Stop
 
+
+            while (true)
+            {
+                int a = Convert.ToInt32(Console.ReadLine());
+                switch (a)
+                {
+                    case 1:
+                        mciSendString(@"open ..\\console\\1.wav type waveaudio alias lol", null, 0, IntPtr.Zero);
+                        mciSendString(@"play lol", null, 0, IntPtr.Zero);
+                        break;
+                    case 2:
+                        mciSendString($"stop lol", null, 0, new IntPtr());
+                        break;
+                    case 3:
+                        player.Play();
+                        break;
+                    case 4:
+                        player.Stop();
+                        break;
+                }
+            }
+            
+             
+             
+             ConsoleKeyInfo key = new ConsoleKeyInfo();
+            
+            Thread lol = new Thread(play);
+            lol.Start();
+            while (lol.IsAlive)
+            {
+                key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.D1)
+                {
+                    Console.Write("a");
+                }
+            }
+            Console.ReadLine();
+            */
             FullScreen();
             
             All_Images Image = new All_Images();
@@ -86,7 +136,7 @@ namespace USG
                     }
                 }
                 catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
-            } 
+            }
         }
     }
 }

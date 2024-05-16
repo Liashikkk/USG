@@ -17,14 +17,18 @@ namespace USG
 
             Random Random_Number = new Random();
 
-            int PlayerOne_Lives = 1;
-            int PlayerTwo_Lives = 1;
+            int PlayerOne_Lives = 6;
+            int PlayerTwo_Lives = 6;
 
             int PlayerOne_HandCuffed = 0;
             int PlayerTwo_HandCuffed = 0;
 
             bool PlayerOne_Bleeding_Phase = false;
             bool PlayerTwo_Bleeding_Phase = false;
+            bool PlayerOne_First_Time_Bleeding = false;
+            bool PlayerTwo_First_Time_Bleeding = false;
+            int Count_Of_PlayerOne_Bleedings = 0;
+            int Count_Of_PlayerTwo_Bleedings = 0;
             int PlayerOne_Bleeding_Turns = 0;
             int PlayerTwo_Bleeding_Turns = 0;
 
@@ -98,8 +102,16 @@ namespace USG
                     switch (Number_Of_Item)
                     {
                         case 1:
-                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
-                            Max_Of_PlayerOne_Inventory++;
+                            if (PlayerOne_Bleeding_Phase)
+                            {
+                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "бинт";
+                                Max_Of_PlayerOne_Inventory++;
+                            }
+                            else
+                            {
+                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
+                                Max_Of_PlayerOne_Inventory++;
+                            }
                             break;
                         case 2:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
@@ -129,8 +141,16 @@ namespace USG
                     switch (Number_Of_Item)
                     {
                         case 1:
-                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
-                            Max_Of_PlayerTwo_Inventory++;
+                            if (PlayerTwo_Bleeding_Phase)
+                            {
+                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "бинт";
+                                Max_Of_PlayerTwo_Inventory++;
+                            }
+                            else
+                            {
+                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
+                                Max_Of_PlayerTwo_Inventory++;
+                            }
                             break;
                         case 2:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
@@ -195,8 +215,16 @@ namespace USG
                             switch (Number_Of_Item)
                             {
                                 case 1:
-                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
-                                    Max_Of_PlayerOne_Inventory++;
+                                    if (PlayerOne_Bleeding_Phase)
+                                    {
+                                        PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "бинт";
+                                        Max_Of_PlayerOne_Inventory++;
+                                    }
+                                    else
+                                    {
+                                        PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
+                                        Max_Of_PlayerOne_Inventory++;
+                                    }
                                     break;
                                 case 2:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
@@ -226,8 +254,16 @@ namespace USG
                             switch (Number_Of_Item)
                             {
                                 case 1:
-                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
-                                    Max_Of_PlayerTwo_Inventory++;
+                                    if (PlayerTwo_Bleeding_Phase)
+                                    {
+                                        PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "бинт";
+                                        Max_Of_PlayerTwo_Inventory++;
+                                    }
+                                    else
+                                    {
+                                        PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
+                                        Max_Of_PlayerTwo_Inventory++;
+                                    }
                                     break;
                                 case 2:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
@@ -283,27 +319,92 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerOne_Lives--;
-                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                         {
-                                            PlayerOne_Bleeding_Phase = true;
-                                            PlayerOne_Bleeding_Turns = 8;
-                                            PlayerOne_Lives = 1;
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
                                         }
-                                        if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                        else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                        {
                                             PlayerOne_Lives = -1;
-                                            Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerOne_Bleeding_Phase)
+                                            if (PlayerOne_First_Time_Bleeding)
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                                if (PlayerOne_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                    for(int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerOne_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerOne_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
                                             {
                                                 PlayerOne_Bleeding_Turns--;
                                             }
-                                            if (PlayerTwo_Bleeding_Phase)
+                                            if (PlayerTwo_Bleeding_Turns > 0)
                                             {
                                                 PlayerTwo_Bleeding_Turns--;
                                             }
@@ -315,16 +416,29 @@ namespace USG
                                     }
                                     else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                                     {
-                                        if (PlayerOne_Bleeding_Phase)
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
                                         }
                                         Console_WriteReadClear(Image.Blank_Shoot());
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                        }
                                         Count_Not_Fired_Shells--;
+                                        PlayerOne_First_Time_Bleeding = false;
                                     }
                                 }
                                 else if (Who_To_Shoot_At == 2)
@@ -333,27 +447,92 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerTwo_Lives--;
-                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                         {
-                                            PlayerTwo_Bleeding_Phase = true;
-                                            PlayerTwo_Bleeding_Turns = 8;
-                                            PlayerTwo_Lives = 1;
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                Count_Of_PlayerTwo_Bleedings = 4;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                PlayerTwo_Lives = 1;
+                                            }
                                         }
-                                        if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                        else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    Count_Of_PlayerTwo_Bleedings = 2;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                        {
                                             PlayerTwo_Lives = -1;
-                                            Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerOne_Bleeding_Phase)
+                                            if (PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                                if (PlayerTwo_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                    for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerTwo_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerTwo_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
                                             {
                                                 PlayerOne_Bleeding_Turns--;
                                             }
-                                            if (PlayerTwo_Bleeding_Phase)
+                                            if (PlayerTwo_Bleeding_Turns > 0)
                                             {
                                                 PlayerTwo_Bleeding_Turns--;
                                             }
@@ -367,13 +546,26 @@ namespace USG
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot(true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        PlayerTwo_First_Time_Bleeding = false;
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
                                         }
                                         if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                         {
@@ -390,27 +582,92 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
+                                    if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                     {
-                                        PlayerOne_Bleeding_Phase = true;
-                                        PlayerOne_Bleeding_Turns = 8;
-                                        PlayerOne_Lives = 1;
+                                        if (Count_Of_PlayerOne_Bleedings == 0)
+                                        {
+                                            PlayerOne_Bleeding_Phase = true;
+                                            PlayerOne_First_Time_Bleeding = true;
+                                            PlayerOne_Bleeding_Turns = 9;
+                                            Count_Of_PlayerOne_Bleedings = 4;
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Bleeding_Phase = true;
+                                            PlayerOne_First_Time_Bleeding = true;
+                                            PlayerOne_Bleeding_Turns = 9;
+                                            PlayerOne_Lives = 1;
+                                        }
                                     }
-                                    if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                    else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                        int Luck = Random_Number.Next(1, 3);
+                                        if (Luck == 1)
+                                        {
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Lives = -1;
+                                        }
+                                    }
+                                    if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                    {
                                         PlayerOne_Lives = -1;
-                                        Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                        PlayerOne_Lives = 1;
+                                    }
+                                    if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                    {
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        if (PlayerOne_First_Time_Bleeding)
+                                        {
+                                            PlayerOne_First_Time_Bleeding = false;
+                                            if (PlayerOne_Inventory.Contains("+хп"))
+                                            {
+                                                Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                {
+                                                    if (PlayerOne_Inventory[i] == "+хп")
+                                                    {
+                                                        PlayerOne_Inventory[i] = "бинт";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_First_Time_Bleeding = false;
+                                        }
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
                                         }
@@ -422,16 +679,29 @@ namespace USG
                                 }
                                 else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                                 {
-                                    if (PlayerOne_Bleeding_Phase)
+                                    Console_WriteReadClear(Image.Blank_Shoot());
+                                    if (PlayerOne_Bleeding_Turns > 0)
                                     {
                                         PlayerOne_Bleeding_Turns--;
                                     }
-                                    if (PlayerTwo_Bleeding_Phase)
+                                    if (PlayerTwo_Bleeding_Turns > 0)
                                     {
                                         PlayerTwo_Bleeding_Turns--;
                                     }
-                                    Console_WriteReadClear(Image.Blank_Shoot());
+                                    if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    }
+                                    else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                    }
                                     Count_Not_Fired_Shells--;
+                                    PlayerOne_First_Time_Bleeding = false;
                                 }
                                 break;
                             case 3:
@@ -442,27 +712,92 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
+                                    if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                     {
-                                        PlayerTwo_Bleeding_Phase = true;
-                                        PlayerTwo_Bleeding_Turns = 8;
-                                        PlayerTwo_Lives = 1;
+                                        if (Count_Of_PlayerTwo_Bleedings == 0)
+                                        {
+                                            PlayerTwo_Bleeding_Phase = true;
+                                            PlayerTwo_First_Time_Bleeding = true;
+                                            PlayerTwo_Bleeding_Turns = 9;
+                                            Count_Of_PlayerTwo_Bleedings = 4;
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Bleeding_Phase = true;
+                                            PlayerTwo_First_Time_Bleeding = true;
+                                            PlayerTwo_Bleeding_Turns = 9;
+                                            PlayerTwo_Lives = 1;
+                                        }
                                     }
-                                    if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                    else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                        int Luck = Random_Number.Next(1, 3);
+                                        if (Luck == 1)
+                                        {
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 5;
+                                                Count_Of_PlayerTwo_Bleedings = 2;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 5;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                        }
+                                    }
+                                    if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                    {
                                         PlayerTwo_Lives = -1;
-                                        Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                        PlayerTwo_Lives = 1;
+                                    }
+                                    if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                    {
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        if (PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            PlayerTwo_First_Time_Bleeding = false;
+                                            if (PlayerTwo_Inventory.Contains("+хп"))
+                                            {
+                                                Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                {
+                                                    if (PlayerTwo_Inventory[i] == "+хп")
+                                                    {
+                                                        PlayerTwo_Inventory[i] = "бинт";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_First_Time_Bleeding = false;
+                                        }
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
                                         }
@@ -476,13 +811,26 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.Blank_Shoot(true));
                                     Count_Not_Fired_Shells--;
-                                    if (PlayerOne_Bleeding_Phase)
+                                    PlayerTwo_First_Time_Bleeding = false;
+                                    if (PlayerOne_Bleeding_Turns > 0)
                                     {
                                         PlayerOne_Bleeding_Turns--;
                                     }
-                                    if (PlayerTwo_Bleeding_Phase)
+                                    if (PlayerTwo_Bleeding_Turns > 0)
                                     {
                                         PlayerTwo_Bleeding_Turns--;
+                                    }
+                                    if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    }
+                                    else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
                                     }
                                     if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                     {
@@ -503,7 +851,7 @@ namespace USG
                                         while (Items_Menu)
                                         {
                                             Console.SetCursorPosition(0, 0);
-                                            Console.Write(Image.All_Player_Items());
+                                            Console.Write(Image.All_Player_Items(PlayerOne_Bleeding_Phase));
                                             for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
                                             {
                                                 Console.Write(PlayerOne_Inventory[i] + ", ");
@@ -512,7 +860,19 @@ namespace USG
                                             switch (Convert.ToInt32(Console.ReadLine()))
                                             {
                                                 case 1:
-                                                    if (PlayerOne_Inventory.Contains("+хп") == true)
+                                                    if (PlayerOne_Bleeding_Phase && PlayerOne_Inventory.Contains("бинт") == true)
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = false;
+                                                        Count_Of_PlayerOne_Bleedings--;
+                                                        PlayerOne_Bleeding_Turns = 0;
+                                                        List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("бинт"));
+                                                        Remove_List.Add("");
+                                                        PlayerOne_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerOne_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else if (PlayerOne_Inventory.Contains("+хп") == true)
                                                     {
                                                         PlayerOne_Lives++;
                                                         List<string> Remove_List = new List<string>(PlayerOne_Inventory);
@@ -521,6 +881,10 @@ namespace USG
                                                         PlayerOne_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerOne_Inventory--;
                                                         Items_Menu = false;
+                                                    }
+                                                    else if (PlayerOne_Inventory.Contains("бинт") == true)
+                                                    {
+                                                        Console_WriteReadClear(Image.You_Dont_Bleeding_Out);
                                                     }
                                                     else
                                                     {
@@ -571,7 +935,7 @@ namespace USG
                                                     if (PlayerOne_Inventory.Contains("рандомный патрончекер") == true)
                                                     {
                                                         int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
-                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell + 1, true));
+                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells - Index_Of_Shell], Index_Of_Shell + 1, true));
                                                         List<string> Remove_List = new List<string>(PlayerOne_Inventory);
                                                         Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                         Remove_List.Add("");
@@ -670,27 +1034,92 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerTwo_Lives--;
-                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                         {
-                                            PlayerTwo_Bleeding_Phase = true;
-                                            PlayerTwo_Bleeding_Turns = 8;
-                                            PlayerTwo_Lives = 1;
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                Count_Of_PlayerTwo_Bleedings = 4;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                PlayerTwo_Lives = 1;
+                                            }
                                         }
-                                        if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                        else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    Count_Of_PlayerTwo_Bleedings = 2;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                        {
                                             PlayerTwo_Lives = -1;
-                                            Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerOne_Bleeding_Phase)
+                                            if (PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                                if (PlayerTwo_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                    for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerTwo_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerTwo_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
                                             {
                                                 PlayerOne_Bleeding_Turns--;
                                             }
-                                            if (PlayerTwo_Bleeding_Phase)
+                                            if (PlayerTwo_Bleeding_Turns > 0)
                                             {
                                                 PlayerTwo_Bleeding_Turns--;
                                             }
@@ -704,13 +1133,26 @@ namespace USG
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot());
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        PlayerTwo_First_Time_Bleeding = false;
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
                                         }
                                     }
                                 }
@@ -720,27 +1162,92 @@ namespace USG
                                     if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                     {
                                         PlayerOne_Lives--;
-                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                         {
-                                            PlayerOne_Bleeding_Phase = true;
-                                            PlayerOne_Bleeding_Turns = 8;
-                                            PlayerOne_Lives = 1;
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
                                         }
-                                        if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                        else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                        {
                                             PlayerOne_Lives = -1;
-                                            Turn_To_Play = 3;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
+                                        }
+                                        else
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
                                             Count_Not_Fired_Shells--;
-                                            if (PlayerOne_Bleeding_Phase)
+                                            if (PlayerOne_First_Time_Bleeding)
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                                if (PlayerOne_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                    for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerOne_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerOne_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
                                             {
                                                 PlayerOne_Bleeding_Turns--;
                                             }
-                                            if (PlayerTwo_Bleeding_Phase)
+                                            if (PlayerTwo_Bleeding_Turns > 0)
                                             {
                                                 PlayerTwo_Bleeding_Turns--;
                                             }
@@ -754,13 +1261,26 @@ namespace USG
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot(true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        PlayerOne_First_Time_Bleeding = false;
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
                                         }
                                         if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                         {
@@ -777,27 +1297,93 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerTwo_Lives--;
-                                    if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives <= 0)
+                                    if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                     {
-                                        PlayerTwo_Bleeding_Phase = true;
-                                        PlayerTwo_Bleeding_Turns = 8;
-                                        PlayerTwo_Lives = 1;
+                                        if (Count_Of_PlayerTwo_Bleedings == 0)
+                                        {
+                                            PlayerTwo_Bleeding_Phase = true;
+                                            PlayerTwo_First_Time_Bleeding = true;
+                                            PlayerTwo_Bleeding_Turns = 9;
+                                            Count_Of_PlayerTwo_Bleedings = 4;
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Bleeding_Phase = true;
+                                            PlayerTwo_First_Time_Bleeding = true;
+                                            PlayerTwo_Bleeding_Turns = 9;
+                                            PlayerTwo_Lives = 1;
+                                        }
                                     }
-                                    if (PlayerTwo_Lives <= 0 && PlayerTwo_Bleeding_Turns == 0)
+                                    else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                        int Luck = Random_Number.Next(1, 3);
+                                        if (Luck == 1)
+                                        {
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 5;
+                                                Count_Of_PlayerTwo_Bleedings = 2;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 5;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            PlayerTwo_Bleeding_Turns = 1;
+                                        }
+                                    }
+                                    if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                    {
                                         PlayerTwo_Lives = -1;
-                                        Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                        PlayerTwo_Lives = 1;
+                                    }
+                                    if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                    {
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        if (PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            PlayerTwo_First_Time_Bleeding = false;
+                                            if (PlayerTwo_Inventory.Contains("+хп"))
+                                            {
+                                                Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                {
+                                                    if (PlayerTwo_Inventory[i] == "+хп")
+                                                    {
+                                                        PlayerTwo_Inventory[i] = "бинт";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_First_Time_Bleeding = false;
+                                        }
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
                                         }
@@ -811,13 +1397,26 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.Blank_Shoot());
                                     Count_Not_Fired_Shells--;
-                                    if (PlayerOne_Bleeding_Phase)
+                                    PlayerTwo_First_Time_Bleeding = false;
+                                    if (PlayerOne_Bleeding_Turns > 0)
                                     {
                                         PlayerOne_Bleeding_Turns--;
                                     }
-                                    if (PlayerTwo_Bleeding_Phase)
+                                    if (PlayerTwo_Bleeding_Turns > 0)
                                     {
                                         PlayerTwo_Bleeding_Turns--;
+                                    }
+                                    if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    }
+                                    else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
                                     }
                                 }
                                 break;
@@ -829,27 +1428,92 @@ namespace USG
                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                 {
                                     PlayerOne_Lives--;
-                                    if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives <= 0)
+                                    if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                     {
-                                        PlayerOne_Bleeding_Phase = true;
-                                        PlayerOne_Bleeding_Turns = 8;
-                                        PlayerOne_Lives = 1;
+                                        if (Count_Of_PlayerOne_Bleedings == 0)
+                                        {
+                                            PlayerOne_Bleeding_Phase = true;
+                                            PlayerOne_First_Time_Bleeding = true;
+                                            PlayerOne_Bleeding_Turns = 9;
+                                            Count_Of_PlayerOne_Bleedings = 4;
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Bleeding_Phase = true;
+                                            PlayerOne_First_Time_Bleeding = true;
+                                            PlayerOne_Bleeding_Turns = 9;
+                                            PlayerOne_Lives = 1;
+                                        }
                                     }
-                                    if (PlayerOne_Lives <= 0 && PlayerOne_Bleeding_Turns == 0)
+                                    else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                        int Luck = Random_Number.Next(1, 3);
+                                        if (Luck == 1)
+                                        {
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Lives = -1;
+                                        }
+                                    }
+                                    if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                    {
                                         PlayerOne_Lives = -1;
-                                        Turn_To_Play = 3;
                                     }
                                     else
                                     {
-                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                        PlayerOne_Lives = 1;
+                                    }
+                                    if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                    {
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
+                                    }
+                                    else
+                                    {
+                                        Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
                                         Count_Not_Fired_Shells--;
-                                        if (PlayerOne_Bleeding_Phase)
+                                        if (PlayerOne_First_Time_Bleeding)
+                                        {
+                                            PlayerOne_First_Time_Bleeding = false;
+                                            if (PlayerOne_Inventory.Contains("+хп"))
+                                            {
+                                                Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                {
+                                                    if (PlayerOne_Inventory[i] == "+хп")
+                                                    {
+                                                        PlayerOne_Inventory[i] = "бинт";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_First_Time_Bleeding = false;
+                                        }
+                                        if (PlayerOne_Bleeding_Turns > 0)
                                         {
                                             PlayerOne_Bleeding_Turns--;
                                         }
-                                        if (PlayerTwo_Bleeding_Phase)
+                                        if (PlayerTwo_Bleeding_Turns > 0)
                                         {
                                             PlayerTwo_Bleeding_Turns--;
                                         }
@@ -863,13 +1527,26 @@ namespace USG
                                 {
                                     Console_WriteReadClear(Image.Blank_Shoot(true));
                                     Count_Not_Fired_Shells--;
-                                    if (PlayerOne_Bleeding_Phase)
+                                    PlayerOne_First_Time_Bleeding = false;
+                                    if (PlayerOne_Bleeding_Turns > 0)
                                     {
                                         PlayerOne_Bleeding_Turns--;
                                     }
-                                    if (PlayerTwo_Bleeding_Phase)
+                                    if (PlayerTwo_Bleeding_Turns > 0)
                                     {
                                         PlayerTwo_Bleeding_Turns--;
+                                    }
+                                    if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerOne_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    }
+                                    else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                    {
+                                        PlayerTwo_Lives = -1;
+                                        Turn_To_Play = 3;
+                                        Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
                                     }
                                     if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                     {
@@ -890,7 +1567,7 @@ namespace USG
                                         while (Items_Menu)
                                         {
                                             Console.SetCursorPosition(0, 0);
-                                            Console.Write(Image.All_Player_Items());
+                                            Console.Write(Image.All_Player_Items(PlayerTwo_Bleeding_Phase));
                                             for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
                                             {
                                                 Console.Write(PlayerTwo_Inventory[i] + ", ");
@@ -899,7 +1576,19 @@ namespace USG
                                             switch (Convert.ToInt32(Console.ReadLine()))
                                             {
                                                 case 1:
-                                                    if (PlayerTwo_Inventory.Contains("+хп") == true)
+                                                    if (PlayerTwo_Bleeding_Phase && PlayerTwo_Inventory.Contains("бинт") == true)
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = false;
+                                                        Count_Of_PlayerTwo_Bleedings--;
+                                                        PlayerTwo_Bleeding_Turns = 0;
+                                                        List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("бинт"));
+                                                        Remove_List.Add("");
+                                                        PlayerTwo_Inventory = Remove_List.ToArray();
+                                                        Max_Of_PlayerTwo_Inventory--;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                     {
                                                         PlayerTwo_Lives++;
                                                         List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
@@ -908,6 +1597,10 @@ namespace USG
                                                         PlayerTwo_Inventory = Remove_List.ToArray();
                                                         Max_Of_PlayerTwo_Inventory--;
                                                         Items_Menu = false;
+                                                    }
+                                                    else if (PlayerTwo_Inventory.Contains("бинт") == true)
+                                                    {
+                                                        Console_WriteReadClear(Image.You_Dont_Bleeding_Out);
                                                     }
                                                     else
                                                     {
@@ -957,7 +1650,7 @@ namespace USG
                                                     if (PlayerTwo_Inventory.Contains("рандомный патрончекер") == true)
                                                     {
                                                         int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
-                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Index_Of_Shell], Index_Of_Shell + 1, true));
+                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells - Index_Of_Shell], Index_Of_Shell + 1, true));
                                                         List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
                                                         Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                         Remove_List.Add("");
@@ -1049,6 +1742,10 @@ namespace USG
 
             bool PlayerOne_Bleeding_Phase = false;
             bool PlayerTwo_Bleeding_Phase = false;
+            bool PlayerOne_First_Time_Bleeding = false;
+            bool PlayerTwo_First_Time_Bleeding = false;
+            int Count_Of_PlayerOne_Bleedings = 0;
+            int Count_Of_PlayerTwo_Bleedings = 0;
             int PlayerOne_Bleeding_Turns = 0;
             int PlayerTwo_Bleeding_Turns = 0;
 
@@ -1122,8 +1819,16 @@ namespace USG
                     switch (Number_Of_Item)
                     {
                         case 1:
-                            PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
-                            Max_Of_PlayerOne_Inventory++;
+                            if (PlayerOne_Bleeding_Phase)
+                            {
+                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "бинт";
+                                Max_Of_PlayerOne_Inventory++;
+                            }
+                            else
+                            {
+                                PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
+                                Max_Of_PlayerOne_Inventory++;
+                            }
                             break;
                         case 2:
                             PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
@@ -1153,8 +1858,16 @@ namespace USG
                     switch (Number_Of_Item)
                     {
                         case 1:
-                            PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
-                            Max_Of_PlayerTwo_Inventory++;
+                            if (PlayerTwo_Bleeding_Phase)
+                            {
+                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "бинт";
+                                Max_Of_PlayerTwo_Inventory++;
+                            }
+                            else
+                            {
+                                PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
+                                Max_Of_PlayerTwo_Inventory++;
+                            }
                             break;
                         case 2:
                             PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
@@ -1222,8 +1935,16 @@ namespace USG
                             switch (Number_Of_Item)
                             {
                                 case 1:
-                                    PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
-                                    Max_Of_PlayerOne_Inventory++;
+                                    if (PlayerOne_Bleeding_Phase)
+                                    {
+                                        PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "бинт";
+                                        Max_Of_PlayerOne_Inventory++;
+                                    }
+                                    else
+                                    {
+                                        PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "+хп";
+                                        Max_Of_PlayerOne_Inventory++;
+                                    }
                                     break;
                                 case 2:
                                     PlayerOne_Inventory[Max_Of_PlayerOne_Inventory] = "наручники";
@@ -1253,8 +1974,16 @@ namespace USG
                             switch (Number_Of_Item)
                             {
                                 case 1:
-                                    PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
-                                    Max_Of_PlayerTwo_Inventory++;
+                                    if (PlayerTwo_Bleeding_Phase)
+                                    {
+                                        PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "бинт";
+                                        Max_Of_PlayerTwo_Inventory++;
+                                    }
+                                    else
+                                    {
+                                        PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "+хп";
+                                        Max_Of_PlayerTwo_Inventory++;
+                                    }
                                     break;
                                 case 2:
                                     PlayerTwo_Inventory[Max_Of_PlayerTwo_Inventory] = "наручники";
@@ -1318,7 +2047,7 @@ namespace USG
                                                 while (Items_Menu)
                                                 {
                                                     Console.SetCursorPosition(0, 0);
-                                                    Console.Write(Image.All_Player_Items(true, false));
+                                                    Console.Write(Image.All_Player_Items(PlayerOne_Bleeding_Phase, true, false));
                                                     for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
                                                     {
                                                         if (PlayerOne_Inventory[i].Contains("рандомный патрончекер") || PlayerOne_Inventory[i].Contains("патрончекер"))
@@ -1683,17 +2412,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerOne_Lives -= 2;
-                                            if (PlayerOne_Lives <= 0)
+                                            if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerOne_Bleedings == 0)
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        Count_Of_PlayerOne_Bleedings = 4;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
-                                                if (PlayerTwo_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
+                                                if (PlayerOne_First_Time_Bleeding)
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                    if (PlayerOne_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                        for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerOne_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerOne_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 2;
                                                 }
@@ -1705,17 +2513,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerOne_Lives--;
-                                            if (PlayerOne_Lives <= 0)
+                                            if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerOne_Bleedings == 0)
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        Count_Of_PlayerOne_Bleedings = 4;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
-                                                if (PlayerTwo_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
+                                                if (PlayerOne_First_Time_Bleeding)
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                    if (PlayerOne_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                        for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerOne_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerOne_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 2;
                                                 }
@@ -1727,9 +2614,30 @@ namespace USG
                                         else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                         {
                                             Console_WriteReadClear(Image.Blank_Shoot());
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                            }
                                             DBShotgun[0] = "null";
                                             DBShotgun[1] = "null";
                                             Menu = false;
+                                            PlayerOne_First_Time_Bleeding = false;
                                         }
                                     }
                                     else if (Who_To_Shoot_At == 2)
@@ -1738,17 +2646,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerTwo_Lives -= 2;
-                                            if (PlayerTwo_Lives <= 0)
+                                            if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerTwo_Bleedings = 4;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        Count_Of_PlayerTwo_Bleedings = 2;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
-                                                if (PlayerTwo_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
+                                                if (PlayerTwo_First_Time_Bleeding)
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                    if (PlayerTwo_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                        for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerTwo_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerTwo_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 2;
                                                 }
@@ -1760,17 +2747,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerTwo_Lives--;
-                                            if (PlayerTwo_Lives <= 0)
+                                            if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerTwo_Bleedings = 4;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        Count_Of_PlayerTwo_Bleedings = 2;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
-                                                if (PlayerTwo_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
+                                                if (PlayerTwo_First_Time_Bleeding)
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                    if (PlayerTwo_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                        for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerTwo_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerTwo_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 2;
                                                 }
@@ -1782,7 +2848,28 @@ namespace USG
                                         else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                         {
                                             Console_WriteReadClear(Image.Blank_Shoot(true));
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            PlayerTwo_First_Time_Bleeding = false;
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -1800,17 +2887,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerOne_Lives -= 2;
-                                        if (PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
+                                            if (PlayerOne_First_Time_Bleeding)
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                                if (PlayerOne_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                    for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerOne_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerOne_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -1822,17 +2988,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerOne_Lives--;
-                                        if (PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns));
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase));
+                                            if (PlayerOne_First_Time_Bleeding)
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                                if (PlayerOne_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                    for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerOne_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerOne_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -1844,9 +3089,30 @@ namespace USG
                                     else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot());
+                                        if (PlayerOne_Bleeding_Turns > 0)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Turns > 0)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                        }
                                         DBShotgun[0] = "null";
                                         DBShotgun[1] = "null";
                                         Menu = false;
+                                        PlayerOne_First_Time_Bleeding = false;
                                     }
                                     break;
                                 case 3:
@@ -1857,17 +3123,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerTwo_Lives -= 2;
-                                        if (PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                Count_Of_PlayerTwo_Bleedings = 4;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    Count_Of_PlayerTwo_Bleedings = 2;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
+                                            if (PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                                if (PlayerTwo_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                    for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerTwo_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerTwo_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -1879,17 +3224,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerTwo_Lives--;
-                                        if (PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                Count_Of_PlayerTwo_Bleedings = 4;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    Count_Of_PlayerTwo_Bleedings = 2;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, PlayerTwo_Bleeding_Turns, PlayerOne_Bleeding_Turns, true));
-                                            if (PlayerTwo_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerOne_Lives, PlayerTwo_Lives, PlayerOne_Bleeding_Phase, PlayerTwo_Bleeding_Phase, true));
+                                            if (PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                                if (PlayerTwo_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                    for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerTwo_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerTwo_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 2;
                                             }
@@ -1901,7 +3325,28 @@ namespace USG
                                     else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot(true));
-                                        if (PlayerTwo_HandCuffed == 0)
+                                        PlayerTwo_First_Time_Bleeding = false;
+                                        if (PlayerOne_Bleeding_Turns > 0)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Turns > 0)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                        }
+                                        if (PlayerTwo_HandCuffed == 0 && PlayerOne_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 2;
                                         }
@@ -1923,7 +3368,7 @@ namespace USG
                                             while (Items_Menu)
                                             {
                                                 Console.SetCursorPosition(0, 0);
-                                                Console.Write(Image.All_Player_Items(false, true));
+                                                Console.Write(Image.All_Player_Items(PlayerOne_Bleeding_Phase, false, true));
                                                 for (int i = 0; i < Max_Of_PlayerOne_Inventory; i++)
                                                 {
                                                     Console.Write(PlayerOne_Inventory[i] + ", ");
@@ -1932,7 +3377,19 @@ namespace USG
                                                 switch (Convert.ToInt32(Console.ReadLine()))
                                                 {
                                                     case 1:
-                                                        if (PlayerOne_Inventory.Contains("+хп") == true)
+                                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Inventory.Contains("бинт") == true)
+                                                        {
+                                                            PlayerOne_Bleeding_Phase = false;
+                                                            Count_Of_PlayerOne_Bleedings--;
+                                                            PlayerOne_Bleeding_Turns = 0;
+                                                            List<string> Remove_List = new List<string>(PlayerOne_Inventory);
+                                                            Remove_List.RemoveAt(Remove_List.IndexOf("бинт"));
+                                                            Remove_List.Add("");
+                                                            PlayerOne_Inventory = Remove_List.ToArray();
+                                                            Max_Of_PlayerOne_Inventory--;
+                                                            Items_Menu = false;
+                                                        }
+                                                        else if (PlayerOne_Inventory.Contains("+хп") == true)
                                                         {
                                                             PlayerOne_Lives++;
                                                             List<string> Remove_List = new List<string>(PlayerOne_Inventory);
@@ -1941,6 +3398,10 @@ namespace USG
                                                             PlayerOne_Inventory = Remove_List.ToArray();
                                                             Max_Of_PlayerOne_Inventory--;
                                                             Items_Menu = false;
+                                                        }
+                                                        else if (PlayerOne_Inventory.Contains("бинт") == true)
+                                                        {
+                                                            Console_WriteReadClear(Image.You_Dont_Bleeding_Out);
                                                         }
                                                         else
                                                         {
@@ -2085,7 +3546,7 @@ namespace USG
                                                 while (Items_Menu)
                                                 {
                                                     Console.SetCursorPosition(0, 0);
-                                                    Console.Write(Image.All_Player_Items(true, false));
+                                                    Console.Write(Image.All_Player_Items(PlayerTwo_Bleeding_Phase, true, false));
                                                     for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
                                                     {
                                                         if (PlayerTwo_Inventory[i].Contains("рандомный патрончекер") || PlayerTwo_Inventory[i].Contains("патрончекер"))
@@ -2449,17 +3910,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerTwo_Lives -= 2;
-                                            if (PlayerTwo_Lives <= 0)
+                                            if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerTwo_Bleedings = 4;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        Count_Of_PlayerTwo_Bleedings = 2;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
-                                                if (PlayerOne_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
+                                                if (PlayerTwo_First_Time_Bleeding)
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                    if (PlayerTwo_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                        for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerTwo_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerTwo_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 1;
                                                 }
@@ -2471,17 +4011,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerTwo_Lives--;
-                                            if (PlayerTwo_Lives <= 0)
+                                            if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerTwo_Bleedings = 4;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 9;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        Count_Of_PlayerTwo_Bleedings = 2;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerTwo_Bleeding_Phase = true;
+                                                        PlayerTwo_First_Time_Bleeding = true;
+                                                        PlayerTwo_Bleeding_Turns = 5;
+                                                        PlayerTwo_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
                                                 PlayerTwo_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
-                                                if (PlayerOne_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
+                                                if (PlayerTwo_First_Time_Bleeding)
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                    if (PlayerTwo_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                        for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerTwo_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerTwo_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 1;
                                                 }
@@ -2493,6 +4112,27 @@ namespace USG
                                         else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                         {
                                             Console_WriteReadClear(Image.Blank_Shoot());
+                                            PlayerTwo_First_Time_Bleeding = false;
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                            }
                                             DBShotgun[0] = "null";
                                             DBShotgun[1] = "null";
                                             Menu = false;
@@ -2503,17 +4143,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerOne_Lives -= 2;
-                                            if (PlayerOne_Lives <= 0)
+                                            if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerOne_Bleedings == 0)
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        Count_Of_PlayerOne_Bleedings = 4;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
-                                                if (PlayerOne_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
+                                                if (PlayerOne_First_Time_Bleeding)
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                    if (PlayerOne_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                        for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerOne_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerOne_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 1;
                                                 }
@@ -2525,17 +4244,96 @@ namespace USG
                                         if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                         {
                                             PlayerOne_Lives--;
-                                            if (PlayerOne_Lives <= 0)
+                                            if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                            {
+                                                int Luck = Random_Number.Next(1, 3);
+                                                if (Luck == 1)
+                                                {
+                                                    if (Count_Of_PlayerOne_Bleedings == 0)
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        Count_Of_PlayerOne_Bleedings = 4;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        PlayerOne_Bleeding_Phase = true;
+                                                        PlayerOne_First_Time_Bleeding = true;
+                                                        PlayerOne_Bleeding_Turns = 9;
+                                                        PlayerOne_Lives = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Lives = -1;
+                                                }
+                                            }
+                                            if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                            {
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
                                                 PlayerOne_Lives = -1;
                                                 Turn_To_Play = 3;
                                                 Menu = false;
                                             }
                                             else
                                             {
-                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
-                                                if (PlayerOne_HandCuffed == 0)
+                                                Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
+                                                if (PlayerOne_First_Time_Bleeding)
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                    if (PlayerOne_Inventory.Contains("+хп"))
+                                                    {
+                                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                        for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                        {
+                                                            if (PlayerOne_Inventory[i] == "+хп")
+                                                            {
+                                                                PlayerOne_Inventory[i] = "бинт";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_First_Time_Bleeding = false;
+                                                }
+                                                if (PlayerOne_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerOne_Bleeding_Turns--;
+                                                }
+                                                if (PlayerTwo_Bleeding_Turns > 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Turns--;
+                                                }
+                                                if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                                 {
                                                     Turn_To_Play = 1;
                                                 }
@@ -2547,9 +4345,30 @@ namespace USG
                                         else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                         {
                                             Console_WriteReadClear(Image.Blank_Shoot(true));
+                                            PlayerOne_First_Time_Bleeding = false;
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerOne_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                            }
+                                            else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                                Turn_To_Play = 3;
+                                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                            }
                                             DBShotgun[0] = "null";
                                             DBShotgun[1] = "null";
-                                            if (PlayerOne_HandCuffed == 0)
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -2565,17 +4384,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerTwo_Lives -= 2;
-                                        if (PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                Count_Of_PlayerTwo_Bleedings = 4;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    Count_Of_PlayerTwo_Bleedings = 2;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
-                                            if (PlayerOne_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
+                                            if (PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                                if (PlayerTwo_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                    for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerTwo_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerTwo_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -2587,17 +4485,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerTwo_Lives--;
-                                        if (PlayerTwo_Lives <= 0)
+                                        if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
+                                            if (Count_Of_PlayerTwo_Bleedings == 0)
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                Count_Of_PlayerTwo_Bleedings = 4;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Bleeding_Phase = true;
+                                                PlayerTwo_First_Time_Bleeding = true;
+                                                PlayerTwo_Bleeding_Turns = 9;
+                                                PlayerTwo_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase == false && PlayerTwo_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerTwo_Bleedings == 0)
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    Count_Of_PlayerTwo_Bleedings = 2;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerTwo_Bleeding_Phase = true;
+                                                    PlayerTwo_First_Time_Bleeding = true;
+                                                    PlayerTwo_Bleeding_Turns = 5;
+                                                    PlayerTwo_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && Count_Of_PlayerTwo_Bleedings == 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase && PlayerTwo_Bleeding_Turns <= 0 || !PlayerTwo_First_Time_Bleeding && PlayerTwo_Bleeding_Phase)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerTwo_Lives = 1;
+                                        }
+                                        if (PlayerTwo_Lives < 1 && !PlayerTwo_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
                                             PlayerTwo_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns));
-                                            if (PlayerOne_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase));
+                                            if (PlayerTwo_First_Time_Bleeding)
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                                if (PlayerTwo_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerTwo_Name));
+                                                    for (int i = 0; i < PlayerTwo_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerTwo_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerTwo_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerTwo_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -2609,6 +4586,27 @@ namespace USG
                                     else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot());
+                                        PlayerTwo_First_Time_Bleeding = false;
+                                        if (PlayerOne_Bleeding_Turns > 0)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Turns > 0)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                        }
                                         DBShotgun[0] = "null";
                                         DBShotgun[1] = "null";
                                         Menu = false;
@@ -2622,17 +4620,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerOne_Lives -= 2;
-                                        if (PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
-                                            if (PlayerOne_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
+                                            if (PlayerOne_First_Time_Bleeding)
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                                if (PlayerOne_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                    for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerOne_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerOne_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -2644,17 +4721,96 @@ namespace USG
                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                     {
                                         PlayerOne_Lives--;
-                                        if (PlayerOne_Lives <= 0)
+                                        if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives == 0)
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
+                                            if (Count_Of_PlayerOne_Bleedings == 0)
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                Count_Of_PlayerOne_Bleedings = 4;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Bleeding_Phase = true;
+                                                PlayerOne_First_Time_Bleeding = true;
+                                                PlayerOne_Bleeding_Turns = 9;
+                                                PlayerOne_Lives = 1;
+                                            }
+                                        }
+                                        else if (PlayerOne_Bleeding_Phase == false && PlayerOne_Lives < 0)
+                                        {
+                                            int Luck = Random_Number.Next(1, 3);
+                                            if (Luck == 1)
+                                            {
+                                                if (Count_Of_PlayerOne_Bleedings == 0)
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    Count_Of_PlayerOne_Bleedings = 4;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                                else
+                                                {
+                                                    PlayerOne_Bleeding_Phase = true;
+                                                    PlayerOne_First_Time_Bleeding = true;
+                                                    PlayerOne_Bleeding_Turns = 9;
+                                                    PlayerOne_Lives = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_Lives = -1;
+                                            }
+                                        }
+                                        if (!PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && Count_Of_PlayerOne_Bleedings == 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase && PlayerOne_Bleeding_Turns <= 0 || !PlayerOne_First_Time_Bleeding && PlayerOne_Bleeding_Phase)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                        }
+                                        else
+                                        {
+                                            PlayerOne_Lives = 1;
+                                        }
+                                        if (PlayerOne_Lives < 1 && !PlayerOne_First_Time_Bleeding)
+                                        {
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
                                             PlayerOne_Lives = -1;
                                             Turn_To_Play = 3;
                                             Menu = false;
                                         }
                                         else
                                         {
-                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, PlayerOne_Bleeding_Turns, PlayerTwo_Bleeding_Turns, true));
-                                            if (PlayerOne_HandCuffed == 0)
+                                            Console_WriteReadClear(Image.Live_Shoot(PlayerTwo_Lives, PlayerOne_Lives, PlayerTwo_Bleeding_Phase, PlayerOne_Bleeding_Phase, true));
+                                            if (PlayerOne_First_Time_Bleeding)
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                                if (PlayerOne_Inventory.Contains("+хп"))
+                                                {
+                                                    Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(PlayerOne_Name));
+                                                    for (int i = 0; i < PlayerOne_Inventory.Length; i++)
+                                                    {
+                                                        if (PlayerOne_Inventory[i] == "+хп")
+                                                        {
+                                                            PlayerOne_Inventory[i] = "бинт";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                PlayerOne_First_Time_Bleeding = false;
+                                            }
+                                            if (PlayerOne_Bleeding_Turns > 0)
+                                            {
+                                                PlayerOne_Bleeding_Turns--;
+                                            }
+                                            if (PlayerTwo_Bleeding_Turns > 0)
+                                            {
+                                                PlayerTwo_Bleeding_Turns--;
+                                            }
+                                            if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                             {
                                                 Turn_To_Play = 1;
                                             }
@@ -2666,9 +4822,30 @@ namespace USG
                                     else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                     {
                                         Console_WriteReadClear(Image.Blank_Shoot(true));
+                                        PlayerOne_First_Time_Bleeding = false;
+                                        if (PlayerOne_Bleeding_Turns > 0)
+                                        {
+                                            PlayerOne_Bleeding_Turns--;
+                                        }
+                                        if (PlayerTwo_Bleeding_Turns > 0)
+                                        {
+                                            PlayerTwo_Bleeding_Turns--;
+                                        }
+                                        if (PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && Count_Of_PlayerOne_Bleedings == 0 || PlayerOne_Bleeding_Phase && PlayerOne_Lives <= 1 && PlayerOne_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerOne_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                        }
+                                        else if (PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && Count_Of_PlayerTwo_Bleedings == 0 || PlayerTwo_Bleeding_Phase && PlayerTwo_Lives <= 1 && PlayerTwo_Bleeding_Turns <= 0)
+                                        {
+                                            PlayerTwo_Lives = -1;
+                                            Turn_To_Play = 3;
+                                            Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                        }
                                         DBShotgun[0] = "null";
                                         DBShotgun[1] = "null";
-                                        if (PlayerOne_HandCuffed == 0)
+                                        if (PlayerOne_HandCuffed == 0 && PlayerTwo_Bleeding_Turns % 2 == 0)
                                         {
                                             Turn_To_Play = 1;
                                         }
@@ -2688,7 +4865,7 @@ namespace USG
                                             while (Items_Menu)
                                             {
                                                 Console.SetCursorPosition(0, 0);
-                                                Console.Write(Image.All_Player_Items(false, true));
+                                                Console.Write(Image.All_Player_Items(PlayerTwo_Bleeding_Phase, false, true));
                                                 for (int i = 0; i < Max_Of_PlayerTwo_Inventory; i++)
                                                 {
                                                     Console.Write(PlayerTwo_Inventory[i] + ", ");
@@ -2697,7 +4874,19 @@ namespace USG
                                                 switch (Convert.ToInt32(Console.ReadLine()))
                                                 {
                                                     case 1:
-                                                        if (PlayerTwo_Inventory.Contains("+хп") == true)
+                                                        if (PlayerTwo_Bleeding_Phase && PlayerTwo_Inventory.Contains("бинт") == true)
+                                                        {
+                                                            PlayerTwo_Bleeding_Phase = false;
+                                                            Count_Of_PlayerTwo_Bleedings--;
+                                                            PlayerTwo_Bleeding_Turns = 0;
+                                                            List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
+                                                            Remove_List.RemoveAt(Remove_List.IndexOf("бинт"));
+                                                            Remove_List.Add("");
+                                                            PlayerTwo_Inventory = Remove_List.ToArray();
+                                                            Max_Of_PlayerTwo_Inventory--;
+                                                            Items_Menu = false;
+                                                        }
+                                                        else if (PlayerTwo_Inventory.Contains("+хп") == true)
                                                         {
                                                             PlayerTwo_Lives++;
                                                             List<string> Remove_List = new List<string>(PlayerTwo_Inventory);
@@ -2706,6 +4895,10 @@ namespace USG
                                                             PlayerTwo_Inventory = Remove_List.ToArray();
                                                             Max_Of_PlayerTwo_Inventory--;
                                                             Items_Menu = false;
+                                                        }
+                                                        else if (PlayerTwo_Inventory.Contains("бинт") == true)
+                                                        {
+                                                            Console_WriteReadClear(Image.You_Dont_Bleeding_Out);
                                                         }
                                                         else
                                                         {
