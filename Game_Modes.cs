@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,23 @@ namespace USG
         All_Images Image = new All_Images();
 
         Random Random_Number = new Random();
+        private void Ending(string Winner_Name, double Winner_Money_Factor, bool Opponent_Gave_Up = false)
+        {
+            double Money;
+            if (Opponent_Gave_Up && Winner_Money_Factor > 0)
+            {
+                Money = 40000 * Winner_Money_Factor;
+            }
+            else if (Winner_Money_Factor > 0)
+            {
+                Money = 20000 * Winner_Money_Factor;
+            }
+            else
+            {
+                Money = 20000;
+            }
+            Console_WriteReadClear(Image.Winner_Ending(Winner_Name, Money));
+        }
         private void Give_Items(ref string[] Player_Inventory, ref int Count_Of_Items, ref int Max_Of_Player_Inventory, bool Player_Bleeding_Phase)
         {
             for (int i = 0; i < Count_Of_Items; i++)
@@ -128,7 +146,7 @@ namespace USG
                 Handful_Of_Shells[i] = Temp_For_Handful_Of_Shells;
             }
         }
-        private void Shotgun_Player_Turn(ref bool Player_Double_Damage, ref int Turn_To_Play, ref string Player_Name, ref int Player_Lives, ref bool Player_First_Time_Bleeding, ref bool Opponent_First_Time_Bleeding, ref int Opponent_Lives, ref string Opponent_Name, ref int Count_Of_Items, ref int Opponent_HandCuffed, ref bool Player_Bleeding_Phase, ref int Player_Bleeding_Turns, ref int Count_Of_Player_Bleedings, ref bool Opponent_Bleeding_Phase, ref int Opponent_Bleeding_Turns, ref int Count_Of_Opponent_Bleedings, ref string[] Magazine, ref int Count_Not_Fired_Shells, ref int Max_Of_Player_Inventory, ref string[] Player_Inventory, ref string[] Opponent_Inventory)
+        private void Shotgun_Player_Turn(ref double Player_Money_Factor, ref double Opponent_Money_Factor, ref bool Player_Double_Damage, ref int Turn_To_Play, ref string Player_Name, ref int Player_Lives, ref bool Player_First_Time_Bleeding, ref bool Opponent_First_Time_Bleeding, ref int Opponent_Lives, ref string Opponent_Name, ref int Count_Of_Items, ref int Opponent_HandCuffed, ref bool Player_Bleeding_Phase, ref int Player_Bleeding_Turns, ref int Count_Of_Player_Bleedings, ref bool Opponent_Bleeding_Phase, ref int Opponent_Bleeding_Turns, ref int Count_Of_Opponent_Bleedings, ref string[] Magazine, ref int Count_Not_Fired_Shells, ref int Max_Of_Player_Inventory, ref string[] Player_Inventory, ref string[] Opponent_Inventory)
         {
             if (Opponent_HandCuffed > 0)
             {
@@ -220,12 +238,15 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
+                                    Player_Money_Factor -= 1.0;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Player_Bleeding_Phase));
+                                    Ending(Opponent_Name, Opponent_Money_Factor);
                                 }
                                 else
                                 {
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Player_Bleeding_Phase));
                                     Count_Not_Fired_Shells--;
+                                    Player_Money_Factor -= 0.5;
                                     if (Player_First_Time_Bleeding)
                                     {
                                         Player_First_Time_Bleeding = false;
@@ -261,6 +282,7 @@ namespace USG
                             }
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
+                                Player_Money_Factor += 1.0;
                                 if (Opponent_HandCuffed > 0)
                                 {
                                     Opponent_HandCuffed--;
@@ -356,12 +378,15 @@ namespace USG
                                 {
                                     Opponent_Lives = -1;
                                     Turn_To_Play = 3;
+                                    Player_Money_Factor =+ 1.0;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
+                                    Ending(Player_Name, Player_Money_Factor);
                                 }
                                 else
                                 {
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Opponent_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                     Count_Not_Fired_Shells--;
+                                    Player_Money_Factor += 0.5;
                                     if (Opponent_First_Time_Bleeding)
                                     {
                                         Opponent_First_Time_Bleeding = false;
@@ -399,6 +424,7 @@ namespace USG
                             {
                                 Console_WriteReadClear(Image.Blank_Shoot(true));
                                 Count_Not_Fired_Shells--;
+                                Player_Money_Factor -= 0.5;
                                 Opponent_First_Time_Bleeding = false;
                                 if (Player_Bleeding_Turns > 0)
                                 {
@@ -499,12 +525,15 @@ namespace USG
                             {
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
+                                Player_Money_Factor -= 1.0;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Player_Bleeding_Phase));
+                                Ending(Opponent_Name, Opponent_Money_Factor);
                             }
                             else
                             {
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Player_Bleeding_Phase));
                                 Count_Not_Fired_Shells--;
+                                Player_Money_Factor -= 0.5;
                                 if (Player_First_Time_Bleeding)
                                 {
                                     Player_First_Time_Bleeding = false;
@@ -540,6 +569,7 @@ namespace USG
                         }
                         else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                         {
+                            Player_Money_Factor += 1.0;
                             if (Opponent_HandCuffed > 0)
                             {
                                 Opponent_HandCuffed--;
@@ -637,12 +667,15 @@ namespace USG
                             {
                                 Opponent_Lives = -1;
                                 Turn_To_Play = 3;
+                                Player_Money_Factor = +1.0;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
+                                Ending(Player_Name, Player_Money_Factor);
                             }
                             else
                             {
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Opponent_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                 Count_Not_Fired_Shells--;
+                                Player_Money_Factor += 0.5;
                                 if (Opponent_First_Time_Bleeding)
                                 {
                                     Opponent_First_Time_Bleeding = false;
@@ -680,6 +713,7 @@ namespace USG
                         {
                             Console_WriteReadClear(Image.Blank_Shoot(true));
                             Count_Not_Fired_Shells--;
+                            Player_Money_Factor -= 0.5;
                             Opponent_First_Time_Bleeding = false;
                             if (Player_Bleeding_Turns > 0)
                             {
@@ -739,6 +773,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else if (Player_Inventory.Contains("+хп") == true)
@@ -749,6 +784,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else if (Player_Inventory.Contains("бинт") == true)
@@ -775,6 +811,7 @@ namespace USG
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
+                                                    Player_Money_Factor += 0.5;
                                                     Items_Menu = false;
                                                 }
 
@@ -793,6 +830,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else
@@ -810,6 +848,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else
@@ -833,6 +872,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else
@@ -865,6 +905,7 @@ namespace USG
                                                                     Player_Inventory = Remove_List.ToArray();
                                                                     Max_Of_Player_Inventory--;
                                                                     Count_Not_Fired_Shells++;
+                                                                    Player_Money_Factor += 0.5;
                                                                     Items_Menu = false;
                                                                     break;
                                                                 case 2:
@@ -876,6 +917,7 @@ namespace USG
                                                                     Player_Inventory = Remove_List.ToArray();
                                                                     Max_Of_Player_Inventory--;
                                                                     Count_Not_Fired_Shells++;
+                                                                    Player_Money_Factor += 0.5;
                                                                     Items_Menu = false;
                                                                     break;
                                                                 default:
@@ -900,25 +942,27 @@ namespace USG
                                                     if (Player_Inventory.Contains("боевой патрон") == true)
                                                     {
                                                         Add_List.Insert(0, "Боевой");
-                                                        Magazine = Add_List.ToArray(); 
+                                                        Magazine = Add_List.ToArray();
                                                         List<string> Remove_List = new List<string>(Player_Inventory);
                                                         Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
                                                         Remove_List.Add("");
                                                         Player_Inventory = Remove_List.ToArray();
                                                         Max_Of_Player_Inventory--;
                                                         Count_Not_Fired_Shells++;
+                                                        Player_Money_Factor += 0.5;
                                                         Items_Menu = false;
                                                     }
                                                     else
                                                     {
                                                         Add_List.Insert(0, "Холостой");
-                                                        Magazine = Add_List.ToArray(); 
+                                                        Magazine = Add_List.ToArray();
                                                         List<string> Remove_List = new List<string>(Player_Inventory);
                                                         Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
                                                         Remove_List.Add("");
                                                         Player_Inventory = Remove_List.ToArray();
                                                         Max_Of_Player_Inventory--;
                                                         Count_Not_Fired_Shells++;
+                                                        Player_Money_Factor += 0.5;
                                                         Items_Menu = false;
                                                     }
                                                 }
@@ -941,7 +985,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
-                                                Count_Not_Fired_Shells++;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else
@@ -970,6 +1014,7 @@ namespace USG
                             Console_WriteReadClear(Image.You_Choose_To_Die());
                             Player_Lives = -1;
                             Turn_To_Play = 3;
+                            Ending(Opponent_Name, Opponent_Money_Factor, true);
                         }
                         else
                         {
@@ -983,7 +1028,7 @@ namespace USG
             }
             catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
         }
-        private void DoubleBarrel_Shotgun_Insert_Shells(ref string[] DBShotgun, ref string[] Handful_Of_Shells, ref string Player_Name, ref string[] Player_Inventory, ref int Max_Of_Player_Inventory, ref int Count_Not_Fired_Shells)
+        private void DoubleBarrel_Shotgun_Insert_Shells(ref double Player_Money_Factor, ref string[] DBShotgun, ref string[] Handful_Of_Shells, ref string Player_Name, ref string[] Player_Inventory, ref int Max_Of_Player_Inventory, ref int Count_Not_Fired_Shells)
         {
             //зарядка двустволки игроком
             bool Player_Want_Use_Items = true;
@@ -1101,6 +1146,7 @@ namespace USG
                                                         Remove_List.Add("");
                                                         Player_Inventory = Remove_List.ToArray();
                                                         Max_Of_Player_Inventory--;
+                                                        Player_Money_Factor += 0.5;
                                                         Items_Menu = false;
                                                     }
                                                     else
@@ -1116,6 +1162,7 @@ namespace USG
                                                     RemoveList.Add("");
                                                     Player_Inventory = RemoveList.ToArray();
                                                     Max_Of_Player_Inventory--;
+                                                    Player_Money_Factor += 0.5;
                                                     Items_Menu = false;
                                                     break;
                                                 case 3:
@@ -1165,6 +1212,7 @@ namespace USG
                                                                         Player_Inventory = Remove_List.ToArray();
                                                                         Max_Of_Player_Inventory--;
                                                                         Count_Not_Fired_Shells++;
+                                                                        Player_Money_Factor += 0.5;
                                                                         Items_Menu = false;
                                                                     }
                                                                     else
@@ -1179,6 +1227,7 @@ namespace USG
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
                                                                             Count_Not_Fired_Shells++;
+                                                                            Player_Money_Factor += 0.5;
                                                                             Items_Menu = false;
                                                                         }
                                                                         else
@@ -1191,6 +1240,7 @@ namespace USG
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
                                                                             Count_Not_Fired_Shells++;
+                                                                            Player_Money_Factor += 0.5;
                                                                             Items_Menu = false;
                                                                         }
                                                                     }
@@ -1207,6 +1257,7 @@ namespace USG
                                                                         Player_Inventory = Remove_List.ToArray();
                                                                         Max_Of_Player_Inventory--;
                                                                         Count_Not_Fired_Shells++;
+                                                                        Player_Money_Factor += 0.5;
                                                                         Items_Menu = false;
                                                                     }
                                                                     else
@@ -1221,6 +1272,7 @@ namespace USG
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
                                                                             Count_Not_Fired_Shells++;
+                                                                            Player_Money_Factor += 0.5;
                                                                             Items_Menu = false;
                                                                         }
                                                                         else
@@ -1233,6 +1285,7 @@ namespace USG
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
                                                                             Count_Not_Fired_Shells++;
+                                                                            Player_Money_Factor += 0.5;
                                                                             Items_Menu = false;
                                                                         }
                                                                     }
@@ -1258,6 +1311,7 @@ namespace USG
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
                                                                 Count_Not_Fired_Shells++;
+                                                                Player_Money_Factor += 0.5;
                                                                 Items_Menu = false;
                                                             }
                                                             else
@@ -1269,6 +1323,7 @@ namespace USG
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
                                                                 Count_Not_Fired_Shells++;
+                                                                Player_Money_Factor += 0.5;
                                                                 Items_Menu = false;
                                                             }
                                                         }
@@ -1283,6 +1338,7 @@ namespace USG
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
                                                                 Count_Not_Fired_Shells++;
+                                                                Player_Money_Factor += 0.5;
                                                                 Items_Menu = false;
                                                             }
                                                             else
@@ -1294,6 +1350,7 @@ namespace USG
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
                                                                 Count_Not_Fired_Shells++;
+                                                                Player_Money_Factor += 0.5;
                                                                 Items_Menu = false;
                                                             }
                                                         }
@@ -1528,17 +1585,17 @@ namespace USG
                 }
             }
         }
-        private void Double_Barrel(ref bool Player_Double_Damage, ref int Count_Of_Live, ref string[] Handful_Of_Shells, ref int Turn_To_Play, ref string Player_Name, ref int Player_Lives, ref bool Player_First_Time_Bleeding, ref bool Opponent_First_Time_Bleeding, ref int Opponent_Lives, ref string Opponent_Name, ref int Count_Of_Items, ref int Opponent_HandCuffed, ref bool Player_Bleeding_Phase, ref int Player_Bleeding_Turns, ref int Count_Of_Player_Bleedings, ref bool Opponent_Bleeding_Phase, ref int Opponent_Bleeding_Turns, ref int Count_Of_Opponent_Bleedings, ref string[] DBShotgun, ref int Count_Not_Fired_Shells, ref int Max_Of_Player_Inventory, ref string[] Player_Inventory, ref string[] Opponent_Inventory)
+        private void Double_Barrel(ref double Player_Money_Factor, ref double Opponent_Money_Factor, ref bool Player_Double_Damage, ref int Turn_To_Play, ref string Player_Name, ref int Player_Lives, ref bool Player_First_Time_Bleeding, ref bool Opponent_First_Time_Bleeding, ref int Opponent_Lives, ref string Opponent_Name, ref int Count_Of_Items, ref int Opponent_HandCuffed, ref bool Player_Bleeding_Phase, ref int Player_Bleeding_Turns, ref int Count_Of_Player_Bleedings, ref bool Opponent_Bleeding_Phase, ref int Opponent_Bleeding_Turns, ref int Count_Of_Opponent_Bleedings, ref string[] DBShotgun, ref int Max_Of_Player_Inventory, ref string[] Player_Inventory, ref string[] Opponent_Inventory)
         {
             if (Opponent_HandCuffed > 0)
             {
                 Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, true));
+                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, true, Player_Bleeding_Phase, Player_Bleeding_Turns));
             }
             else
             {
                 Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items));
+                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, false, Player_Bleeding_Phase, Player_Bleeding_Turns));
             }
             try
             {
@@ -1618,12 +1675,15 @@ namespace USG
                                 }
                                 if (Player_Lives < 1 && !Player_First_Time_Bleeding)
                                 {
+                                    Player_Money_Factor -= 1.5;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
+                                    Ending(Opponent_Name, Opponent_Money_Factor);
                                 }
                                 else
                                 {
+                                    Player_Money_Factor -= 1.0;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                     if (Player_First_Time_Bleeding)
                                     {
@@ -1725,12 +1785,15 @@ namespace USG
                                 }
                                 if (Player_Lives < 1 && !Player_First_Time_Bleeding)
                                 {
+                                    Player_Money_Factor -= 1.0;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
+                                    Ending(Opponent_Name, Opponent_Money_Factor);
                                 }
                                 else
                                 {
+                                    Player_Money_Factor -= 0.5;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                     if (Player_First_Time_Bleeding)
                                     {
@@ -1769,6 +1832,7 @@ namespace USG
                             }
                             else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                             {
+                                Player_Money_Factor += 1.5;
                                 Console_WriteReadClear(Image.Blank_Shoot());
                                 if (Player_Bleeding_Turns > 0)
                                 {
@@ -1863,12 +1927,15 @@ namespace USG
                                 }
                                 if (Opponent_Lives < 1 && !Opponent_First_Time_Bleeding)
                                 {
+                                    Player_Money_Factor += 1.5;
                                     Opponent_Lives = -1;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                     Turn_To_Play = 3;
+                                    Ending(Player_Name, Player_Money_Factor);
                                 }
                                 else
                                 {
+                                    Player_Money_Factor += 1.0;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                     if (Opponent_First_Time_Bleeding)
                                     {
@@ -1970,12 +2037,15 @@ namespace USG
                                 }
                                 if (Opponent_Lives < 1 && !Opponent_First_Time_Bleeding)
                                 {
+                                    Player_Money_Factor += 1.0;
                                     Opponent_Lives = -1;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                     Turn_To_Play = 3;
+                                    Ending(Player_Name, Player_Money_Factor);
                                 }
                                 else
                                 {
+                                    Player_Money_Factor += 0.5;
                                     Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                     if (Opponent_First_Time_Bleeding)
                                     {
@@ -2014,6 +2084,7 @@ namespace USG
                             }
                             else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                             {
+                                Player_Money_Factor -= 1.0;
                                 Console_WriteReadClear(Image.Blank_Shoot(true));
                                 Opponent_First_Time_Bleeding = false;
                                 if (Player_Bleeding_Turns > 0)
@@ -2115,12 +2186,15 @@ namespace USG
                             }
                             if (Player_Lives < 1 && !Player_First_Time_Bleeding)
                             {
+                                Player_Money_Factor -= 1.5;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
+                                Ending(Opponent_Name, Opponent_Money_Factor);
                             }
                             else
                             {
+                                Player_Money_Factor -= 1.0;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                 if (Player_First_Time_Bleeding)
                                 {
@@ -2222,12 +2296,15 @@ namespace USG
                             }
                             if (Player_Lives < 1 && !Player_First_Time_Bleeding)
                             {
+                                Player_Money_Factor -= 1.0;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
+                                Ending(Opponent_Name, Opponent_Money_Factor);
                             }
                             else
                             {
+                                Player_Money_Factor -= 0.5;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase));
                                 if (Player_First_Time_Bleeding)
                                 {
@@ -2266,6 +2343,7 @@ namespace USG
                         }
                         else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                         {
+                            Player_Money_Factor += 1.5;
                             Console_WriteReadClear(Image.Blank_Shoot());
                             if (Player_Bleeding_Turns > 0)
                             {
@@ -2362,12 +2440,15 @@ namespace USG
                             }
                             if (Opponent_Lives < 1 && !Opponent_First_Time_Bleeding)
                             {
+                                Player_Money_Factor += 1.5;
                                 Opponent_Lives = -1;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                 Turn_To_Play = 3;
+                                Ending(Player_Name, Player_Money_Factor);
                             }
                             else
                             {
+                                Player_Money_Factor += 1.0;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                 if (Opponent_First_Time_Bleeding)
                                 {
@@ -2469,12 +2550,15 @@ namespace USG
                             }
                             if (Opponent_Lives < 1 && !Opponent_First_Time_Bleeding)
                             {
+                                Player_Money_Factor += 1.0;
                                 Opponent_Lives = -1;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                 Turn_To_Play = 3;
+                                Ending(Player_Name, Player_Money_Factor);
                             }
                             else
                             {
+                                Player_Money_Factor += 0.5;
                                 Console_WriteReadClear(Image.Live_Shoot(Player_Lives, Opponent_Lives, Player_Bleeding_Phase, Opponent_Bleeding_Phase, true));
                                 if (Opponent_First_Time_Bleeding)
                                 {
@@ -2513,6 +2597,7 @@ namespace USG
                         }
                         else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                         {
+                            Player_Money_Factor -= 1.0;
                             Console_WriteReadClear(Image.Blank_Shoot(true));
                             Opponent_First_Time_Bleeding = false;
                             if (Player_Bleeding_Turns > 0)
@@ -2575,6 +2660,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else if (Player_Inventory.Contains("+хп") == true)
@@ -2585,6 +2671,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else if (Player_Inventory.Contains("бинт") == true)
@@ -2611,6 +2698,7 @@ namespace USG
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
+                                                    Player_Money_Factor += 0.5;
                                                     Items_Menu = false;
                                                 }
 
@@ -2632,6 +2720,7 @@ namespace USG
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
+                                                    Player_Money_Factor += 0.5;
                                                     Items_Menu = false;
                                                 }
                                                 else if (DBShotgun[0] == "Холостой" || DBShotgun[1] == "Боевой" && DBShotgun[0] == "Боевой" || DBShotgun[1] == "Холостой")
@@ -2657,6 +2746,7 @@ namespace USG
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
+                                                    Player_Money_Factor += 0.5;
                                                     Items_Menu = false;
                                                 }
                                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
@@ -2668,6 +2758,7 @@ namespace USG
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
+                                                    Player_Money_Factor += 0.5;
                                                     Items_Menu = false;
                                                 }
                                             }
@@ -2685,7 +2776,7 @@ namespace USG
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
-                                                Count_Not_Fired_Shells++;
+                                                Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
                                             else
@@ -2708,6 +2799,19 @@ namespace USG
                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         }
                         break;
+                    case 0:
+                        if (Player_Lives == 1)
+                        {
+                            Console_WriteReadClear(Image.You_Choose_To_Die());
+                            Player_Lives = -1;
+                            Turn_To_Play = 3;
+                            Ending(Opponent_Name, Opponent_Money_Factor, true);
+                        }
+                        else
+                        {
+                            Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                        }
+                        break;
                     default:
                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         break;
@@ -2719,8 +2823,11 @@ namespace USG
         {
             //Инициализация всех нужных переменных
 
-            int PlayerOne_Lives = 1;
-            int PlayerTwo_Lives = 1;
+            int PlayerOne_Lives = 6;
+            int PlayerTwo_Lives = 6;
+
+            double PlayerOne_Money_Factor = 0;
+            double PlayerTwo_Money_Factor = 0;
 
             bool PlayerOne_Double_Damage = false;
             bool PlayerTwo_Double_Damage = false;
@@ -2810,12 +2917,12 @@ namespace USG
                 }
                 while (Turn_To_Play == 1 && Count_Not_Fired_Shells >= 0 && PlayerOne_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
-                    Shotgun_Player_Turn(ref PlayerOne_Double_Damage, ref Turn_To_Play, ref PlayerOne_Name, ref PlayerOne_Lives, ref PlayerOne_First_Time_Bleeding, ref PlayerTwo_First_Time_Bleeding, ref PlayerTwo_Lives, ref PlayerTwo_Name, ref Count_Of_Items, ref PlayerTwo_HandCuffed, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref Magazine, ref Count_Not_Fired_Shells, ref Max_Of_PlayerOne_Inventory, ref PlayerOne_Inventory, ref PlayerTwo_Inventory);
+                    Shotgun_Player_Turn(ref PlayerOne_Money_Factor, ref PlayerTwo_Money_Factor, ref PlayerOne_Double_Damage, ref Turn_To_Play, ref PlayerOne_Name, ref PlayerOne_Lives, ref PlayerOne_First_Time_Bleeding, ref PlayerTwo_First_Time_Bleeding, ref PlayerTwo_Lives, ref PlayerTwo_Name, ref Count_Of_Items, ref PlayerTwo_HandCuffed, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref Magazine, ref Count_Not_Fired_Shells, ref Max_Of_PlayerOne_Inventory, ref PlayerOne_Inventory, ref PlayerTwo_Inventory);
                     //ход первого игрока
                 }
                 while (Turn_To_Play == 2 && Count_Not_Fired_Shells >= 0 && PlayerTwo_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
-                    Shotgun_Player_Turn(ref PlayerTwo_Double_Damage, ref Turn_To_Play, ref PlayerTwo_Name, ref PlayerTwo_Lives, ref PlayerTwo_First_Time_Bleeding, ref PlayerOne_First_Time_Bleeding, ref PlayerOne_Lives, ref PlayerOne_Name, ref Count_Of_Items, ref PlayerOne_HandCuffed, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref Magazine, ref Count_Not_Fired_Shells, ref Max_Of_PlayerTwo_Inventory, ref PlayerTwo_Inventory, ref PlayerOne_Inventory);
+                    Shotgun_Player_Turn(ref PlayerTwo_Money_Factor, ref PlayerOne_Money_Factor, ref PlayerTwo_Double_Damage, ref Turn_To_Play, ref PlayerTwo_Name, ref PlayerTwo_Lives, ref PlayerTwo_First_Time_Bleeding, ref PlayerOne_First_Time_Bleeding, ref PlayerOne_Lives, ref PlayerOne_Name, ref Count_Of_Items, ref PlayerOne_HandCuffed, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref Magazine, ref Count_Not_Fired_Shells, ref Max_Of_PlayerTwo_Inventory, ref PlayerTwo_Inventory, ref PlayerOne_Inventory);
                     //ход второго игрока
                 }
             }
@@ -2826,6 +2933,9 @@ namespace USG
 
             int PlayerOne_Lives = 8;
             int PlayerTwo_Lives = 8;
+
+            double PlayerOne_Money_Factor = 0;
+            double PlayerTwo_Money_Factor = 0;
 
             int PlayerOne_HandCuffed = 0;
             int PlayerTwo_HandCuffed = 0;
@@ -2847,8 +2957,6 @@ namespace USG
             int Count_Of_PlayerTwo_Bleedings = 0;
             int PlayerOne_Bleeding_Turns = 0;
             int PlayerTwo_Bleeding_Turns = 0;
-
-            bool Player_Want_Use_Items = true;
 
             Console_WriteReadClear(Image.DoubleBarreledShotgun_Rules);
 
@@ -2933,8 +3041,8 @@ namespace USG
                 while (Turn_To_Play == 1 && Count_Not_Fired_Shells > 0 && PlayerOne_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
                     //ход первого игрока
-                    DoubleBarrel_Shotgun_Insert_Shells(ref DBShotgun, ref Handful_Of_Shells, ref PlayerOne_Name, ref PlayerOne_Inventory, ref Max_Of_PlayerOne_Inventory, ref Count_Not_Fired_Shells);
-                    Double_Barrel(ref PlayerOne_Double_Damage, ref Count_Of_Live, ref Handful_Of_Shells, ref Turn_To_Play, ref PlayerOne_Name, ref PlayerOne_Lives, ref PlayerOne_First_Time_Bleeding, ref PlayerTwo_First_Time_Bleeding, ref PlayerTwo_Lives, ref PlayerTwo_Name, ref Count_Of_Items, ref PlayerTwo_HandCuffed, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref Handful_Of_Shells, ref Count_Not_Fired_Shells, ref Max_Of_PlayerOne_Inventory, ref PlayerOne_Inventory, ref PlayerTwo_Inventory);
+                    DoubleBarrel_Shotgun_Insert_Shells(ref PlayerOne_Money_Factor, ref DBShotgun, ref Handful_Of_Shells, ref PlayerOne_Name, ref PlayerOne_Inventory, ref Max_Of_PlayerOne_Inventory, ref Count_Not_Fired_Shells);
+                    Double_Barrel(ref PlayerOne_Money_Factor, ref PlayerTwo_Money_Factor, ref PlayerOne_Double_Damage, ref Turn_To_Play, ref PlayerOne_Name, ref PlayerOne_Lives, ref PlayerOne_First_Time_Bleeding, ref PlayerTwo_First_Time_Bleeding, ref PlayerTwo_Lives, ref PlayerTwo_Name, ref Count_Of_Items, ref PlayerTwo_HandCuffed, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref DBShotgun, ref Max_Of_PlayerOne_Inventory, ref PlayerOne_Inventory, ref PlayerTwo_Inventory);
                 }
                 if (Count_Not_Fired_Shells == 0)
                 {
@@ -2952,8 +3060,8 @@ namespace USG
                 while (Turn_To_Play == 2 && Count_Not_Fired_Shells > 0 && PlayerTwo_HandCuffed == 0 && PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
                 {
                     //ход второго игрока
-                    DoubleBarrel_Shotgun_Insert_Shells(ref DBShotgun, ref Handful_Of_Shells, ref PlayerTwo_Name, ref PlayerTwo_Inventory, ref Max_Of_PlayerTwo_Inventory, ref Count_Not_Fired_Shells);
-                    Double_Barrel(ref PlayerTwo_Double_Damage, ref Count_Of_Live, ref Handful_Of_Shells, ref Turn_To_Play, ref PlayerTwo_Name, ref PlayerTwo_Lives, ref PlayerTwo_First_Time_Bleeding, ref PlayerOne_First_Time_Bleeding, ref PlayerOne_Lives, ref PlayerOne_Name, ref Count_Of_Items, ref PlayerOne_HandCuffed, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref Handful_Of_Shells, ref Count_Not_Fired_Shells, ref Max_Of_PlayerTwo_Inventory, ref PlayerTwo_Inventory, ref PlayerOne_Inventory);
+                    DoubleBarrel_Shotgun_Insert_Shells(ref PlayerTwo_Money_Factor, ref DBShotgun, ref Handful_Of_Shells, ref PlayerTwo_Name, ref PlayerTwo_Inventory, ref Max_Of_PlayerTwo_Inventory, ref Count_Not_Fired_Shells);
+                    Double_Barrel(ref PlayerTwo_Money_Factor, ref PlayerOne_Money_Factor, ref PlayerTwo_Double_Damage, ref Turn_To_Play, ref PlayerTwo_Name, ref PlayerTwo_Lives, ref PlayerTwo_First_Time_Bleeding, ref PlayerOne_First_Time_Bleeding, ref PlayerOne_Lives, ref PlayerOne_Name, ref Count_Of_Items, ref PlayerOne_HandCuffed, ref PlayerTwo_Bleeding_Phase, ref PlayerTwo_Bleeding_Turns, ref Count_Of_PlayerTwo_Bleedings, ref PlayerOne_Bleeding_Phase, ref PlayerOne_Bleeding_Turns, ref Count_Of_PlayerOne_Bleedings, ref DBShotgun, ref Max_Of_PlayerTwo_Inventory, ref PlayerTwo_Inventory, ref PlayerOne_Inventory);
                 }
             }
         }

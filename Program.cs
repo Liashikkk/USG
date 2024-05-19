@@ -18,10 +18,8 @@ namespace USG
     {
         const int STD_OUTPUT_HANDLE = -11;
 
-
         [DllImport("winmm.dll")]
         static extern Int32 mciSendString(string command, StringBuilder buffer, int bufferSize, IntPtr hwndCallback);
-
 
         [DllImport("kernel32.dll")]
         static extern IntPtr GetStdHandle(int handle);
@@ -90,8 +88,9 @@ namespace USG
             }
             Console.ReadLine();
             */
-            FullScreen();
-            
+
+           FullScreen();
+
             All_Images Image = new All_Images();
 
             Game_Modes Mode = new Game_Modes();
@@ -101,7 +100,7 @@ namespace USG
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Main_Menu); 
+                Console.Write(Image.Main_Menu);
                 try
                 {
                     switch (Convert.ToInt32(Console.ReadLine()))

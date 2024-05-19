@@ -41,9 +41,13 @@ namespace USG
         
         public string Magazine_Full = "магазин полон - патроны не 3арядить =). Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ";
 
+        public string Winner_Ending(string Winner_Name, double Money)
+        {
+            return $"{Winner_Name}, ты победил. Твой выигрыш: {Money} _currency_ . Ты можешь посмотреть статистику игры в главном меню =). Еnter для перехода на следующее меню                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ";
+        }
         public string Dead_Of_Bleeding_Out(bool Opponent = false)
         {
-            if (Opponent) 
+            if (Opponent)
             {
                 string[] Comentary = { "кто-то сегодня не вернется домой..", "поздравляю =)", "ты победил =)", "ты рад, победитель?", "кому-то сегодня сказачно повезло =)" };
                 int Comm_Number = Random_Number.Next(0, 5);
