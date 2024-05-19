@@ -34,10 +34,10 @@ namespace USG
             SetConsoleDisplayMode(hConsole, 1, IntPtr.Zero);
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
         }
-        public static void Console_WriteReadClear(string Text, int First_Num = 0, int Second_Num = 0)
+        public static void Console_WriteReadClear(string text)
         {
-            Console.SetCursorPosition(First_Num, Second_Num);
-            Console.WriteLine(Text);
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine(text);
             Console.ReadLine();
         }
         public static void play()
