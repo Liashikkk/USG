@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace USG
@@ -2852,6 +2853,10 @@ namespace USG
 
             Console_WriteReadClear(Image.Shotgun_Rules);
 
+            //Игроки делятся на первого и второго игрока и вводят свои имена
+            string PlayerOne_Name = Image.PlayerOne_Name_Input();
+            string PlayerTwo_Name = Image.PlayerTwo_Name_Input();
+
             //Игроки выбирают кол-во выдаваемых предметов за раз
             int Count_Of_Items = 0;
             bool Count_Of_Items_Not_Choosen = true;
@@ -2861,10 +2866,14 @@ namespace USG
                 {
                     Console.SetCursorPosition(0, 0);
                     Console.Write(Image.Choose_Max_Count_Of_Items);
+                    Console.SetCursorPosition(98, 16);
                     Count_Of_Items = Convert.ToInt32(Console.ReadLine());
                     if (Count_Of_Items > 4 || Count_Of_Items < 0)
                     {
-                        Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                        Console.SetCursorPosition(44, 20);
+                        Console.Write("Вы указали неправильное количество предметов =)");
+                        Console.SetCursorPosition(35, 35);
+                        Thread.Sleep(2000);
                     }
                     else
                     {
@@ -2874,25 +2883,26 @@ namespace USG
                 catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
 
-            //Игроки делятся на первого и второго игрока и вводят свои имена
-            string PlayerOne_Name = Image.PlayerOne_Name_Input();
-            string PlayerTwo_Name = Image.PlayerTwo_Name_Input();
-
-            int Count_Not_Fired_Shells = Random_Number.Next(2, 8);
-            string[] Magazine = new string[Count_Not_Fired_Shells];
-            int Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
-            Shotgun_Shells_Insert(ref Count_Not_Fired_Shells, ref Count_Of_Live, ref Magazine);
-
             //Bыдача 2-x предметов
 
             Give_Items(ref PlayerOne_Inventory, ref Count_Of_Items, ref Max_Of_PlayerOne_Inventory, PlayerOne_Bleeding_Phase);
 
             Give_Items(ref PlayerTwo_Inventory, ref Count_Of_Items, ref Max_Of_PlayerTwo_Inventory, PlayerTwo_Bleeding_Phase);
 
-            if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0 && Max_Of_PlayerOne_Inventory != 0 && Max_Of_PlayerTwo_Inventory != 0)
+            if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0)
             {
-                Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
+                Console.SetCursorPosition(40, 20);
+                Console.Write("Свободные слоты ваших инвентарей заполучили предметы =)");
+                Console.SetCursorPosition(48, 25);
+                Console.Write("Enter для перехода на следующее меню...");
+                Console.ReadLine();
             }
+
+            int Count_Not_Fired_Shells = Random_Number.Next(2, 8);
+            string[] Magazine = new string[Count_Not_Fired_Shells];
+            int Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
+            Shotgun_Shells_Insert(ref Count_Not_Fired_Shells, ref Count_Of_Live, ref Magazine);
+
             Count_Not_Fired_Shells--;
             //Начало игры
             while (PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
@@ -2909,7 +2919,7 @@ namespace USG
 
                     Give_Items(ref PlayerTwo_Inventory, ref Count_Of_Items, ref Max_Of_PlayerTwo_Inventory, PlayerTwo_Bleeding_Phase);
 
-                    if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0 && Max_Of_PlayerOne_Inventory != 0 && Max_Of_PlayerTwo_Inventory != 0)
+                    if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0)
                     {
                         Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
                     }
@@ -2960,6 +2970,10 @@ namespace USG
 
             Console_WriteReadClear(Image.DoubleBarreledShotgun_Rules);
 
+            //Игроки делятся на первого и второго игрока и вводят свои имена
+            string PlayerOne_Name = Image.PlayerOne_Name_Input();
+            string PlayerTwo_Name = Image.PlayerTwo_Name_Input();
+
             //Игроки выбирают кол-во выдаваемых предметов за раз
             int Count_Of_Items = 0;
             bool Count_Of_Items_Not_Choosen = true;
@@ -2969,10 +2983,14 @@ namespace USG
                 {
                     Console.SetCursorPosition(0, 0);
                     Console.Write(Image.Choose_Max_Count_Of_Items);
+                    Console.SetCursorPosition(98, 16);
                     Count_Of_Items = Convert.ToInt32(Console.ReadLine());
                     if (Count_Of_Items > 4 || Count_Of_Items < 0)
                     {
-                        Console_WriteReadClear(Image.Wrong_Num_For_Count_Of_Items);
+                        Console.SetCursorPosition(44, 20);
+                        Console.Write("Вы указали неправильное количество предметов =)");
+                        Console.SetCursorPosition(35, 35);
+                        Thread.Sleep(2000);
                     }
                     else
                     {
@@ -2982,9 +3000,20 @@ namespace USG
                 catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
 
-            //Игроки делятся на первого и второго игрока и вводят свои имена
-            string PlayerOne_Name = Image.PlayerOne_Name_Input();
-            string PlayerTwo_Name = Image.PlayerTwo_Name_Input();
+            //Bыдача 2-x предметов
+
+            Give_Items(ref PlayerOne_Inventory, ref Count_Of_Items, ref Max_Of_PlayerOne_Inventory, PlayerOne_Bleeding_Phase);
+
+            Give_Items(ref PlayerTwo_Inventory, ref Count_Of_Items, ref Max_Of_PlayerTwo_Inventory, PlayerTwo_Bleeding_Phase);
+
+            if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0)
+            {
+                Console.SetCursorPosition(40, 20);
+                Console.Write("Свободные слоты ваших инвентарей заполучили предметы =)"); 
+                Console.SetCursorPosition(48, 25);
+                Console.Write("Enter для перехода на следующее меню...");
+                Console.ReadLine();
+            }
 
             //Распределение патронов, извучка их игрокам и выдача 2-х предметов (в первый раз)
             int Count_Not_Fired_Shells = Random_Number.Next(2, 8);
@@ -2997,17 +3026,6 @@ namespace USG
             int Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
 
             DoubleBarrel_Shotgun_Handful_Of_Shells(ref Count_Not_Fired_Shells, ref Count_Of_Live, ref Handful_Of_Shells);
-
-            //Bыдача 2-x предметов
-
-            Give_Items(ref PlayerOne_Inventory, ref Count_Of_Items, ref Max_Of_PlayerOne_Inventory, PlayerOne_Bleeding_Phase);
-
-            Give_Items(ref PlayerTwo_Inventory, ref Count_Of_Items, ref Max_Of_PlayerTwo_Inventory, PlayerTwo_Bleeding_Phase);
-
-            if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0 && Max_Of_PlayerOne_Inventory != 0 && Max_Of_PlayerTwo_Inventory != 0)
-            {
-                Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
-            }
             Count_Not_Fired_Shells--;
             //Начало игры
             while (PlayerOne_Lives > 0 && PlayerTwo_Lives > 0)
@@ -3019,7 +3037,7 @@ namespace USG
                     //Bыдача 2-x предметов
                     Give_Items(ref PlayerOne_Inventory, ref Count_Of_Items, ref Max_Of_PlayerOne_Inventory, PlayerOne_Bleeding_Phase);
                     Give_Items(ref PlayerTwo_Inventory, ref Count_Of_Items, ref Max_Of_PlayerTwo_Inventory, PlayerTwo_Bleeding_Phase);
-                    if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0 && Max_Of_PlayerOne_Inventory != 0 && Max_Of_PlayerTwo_Inventory != 0)
+                    if (Max_Of_PlayerOne_Inventory > 0 && Max_Of_PlayerTwo_Inventory > 0)
                     {
                         Console_WriteReadClear(Image.All_Players_Has_Given_Two_Items);
                     }

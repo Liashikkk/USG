@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Tls;
+﻿using Org.BouncyCastle.Tls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +9,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace USG
 {
@@ -32,10 +30,11 @@ namespace USG
             SetConsoleDisplayMode(hConsole, 1, IntPtr.Zero);
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
         }
-        public static void Console_WriteReadClear(string Text, int First_Num = 0, int Second_Num = 0)
+        public static void Console_WriteReadClear(string Text, int First_Num = 35, int Second_Num = 35)
         {
-            Console.SetCursorPosition(First_Num, Second_Num);
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine(Text);
+            Console.SetCursorPosition(First_Num, Second_Num);
             Console.ReadLine();
         }
         public static void play()
@@ -88,8 +87,7 @@ namespace USG
             }
             Console.ReadLine();
             */
-
-           FullScreen();
+            FullScreen();
 
             All_Images Image = new All_Images();
 
@@ -97,36 +95,58 @@ namespace USG
 
             Random Random_Number = new Random();
 
+            Console_WriteReadClear(Image.Set_Display);
+
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
                 Console.Write(Image.Main_Menu);
+                Console.SetCursorPosition(67, 33);
                 try
                 {
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
                         case 1:
-                            Console.SetCursorPosition(0, 0);
-                            Console.Write(Image.Game_Modes_Choose);
-                            switch (Convert.ToInt32(Console.ReadLine()))
+                            bool Will = false;
+                            while (!Will)
                             {
-                                case 1:
-                                    Mode.Shotgun_Mode();
-                                    break;
-                                case 2:
-                                    Mode.DoubleBarreledShotgun_Mode();
-                                    break;
-                                case 3:
-                                    break;
-                                default:
-                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
-                                    break;
+                                Console.SetCursorPosition(0, 0);
+                                Console.Write(Image.Lore);
+                                Console.SetCursorPosition(70, 32);
+                                switch (Convert.ToInt32(Console.ReadLine()))
+                                {
+                                    case 1:
+                                        while (!Will)
+                                        {
+                                            Console.SetCursorPosition(0, 0);
+                                            Console.Write(Image.Game_Modes_Choose);
+                                            Console.SetCursorPosition(69, 33);
+                                            switch (Convert.ToInt32(Console.ReadLine()))
+                                            {
+                                                case 1:
+                                                    Mode.Shotgun_Mode();
+                                                    Will = true;
+                                                    break;
+                                                case 2:
+                                                    Mode.DoubleBarreledShotgun_Mode();
+                                                    Will = true;
+                                                    break;
+                                                default:
+                                                    Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case 2:
+                                        Will = true;
+                                        break;
+                                    default:
+                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                        break;
+                                }
                             }
                             break;
                         case 2:
-                            Console_WriteReadClear("она пока что не работает. enter для перехода на следующее меню                                                                 ");
-                            break;
-                        case 3:
                             Environment.Exit(0);
                             break;
                         default:

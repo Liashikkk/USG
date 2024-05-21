@@ -7,7 +7,6 @@ C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\K4os.Compression.LZ4.dll
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\K4os.Compression.LZ4.Streams.dll
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\K4os.Hash.xxHash.dll
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\MySql.Data.dll
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\System.Buffers.dll
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\System.Configuration.ConfigurationManager.dll
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\System.Diagnostics.DiagnosticSource.dll
@@ -24,7 +23,6 @@ C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\K4os.Compression.LZ4.xml
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\K4os.Compression.LZ4.Streams.xml
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\K4os.Hash.xxHash.xml
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
-C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\MySql.Data.xml
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\System.Buffers.xml
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 C:\Users\Юзер\source\repos\UGG\UGG\bin\Debug\System.IO.Pipelines.xml
