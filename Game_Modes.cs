@@ -92,7 +92,7 @@ namespace USG
             Count_Not_Fired_Shells = Random_Number.Next(2, 8);
             Magazine = new string[Count_Not_Fired_Shells];
             Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
-            Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live, Count_Not_Fired_Shells));
+            Image.How_Live_Shells_Will_Be(Count_Of_Live, Count_Not_Fired_Shells);
             //Зарядка магазина (8 патронов в максимум)
             for (int i = 0; i < Count_Not_Fired_Shells; i++)
             {
@@ -126,7 +126,7 @@ namespace USG
             }
             Handful_Of_Shells = new string[Count_Not_Fired_Shells];
             Count_Of_Live = Random_Number.Next(1, Count_Not_Fired_Shells);
-            Console_WriteReadClear(Image.How_Live_Shells_Will_Be(Count_Of_Live, Count_Not_Fired_Shells));
+            Image.How_Live_Shells_Will_Be(Count_Of_Live, Count_Not_Fired_Shells);
             for (int i = 0; i < Count_Not_Fired_Shells; i++)
             {
                 if (Count_Of_Live > 0)
@@ -151,13 +151,11 @@ namespace USG
         {
             if (Opponent_HandCuffed > 0)
             {
-                Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, true, Player_Bleeding_Phase, Player_Bleeding_Turns));
+                Image.Player_Menu(Player_Lives, Opponent_Name, Count_Of_Items, true, Player_Bleeding_Phase, Player_Bleeding_Turns);
             }
             else
             {
-                Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, false, Player_Bleeding_Phase, Player_Bleeding_Turns));
+                Image.Player_Menu(Player_Lives, Opponent_Name, Count_Of_Items, false, Player_Bleeding_Phase, Player_Bleeding_Turns);
             }
             try
             {
@@ -171,7 +169,7 @@ namespace USG
                         int Who_To_Shoot_At = Random_Number.Next(1, 3);
                         if (Who_To_Shoot_At == 1)
                         {
-                            Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                            Image.Will_Be_Fired_At(Who_To_Shoot_At);
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 if (Player_Double_Damage)
@@ -253,7 +251,7 @@ namespace USG
                                         Player_First_Time_Bleeding = false;
                                         if (Player_Inventory.Contains("+хп"))
                                         {
-                                            Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Player_Name));
+                                            Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                             for (int i = 0; i < Player_Inventory.Length; i++)
                                             {
                                                 if (Player_Inventory[i] == "+хп")
@@ -311,7 +309,7 @@ namespace USG
                         }
                         else if (Who_To_Shoot_At == 2)
                         {
-                            Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                            Image.Will_Be_Fired_At(Who_To_Shoot_At);
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
                                 if (Player_Double_Damage)
@@ -393,7 +391,7 @@ namespace USG
                                         Opponent_First_Time_Bleeding = false;
                                         if (Opponent_Inventory.Contains("+хп"))
                                         {
-                                            Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Opponent_Name));
+                                            Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                             for (int i = 0; i < Opponent_Inventory.Length; i++)
                                             {
                                                 if (Opponent_Inventory[i] == "+хп")
@@ -540,7 +538,7 @@ namespace USG
                                     Player_First_Time_Bleeding = false;
                                     if (Player_Inventory.Contains("+хп"))
                                     {
-                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Player_Name));
+                                        Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                         for (int i = 0; i < Player_Inventory.Length; i++)
                                         {
                                             if (Player_Inventory[i] == "+хп")
@@ -682,7 +680,7 @@ namespace USG
                                     Opponent_First_Time_Bleeding = false;
                                     if (Opponent_Inventory.Contains("+хп"))
                                     {
-                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Opponent_Name));
+                                        Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                         for (int i = 0; i < Opponent_Inventory.Length; i++)
                                         {
                                             if (Opponent_Inventory[i] == "+хп")
@@ -747,7 +745,7 @@ namespace USG
                         {
                             if (Max_Of_Player_Inventory == 0)
                             {
-                                Console_WriteReadClear(Image.Player_Dont_Have_Items);
+                                Image.Player_Dont_Have_Items();
                             }
                             else
                             {
@@ -790,7 +788,7 @@ namespace USG
                                             }
                                             else if (Player_Inventory.Contains("бинт") == true)
                                             {
-                                                Console_WriteReadClear(Image.You_Dont_Bleeding_Out);
+                                                Image.You_Dont_Bleeding_Out();
                                             }
                                             else
                                             {
@@ -802,7 +800,7 @@ namespace USG
                                             {
                                                 if (Opponent_HandCuffed > 0)
                                                 {
-                                                    Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
+                                                    Image.Opponent_Already_HandCuffed();
                                                 }
                                                 else
                                                 {
@@ -825,7 +823,7 @@ namespace USG
                                         case 3:
                                             if (Player_Inventory.Contains("патрончекер") == true)
                                             {
-                                                Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells], 0));
+                                                Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells], 0);
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
                                                 Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
                                                 Remove_List.Add("");
@@ -843,7 +841,7 @@ namespace USG
                                             if (Player_Inventory.Contains("рандомный патрончекер") == true)
                                             {
                                                 int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
-                                                Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells - Index_Of_Shell], Index_Of_Shell + 1, true));
+                                                Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells - Index_Of_Shell], Index_Of_Shell + 1, true);
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
                                                 Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
                                                 Remove_List.Add("");
@@ -932,7 +930,7 @@ namespace USG
                                                 }
                                                 else
                                                 {
-                                                    Console_WriteReadClear(Image.Magazine_Full);
+                                                    Image.Magazine_Full();
                                                 }
                                             }
                                             else if (Player_Inventory.Contains("боевой патрон") == true || Player_Inventory.Contains("холостой патрон") == true)
@@ -969,7 +967,7 @@ namespace USG
                                                 }
                                                 else
                                                 {
-                                                    Console_WriteReadClear(Image.Magazine_Full);
+                                                    Image.Magazine_Full();
                                                 }
                                             }
                                             else
@@ -1076,7 +1074,7 @@ namespace USG
                                                                 case 1:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1084,7 +1082,7 @@ namespace USG
                                                                 case 2:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1092,7 +1090,7 @@ namespace USG
                                                                 case 3:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1100,7 +1098,7 @@ namespace USG
                                                                 case 4:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1108,7 +1106,7 @@ namespace USG
                                                                 case 5:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1116,7 +1114,7 @@ namespace USG
                                                                 case 6:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1124,7 +1122,7 @@ namespace USG
                                                                 case 7:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1132,7 +1130,7 @@ namespace USG
                                                                 case 8:
                                                                     try
                                                                     {
-                                                                        Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true));
+                                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
@@ -1157,7 +1155,7 @@ namespace USG
                                                     break;
                                                 case 2:
                                                     int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
-                                                    Console_WriteReadClear(Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true));
+                                                    Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true);
                                                     List<string> RemoveList = new List<string>(Player_Inventory);
                                                     RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
                                                     RemoveList.Add("");
@@ -1389,7 +1387,7 @@ namespace USG
                 }
                 else if (Count_Not_Fired_Shells == 0)
                 {
-                    Console_WriteReadClear(Image.Last_Shell_Was_Inserted);
+                    Image.Last_Shell_Was_Inserted();
                     if (DBShotgun[0].Contains("null"))
                     {
                         DBShotgun[0] = Handful_Of_Shells[0];
@@ -1590,13 +1588,11 @@ namespace USG
         {
             if (Opponent_HandCuffed > 0)
             {
-                Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, true, Player_Bleeding_Phase, Player_Bleeding_Turns));
+                Image.Player_Menu(Player_Lives, Opponent_Name, Count_Of_Items, true, Player_Bleeding_Phase, Player_Bleeding_Turns);
             }
             else
             {
-                Console.SetCursorPosition(0, 0);
-                Console.Write(Image.Player_Menu(Player_Name, Player_Lives, Opponent_Name, Count_Of_Items, false, Player_Bleeding_Phase, Player_Bleeding_Turns));
+                Image.Player_Menu(Player_Lives, Opponent_Name, Count_Of_Items, false, Player_Bleeding_Phase, Player_Bleeding_Turns);
             }
             try
             {
@@ -1610,7 +1606,7 @@ namespace USG
                         int Who_To_Shoot_At = Random_Number.Next(1, 3);
                         if (Who_To_Shoot_At == 1)
                         {
-                            Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                            Image.Will_Be_Fired_At(Who_To_Shoot_At);
                             if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                             {
                                 if (Player_Double_Damage)
@@ -1691,7 +1687,7 @@ namespace USG
                                         Player_First_Time_Bleeding = false;
                                         if (Player_Inventory.Contains("+хп"))
                                         {
-                                            Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Player_Name));
+                                            Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                             for (int i = 0; i < Player_Inventory.Length; i++)
                                             {
                                                 if (Player_Inventory[i] == "+хп")
@@ -1801,7 +1797,7 @@ namespace USG
                                         Player_First_Time_Bleeding = false;
                                         if (Player_Inventory.Contains("+хп"))
                                         {
-                                            Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Player_Name));
+                                            Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                             for (int i = 0; i < Player_Inventory.Length; i++)
                                             {
                                                 if (Player_Inventory[i] == "+хп")
@@ -1862,7 +1858,7 @@ namespace USG
                         }
                         else if (Who_To_Shoot_At == 2)
                         {
-                            Console_WriteReadClear(Image.Will_Be_Fired_At(Who_To_Shoot_At));
+                            Image.Will_Be_Fired_At(Who_To_Shoot_At);
                             if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                             {
                                 if (Player_Double_Damage)
@@ -1943,7 +1939,7 @@ namespace USG
                                         Opponent_First_Time_Bleeding = false;
                                         if (Opponent_Inventory.Contains("+хп"))
                                         {
-                                            Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Opponent_Name));
+                                            Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                             for (int i = 0; i < Opponent_Inventory.Length; i++)
                                             {
                                                 if (Opponent_Inventory[i] == "+хп")
@@ -2053,7 +2049,7 @@ namespace USG
                                         Opponent_First_Time_Bleeding = false;
                                         if (Opponent_Inventory.Contains("+хп"))
                                         {
-                                            Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Opponent_Name));
+                                            Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                             for (int i = 0; i < Opponent_Inventory.Length; i++)
                                             {
                                                 if (Opponent_Inventory[i] == "+хп")
@@ -2202,7 +2198,7 @@ namespace USG
                                     Player_First_Time_Bleeding = false;
                                     if (Player_Inventory.Contains("+хп"))
                                     {
-                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Player_Name));
+                                        Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                         for (int i = 0; i < Player_Inventory.Length; i++)
                                         {
                                             if (Player_Inventory[i] == "+хп")
@@ -2312,7 +2308,7 @@ namespace USG
                                     Player_First_Time_Bleeding = false;
                                     if (Player_Inventory.Contains("+хп"))
                                     {
-                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Player_Name));
+                                        Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                         for (int i = 0; i < Player_Inventory.Length; i++)
                                         {
                                             if (Player_Inventory[i] == "+хп")
@@ -2456,7 +2452,7 @@ namespace USG
                                     Opponent_First_Time_Bleeding = false;
                                     if (Opponent_Inventory.Contains("+хп"))
                                     {
-                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Opponent_Name));
+                                        Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                         for (int i = 0; i < Opponent_Inventory.Length; i++)
                                         {
                                             if (Opponent_Inventory[i] == "+хп")
@@ -2566,7 +2562,7 @@ namespace USG
                                     Opponent_First_Time_Bleeding = false;
                                     if (Opponent_Inventory.Contains("+хп"))
                                     {
-                                        Console_WriteReadClear(Image.Heals_Was_Changed_To_Bandage(Opponent_Name));
+                                        Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                         for (int i = 0; i < Opponent_Inventory.Length; i++)
                                         {
                                             if (Opponent_Inventory[i] == "+хп")
@@ -2634,7 +2630,7 @@ namespace USG
                         {
                             if (Max_Of_Player_Inventory == 0)
                             {
-                                Console_WriteReadClear(Image.Player_Dont_Have_Items);
+                                Image.Player_Dont_Have_Items();
                             }
                             else
                             {
@@ -2677,7 +2673,7 @@ namespace USG
                                             }
                                             else if (Player_Inventory.Contains("бинт") == true)
                                             {
-                                                Console_WriteReadClear(Image.You_Dont_Bleeding_Out);
+                                                Image.You_Dont_Bleeding_Out();
                                             }
                                             else
                                             {
@@ -2689,7 +2685,7 @@ namespace USG
                                             {
                                                 if (Opponent_HandCuffed > 0)
                                                 {
-                                                    Console_WriteReadClear(Image.Opponent_Already_HandCuffed);
+                                                    Image.Opponent_Already_HandCuffed();
                                                 }
                                                 else
                                                 {
@@ -3045,7 +3041,7 @@ namespace USG
                 }
                 if (Count_Not_Fired_Shells == 0)
                 {
-                    Console_WriteReadClear(Image.Last_Shell_Was_Inserted);
+                    Image.Last_Shell_Was_Inserted();
                     if (DBShotgun[0].Contains("null"))
                     {
                         DBShotgun[0] = Handful_Of_Shells[0];
@@ -3064,7 +3060,7 @@ namespace USG
                 }
                 if (Count_Not_Fired_Shells == 0)
                 {
-                    Console_WriteReadClear(Image.Last_Shell_Was_Inserted);
+                    Image.Last_Shell_Was_Inserted();
                     if (DBShotgun[0].Contains("null"))
                     {
                         DBShotgun[0] = Handful_Of_Shells[0];
