@@ -28,7 +28,7 @@ namespace USG
             {
                 Money = 20000;
             }
-            Console_WriteReadClear(Image.Winner_Ending(Winner_Name, Money));
+            Image.Winner_Ending(Winner_Name, Money);
         }
         private void Give_Items(ref string[] Player_Inventory, ref int Count_Of_Items, ref int Max_Of_Player_Inventory, bool Player_Bleeding_Phase)
         {
@@ -42,41 +42,41 @@ namespace USG
                         case 1:
                             if (Player_Bleeding_Phase)
                             {
-                                Player_Inventory[Max_Of_Player_Inventory] = "бинт";
+                                Player_Inventory[Max_Of_Player_Inventory] = "Бинт";
                                 Max_Of_Player_Inventory++;
                             }
                             else
                             {
-                                Player_Inventory[Max_Of_Player_Inventory] = "+хп";
+                                Player_Inventory[Max_Of_Player_Inventory] = "Батарейка";
                                 Max_Of_Player_Inventory++;
                             }
                             break;
                         case 2:
-                            Player_Inventory[Max_Of_Player_Inventory] = "наручники";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Сыворотка обездвижения";
                             Max_Of_Player_Inventory++;
                             break;
                         case 3:
-                            Player_Inventory[Max_Of_Player_Inventory] = "патрончекер";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Сканер";
                             Max_Of_Player_Inventory++;
                             break;
                         case 4:
-                            Player_Inventory[Max_Of_Player_Inventory] = "рандомный патрончекер";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Подпорченный сканер";
                             Max_Of_Player_Inventory++;
                             break;
                         case 5:
-                            Player_Inventory[Max_Of_Player_Inventory] = "инвертор";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Реверс";
                             Max_Of_Player_Inventory++;
                             break;
                         case 6:
-                            Player_Inventory[Max_Of_Player_Inventory] = "холостой патрон";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Холостой патрон";
                             Max_Of_Player_Inventory++;
                             break;
                         case 7:
-                            Player_Inventory[Max_Of_Player_Inventory] = "боевой патрон";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Боевой патрон";
                             Max_Of_Player_Inventory++;
                             break;
                         case 8:
-                            Player_Inventory[Max_Of_Player_Inventory] = "удвоитель урона";
+                            Player_Inventory[Max_Of_Player_Inventory] = "Удвоитель урона";
                             Max_Of_Player_Inventory++;
                             break;
                     }
@@ -249,14 +249,14 @@ namespace USG
                                     if (Player_First_Time_Bleeding)
                                     {
                                         Player_First_Time_Bleeding = false;
-                                        if (Player_Inventory.Contains("+хп"))
+                                        if (Player_Inventory.Contains("Батарейка"))
                                         {
                                             Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                             for (int i = 0; i < Player_Inventory.Length; i++)
                                             {
-                                                if (Player_Inventory[i] == "+хп")
+                                                if (Player_Inventory[i] == "Батарейка")
                                                 {
-                                                    Player_Inventory[i] = "бинт";
+                                                    Player_Inventory[i] = "Бинт";
                                                 }
                                             }
                                         }
@@ -295,13 +295,13 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    Image.Dead_Of_Bleeding_Out();
                                 }
                                 else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                                 {
                                     Opponent_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                    Image.Dead_Of_Bleeding_Out(true);
                                 }
                                 Count_Not_Fired_Shells--;
                                 Player_First_Time_Bleeding = false;
@@ -389,14 +389,14 @@ namespace USG
                                     if (Opponent_First_Time_Bleeding)
                                     {
                                         Opponent_First_Time_Bleeding = false;
-                                        if (Opponent_Inventory.Contains("+хп"))
+                                        if (Opponent_Inventory.Contains("Батарейка"))
                                         {
                                             Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                             for (int i = 0; i < Opponent_Inventory.Length; i++)
                                             {
-                                                if (Opponent_Inventory[i] == "+хп")
+                                                if (Opponent_Inventory[i] == "Батарейка")
                                                 {
-                                                    Opponent_Inventory[i] = "бинт";
+                                                    Opponent_Inventory[i] = "Бинт";
                                                 }
                                             }
                                         }
@@ -437,13 +437,13 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    Image.Dead_Of_Bleeding_Out();
                                 }
                                 else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                                 {
                                     Opponent_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                    Image.Dead_Of_Bleeding_Out(true);
                                 }
                                 if (Opponent_HandCuffed == 0 && Player_Bleeding_Turns % 2 == 0)
                                 {
@@ -536,14 +536,14 @@ namespace USG
                                 if (Player_First_Time_Bleeding)
                                 {
                                     Player_First_Time_Bleeding = false;
-                                    if (Player_Inventory.Contains("+хп"))
+                                    if (Player_Inventory.Contains("Батарейка"))
                                     {
                                         Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                         for (int i = 0; i < Player_Inventory.Length; i++)
                                         {
-                                            if (Player_Inventory[i] == "+хп")
+                                            if (Player_Inventory[i] == "Батарейка")
                                             {
-                                                Player_Inventory[i] = "бинт";
+                                                Player_Inventory[i] = "Бинт";
                                             }
                                         }
                                     }
@@ -582,13 +582,13 @@ namespace USG
                             {
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                Image.Dead_Of_Bleeding_Out();
                             }
                             else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                             {
                                 Opponent_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                Image.Dead_Of_Bleeding_Out(true);
                             }
                             Count_Not_Fired_Shells--;
                             Player_First_Time_Bleeding = false;
@@ -678,14 +678,14 @@ namespace USG
                                 if (Opponent_First_Time_Bleeding)
                                 {
                                     Opponent_First_Time_Bleeding = false;
-                                    if (Opponent_Inventory.Contains("+хп"))
+                                    if (Opponent_Inventory.Contains("Батарейка"))
                                     {
                                         Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                         for (int i = 0; i < Opponent_Inventory.Length; i++)
                                         {
-                                            if (Opponent_Inventory[i] == "+хп")
+                                            if (Opponent_Inventory[i] == "Батарейка")
                                             {
-                                                Opponent_Inventory[i] = "бинт";
+                                                Opponent_Inventory[i] = "Бинт";
                                             }
                                         }
                                     }
@@ -726,13 +726,13 @@ namespace USG
                             {
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                Image.Dead_Of_Bleeding_Out();
                             }
                             else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                             {
                                 Opponent_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                Image.Dead_Of_Bleeding_Out(true);
                             }
                             if (Opponent_HandCuffed == 0 && Player_Bleeding_Turns % 2 == 0)
                             {
@@ -752,41 +752,35 @@ namespace USG
                                 bool Items_Menu = true;
                                 while (Items_Menu)
                                 {
-                                    Console.SetCursorPosition(0, 0);
-                                    Console.Write(Image.All_Player_Items(Player_Bleeding_Phase));
-                                    for (int i = 0; i < Max_Of_Player_Inventory; i++)
-                                    {
-                                        Console.Write(Player_Inventory[i] + ", ");
-                                    }
-                                    Console.Write("и все.                                                                                                                              ");
+                                    Image.All_Player_Items(Max_Of_Player_Inventory, Player_Inventory, Player_Bleeding_Phase);
                                     switch (Convert.ToInt32(Console.ReadLine()))
                                     {
                                         case 1:
-                                            if (Player_Bleeding_Phase && Player_Inventory.Contains("бинт") == true)
+                                            if (Player_Bleeding_Phase && Player_Inventory.Contains("Бинт") == true)
                                             {
                                                 Player_Bleeding_Phase = false;
                                                 Count_Of_Player_Bleedings--;
                                                 Player_Bleeding_Turns = 0;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("бинт"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Бинт"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
                                                 Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
-                                            else if (Player_Inventory.Contains("+хп") == true)
+                                            else if (Player_Inventory.Contains("Батарейка") == true)
                                             {
                                                 Player_Lives++;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Батарейка"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
                                                 Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
-                                            else if (Player_Inventory.Contains("бинт") == true)
+                                            else if (Player_Inventory.Contains("Бинт") == true)
                                             {
                                                 Image.You_Dont_Bleeding_Out();
                                             }
@@ -796,7 +790,7 @@ namespace USG
                                             }
                                             break;
                                         case 2:
-                                            if (Player_Inventory.Contains("наручники") == true)
+                                            if (Player_Inventory.Contains("Сыворотка обездвижения") == true)
                                             {
                                                 if (Opponent_HandCuffed > 0)
                                                 {
@@ -806,7 +800,7 @@ namespace USG
                                                 {
                                                     Opponent_HandCuffed = 2;
                                                     List<string> Remove_List = new List<string>(Player_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("наручники"));
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Сыворотка обездвижения"));
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
@@ -821,11 +815,11 @@ namespace USG
                                             }
                                             break;
                                         case 3:
-                                            if (Player_Inventory.Contains("патрончекер") == true)
+                                            if (Player_Inventory.Contains("Сканер") == true)
                                             {
                                                 Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells], 0);
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Сканер"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
@@ -838,12 +832,12 @@ namespace USG
                                             }
                                             break;
                                         case 4:
-                                            if (Player_Inventory.Contains("рандомный патрончекер") == true)
+                                            if (Player_Inventory.Contains("Подпорченный сканер") == true)
                                             {
                                                 int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
                                                 Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells - Index_Of_Shell], Index_Of_Shell + 1, true);
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("рандомный патрончекер"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Подпорченный сканер"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
@@ -856,7 +850,7 @@ namespace USG
                                             }
                                             break;
                                         case 5:
-                                            if (Player_Inventory.Contains("инвертор") == true)
+                                            if (Player_Inventory.Contains("Реверс") == true)
                                             {
                                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                                                 {
@@ -867,7 +861,7 @@ namespace USG
                                                     Magazine[Count_Not_Fired_Shells] = "Боевой";
                                                 }
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Реверс"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
@@ -880,15 +874,14 @@ namespace USG
                                             }
                                             break;
                                         case 6:
-                                            if (Player_Inventory.Contains("боевой патрон") == true && Player_Inventory.Contains("холостой патрон") == true)
+                                            if (Player_Inventory.Contains("Боевой патрон") == true && Player_Inventory.Contains("Холостой патрон") == true)
                                             {
                                                 if (Count_Not_Fired_Shells < 8)
                                                 {
                                                     bool Shell_Choosen = false;
                                                     while (!Shell_Choosen)
                                                     {
-                                                        Console.SetCursorPosition(0, 0);
-                                                        Console.Write(Image.Which_Shell_Will_Be_Inserted);
+                                                        Image.Which_Shell_Will_Be_Inserted();
                                                         List<string> Add_List = new List<string>(Magazine);
                                                         List<string> Remove_List = new List<string>(Player_Inventory);
                                                         try
@@ -899,7 +892,7 @@ namespace USG
                                                                     Add_List.Insert(0, "Боевой");
                                                                     Magazine = Add_List.ToArray();
                                                                     Shell_Choosen = true;
-                                                                    Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                                     Remove_List.Add("");
                                                                     Player_Inventory = Remove_List.ToArray();
                                                                     Max_Of_Player_Inventory--;
@@ -911,7 +904,7 @@ namespace USG
                                                                     Add_List.Insert(0, "Холостой");
                                                                     Magazine = Add_List.ToArray();
                                                                     Shell_Choosen = true;
-                                                                    Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                                     Remove_List.Add("");
                                                                     Player_Inventory = Remove_List.ToArray();
                                                                     Max_Of_Player_Inventory--;
@@ -933,17 +926,17 @@ namespace USG
                                                     Image.Magazine_Full();
                                                 }
                                             }
-                                            else if (Player_Inventory.Contains("боевой патрон") == true || Player_Inventory.Contains("холостой патрон") == true)
+                                            else if (Player_Inventory.Contains("Боевой патрон") == true || Player_Inventory.Contains("Холостой патрон") == true)
                                             {
                                                 if (Count_Not_Fired_Shells < 8)
                                                 {
                                                     List<string> Add_List = new List<string>(Magazine);
-                                                    if (Player_Inventory.Contains("боевой патрон") == true)
+                                                    if (Player_Inventory.Contains("Боевой патрон") == true)
                                                     {
                                                         Add_List.Insert(0, "Боевой");
                                                         Magazine = Add_List.ToArray();
                                                         List<string> Remove_List = new List<string>(Player_Inventory);
-                                                        Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                         Remove_List.Add("");
                                                         Player_Inventory = Remove_List.ToArray();
                                                         Max_Of_Player_Inventory--;
@@ -956,7 +949,7 @@ namespace USG
                                                         Add_List.Insert(0, "Холостой");
                                                         Magazine = Add_List.ToArray();
                                                         List<string> Remove_List = new List<string>(Player_Inventory);
-                                                        Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                         Remove_List.Add("");
                                                         Player_Inventory = Remove_List.ToArray();
                                                         Max_Of_Player_Inventory--;
@@ -976,16 +969,20 @@ namespace USG
                                             }
                                             break;
                                         case 7:
-                                            if (Player_Inventory.Contains("удвоитель урона") == true)
+                                            if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == false)
                                             {
                                                 Player_Double_Damage = true;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("удвоитель урона"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Удвоитель урона"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
                                                 Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
+                                            }
+                                            else if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == true)
+                                            {
+                                                Image.You_Alredy_Have_Double_Damage();
                                             }
                                             else
                                             {
@@ -1010,7 +1007,7 @@ namespace USG
                     case 0:
                         if (Player_Lives == 1)
                         {
-                            Console_WriteReadClear(Image.You_Choose_To_Die());
+                            Image.You_Choose_To_Die();
                             Player_Lives = -1;
                             Turn_To_Play = 3;
                             Ending(Opponent_Name, Opponent_Money_Factor, true);
@@ -1035,40 +1032,29 @@ namespace USG
             {
                 if (Player_Want_Use_Items)
                 {
-                    if (Player_Inventory.Contains("холостой патрон") || Player_Inventory.Contains("боевой патрон") || Player_Inventory.Contains("рандомный патрончекер") || Player_Inventory.Contains("патрончекер"))
+                    if (Player_Inventory.Contains("Холостой патрон") || Player_Inventory.Contains("Боевой патрон") || Player_Inventory.Contains("Подпорченный сканер") || Player_Inventory.Contains("Сканер"))
                     {
-                        Console.SetCursorPosition(0, 0);
-                        Console.Write(Image.Will_You_Use_Items(Player_Name));
+                        Image.Will_You_Use_Items();
                         try
                         {
                             switch (Convert.ToInt32(Console.ReadLine()))
                             {
                                 case 1:
                                     bool Items_Menu = true;
-                                    if (Player_Inventory.Contains("холостой патрон") || Player_Inventory.Contains("боевой патрон") || Player_Inventory.Contains("рандомный патрончекер") || Player_Inventory.Contains("патрончекер"))
+                                    if (Player_Inventory.Contains("Холостой патрон") || Player_Inventory.Contains("Боевой патрон") || Player_Inventory.Contains("Подпорченный сканер") || Player_Inventory.Contains("Сканер"))
                                     {
                                         while (Items_Menu)
                                         {
-                                            Console.SetCursorPosition(0, 0);
-                                            Console.Write(Image.All_Player_Items(false, true, false));
-                                            for (int i = 0; i < Max_Of_Player_Inventory; i++)
-                                            {
-                                                if (Player_Inventory[i].Contains("рандомный патрончекер") || Player_Inventory[i].Contains("патрончекер") || Player_Inventory[i].Contains("холостой патрон") || Player_Inventory[i].Contains("боевой патрон"))
-                                                {
-                                                    Console.Write(Player_Inventory[i] + ", ");
-                                                }
-                                            }
-                                            Console.Write("и все.                                                                                                                              ");
+                                            Image.All_Player_Items(Max_Of_Player_Inventory, Player_Inventory, false, true, false);
                                             switch (Convert.ToInt32(Console.ReadLine()))
                                             {
                                                 case 1:
-                                                    if (Player_Inventory.Contains("патрончекер") == true)
+                                                    if (Player_Inventory.Contains("Сканер") == true)
                                                     {
                                                         bool Number_Has_Choosen = false;
                                                         while (!Number_Has_Choosen)
                                                         {
-                                                            Console.SetCursorPosition(0, 0);
-                                                            Console.Write(Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells + 1));
+                                                            Image.Choose_Shell_That_You_Check(Count_Not_Fired_Shells + 1);
                                                             switch (Convert.ToInt32(Console.ReadLine()))
                                                             {
                                                                 case 1:
@@ -1141,7 +1127,7 @@ namespace USG
                                                             }
                                                         }
                                                         List<string> Remove_List = new List<string>(Player_Inventory);
-                                                        Remove_List.RemoveAt(Remove_List.IndexOf("патрончекер"));
+                                                        Remove_List.RemoveAt(Remove_List.IndexOf("Сканер"));
                                                         Remove_List.Add("");
                                                         Player_Inventory = Remove_List.ToArray();
                                                         Max_Of_Player_Inventory--;
@@ -1154,18 +1140,25 @@ namespace USG
                                                     }
                                                     break;
                                                 case 2:
-                                                    int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
-                                                    Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true);
-                                                    List<string> RemoveList = new List<string>(Player_Inventory);
-                                                    RemoveList.RemoveAt(RemoveList.IndexOf("рандомный патрончекер"));
-                                                    RemoveList.Add("");
-                                                    Player_Inventory = RemoveList.ToArray();
-                                                    Max_Of_Player_Inventory--;
-                                                    Player_Money_Factor += 0.5;
-                                                    Items_Menu = false;
+                                                    if (Player_Inventory.Contains("Подпорченный сканер") == true)
+                                                    {
+                                                        int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
+                                                        Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[Index_Of_Shell], Index_Of_Shell + 1, true);
+                                                        List<string> RemoveList = new List<string>(Player_Inventory);
+                                                        RemoveList.RemoveAt(RemoveList.IndexOf("Подпорченный сканер"));
+                                                        RemoveList.Add("");
+                                                        Player_Inventory = RemoveList.ToArray();
+                                                        Max_Of_Player_Inventory--;
+                                                        Player_Money_Factor += 0.5;
+                                                        Items_Menu = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console_WriteReadClear(Image.This_Button_Isnt_Exists);
+                                                    }
                                                     break;
                                                 case 3:
-                                                    if (Player_Inventory.Contains("боевой патрон") == true && Player_Inventory.Contains("холостой патрон") == true)
+                                                    if (Player_Inventory.Contains("Боевой патрон") == true && Player_Inventory.Contains("Холостой патрон") == true)
                                                     {
                                                         bool Shell_Choosen = false;
                                                         while (!Shell_Choosen)
@@ -1173,8 +1166,7 @@ namespace USG
                                                             int Side = -1;
                                                             if (DBShotgun[0].Contains("null") == true && DBShotgun[1].Contains("null") == true)
                                                             {
-                                                                Console.SetCursorPosition(0, 0);
-                                                                Console.Write(Image.Which_Side_Need_Insert);
+                                                                Image.Which_Side_Need_Insert();
                                                                 while (Side == -1)
                                                                 {
                                                                     try
@@ -1195,8 +1187,7 @@ namespace USG
                                                                     catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                 }
                                                             }
-                                                            Console.SetCursorPosition(0, 0);
-                                                            Console.Write(Image.Which_Shell_Will_Be_Inserted);
+                                                            Image.Which_Shell_Will_Be_Inserted();
                                                             try
                                                             {
                                                                 if (Convert.ToInt32(Console.ReadLine()) == 1)
@@ -1206,7 +1197,7 @@ namespace USG
                                                                         DBShotgun[Side] = "Боевой";
                                                                         Shell_Choosen = true;
                                                                         List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                        Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                                        Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                                         Remove_List.Add("");
                                                                         Player_Inventory = Remove_List.ToArray();
                                                                         Max_Of_Player_Inventory--;
@@ -1221,7 +1212,7 @@ namespace USG
                                                                             DBShotgun[0] = "Боевой";
                                                                             Shell_Choosen = true;
                                                                             List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                                             Remove_List.Add("");
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
@@ -1234,7 +1225,7 @@ namespace USG
                                                                             DBShotgun[1] = "Боевой";
                                                                             Shell_Choosen = true;
                                                                             List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                                             Remove_List.Add("");
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
@@ -1251,7 +1242,7 @@ namespace USG
                                                                         DBShotgun[Side] = "Холостой";
                                                                         Shell_Choosen = true;
                                                                         List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                        Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                                        Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                                         Remove_List.Add("");
                                                                         Player_Inventory = Remove_List.ToArray();
                                                                         Max_Of_Player_Inventory--;
@@ -1266,7 +1257,7 @@ namespace USG
                                                                             DBShotgun[0] = "Холостой";
                                                                             Shell_Choosen = true;
                                                                             List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                                             Remove_List.Add("");
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
@@ -1279,7 +1270,7 @@ namespace USG
                                                                             DBShotgun[1] = "Холостой";
                                                                             Shell_Choosen = true;
                                                                             List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                                            Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                                             Remove_List.Add("");
                                                                             Player_Inventory = Remove_List.ToArray();
                                                                             Max_Of_Player_Inventory--;
@@ -1297,15 +1288,15 @@ namespace USG
                                                             catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                         }
                                                     }
-                                                    else if (Player_Inventory.Contains("боевой патрон") == true || Player_Inventory.Contains("холостой патрон") == true)
+                                                    else if (Player_Inventory.Contains("Боевой патрон") == true || Player_Inventory.Contains("Холостой патрон") == true)
                                                     {
-                                                        if (Player_Inventory.Contains("боевой патрон") == true)
+                                                        if (Player_Inventory.Contains("Боевой патрон") == true)
                                                         {
                                                             if (DBShotgun[0].Contains("null"))
                                                             {
                                                                 DBShotgun[0] = "Боевой";
                                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                                Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                                 Remove_List.Add("");
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
@@ -1317,7 +1308,7 @@ namespace USG
                                                             {
                                                                 DBShotgun[1] = "Боевой";
                                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                Remove_List.RemoveAt(Remove_List.IndexOf("боевой патрон"));
+                                                                Remove_List.RemoveAt(Remove_List.IndexOf("Боевой патрон"));
                                                                 Remove_List.Add("");
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
@@ -1332,7 +1323,7 @@ namespace USG
                                                             {
                                                                 DBShotgun[0] = "Холостой";
                                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                                Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                                 Remove_List.Add("");
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
@@ -1344,7 +1335,7 @@ namespace USG
                                                             {
                                                                 DBShotgun[1] = "Холостой";
                                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                                Remove_List.RemoveAt(Remove_List.IndexOf("холостой патрон"));
+                                                                Remove_List.RemoveAt(Remove_List.IndexOf("Холостой патрон"));
                                                                 Remove_List.Add("");
                                                                 Player_Inventory = Remove_List.ToArray();
                                                                 Max_Of_Player_Inventory--;
@@ -1400,8 +1391,7 @@ namespace USG
                 }
                 else
                 {
-                    Console.SetCursorPosition(0, 0);
-                    Console.Write(Image.Time_To_Load_Shotgun(Player_Name, Count_Not_Fired_Shells + 1, DBShotgun));
+                    Image.Time_To_Load_Shotgun(Count_Not_Fired_Shells + 1, DBShotgun);
                     try
                     {
                         switch (Convert.ToInt32(Console.ReadLine()))
@@ -1685,14 +1675,14 @@ namespace USG
                                     if (Player_First_Time_Bleeding)
                                     {
                                         Player_First_Time_Bleeding = false;
-                                        if (Player_Inventory.Contains("+хп"))
+                                        if (Player_Inventory.Contains("Батарейка"))
                                         {
                                             Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                             for (int i = 0; i < Player_Inventory.Length; i++)
                                             {
-                                                if (Player_Inventory[i] == "+хп")
+                                                if (Player_Inventory[i] == "Батарейка")
                                                 {
-                                                    Player_Inventory[i] = "бинт";
+                                                    Player_Inventory[i] = "Бинт";
                                                 }
                                             }
                                         }
@@ -1795,14 +1785,14 @@ namespace USG
                                     if (Player_First_Time_Bleeding)
                                     {
                                         Player_First_Time_Bleeding = false;
-                                        if (Player_Inventory.Contains("+хп"))
+                                        if (Player_Inventory.Contains("Батарейка"))
                                         {
                                             Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                             for (int i = 0; i < Player_Inventory.Length; i++)
                                             {
-                                                if (Player_Inventory[i] == "+хп")
+                                                if (Player_Inventory[i] == "Батарейка")
                                                 {
-                                                    Player_Inventory[i] = "бинт";
+                                                    Player_Inventory[i] = "Бинт";
                                                 }
                                             }
                                         }
@@ -1843,13 +1833,13 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    Image.Dead_Of_Bleeding_Out();
                                 }
                                 else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                                 {
                                     Opponent_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                    Image.Dead_Of_Bleeding_Out(true);
                                 }
                                 DBShotgun[0] = "null";
                                 DBShotgun[1] = "null";
@@ -1937,14 +1927,14 @@ namespace USG
                                     if (Opponent_First_Time_Bleeding)
                                     {
                                         Opponent_First_Time_Bleeding = false;
-                                        if (Opponent_Inventory.Contains("+хп"))
+                                        if (Opponent_Inventory.Contains("Батарейка"))
                                         {
                                             Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                             for (int i = 0; i < Opponent_Inventory.Length; i++)
                                             {
-                                                if (Opponent_Inventory[i] == "+хп")
+                                                if (Opponent_Inventory[i] == "Батарейка")
                                                 {
-                                                    Opponent_Inventory[i] = "бинт";
+                                                    Opponent_Inventory[i] = "Бинт";
                                                 }
                                             }
                                         }
@@ -2047,14 +2037,14 @@ namespace USG
                                     if (Opponent_First_Time_Bleeding)
                                     {
                                         Opponent_First_Time_Bleeding = false;
-                                        if (Opponent_Inventory.Contains("+хп"))
+                                        if (Opponent_Inventory.Contains("Батарейка"))
                                         {
                                             Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                             for (int i = 0; i < Opponent_Inventory.Length; i++)
                                             {
-                                                if (Opponent_Inventory[i] == "+хп")
+                                                if (Opponent_Inventory[i] == "Батарейка")
                                                 {
-                                                    Opponent_Inventory[i] = "бинт";
+                                                    Opponent_Inventory[i] = "Бинт";
                                                 }
                                             }
                                         }
@@ -2096,13 +2086,13 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                    Image.Dead_Of_Bleeding_Out();
                                 }
                                 else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                                 {
                                     Opponent_Lives = -1;
                                     Turn_To_Play = 3;
-                                    Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                    Image.Dead_Of_Bleeding_Out(true);
                                 }
                                 if (Opponent_HandCuffed == 0 && Player_Bleeding_Turns % 2 == 0)
                                 {
@@ -2196,14 +2186,14 @@ namespace USG
                                 if (Player_First_Time_Bleeding)
                                 {
                                     Player_First_Time_Bleeding = false;
-                                    if (Player_Inventory.Contains("+хп"))
+                                    if (Player_Inventory.Contains("Батарейка"))
                                     {
                                         Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                         for (int i = 0; i < Player_Inventory.Length; i++)
                                         {
-                                            if (Player_Inventory[i] == "+хп")
+                                            if (Player_Inventory[i] == "Батарейка")
                                             {
-                                                Player_Inventory[i] = "бинт";
+                                                Player_Inventory[i] = "Бинт";
                                             }
                                         }
                                     }
@@ -2306,14 +2296,14 @@ namespace USG
                                 if (Player_First_Time_Bleeding)
                                 {
                                     Player_First_Time_Bleeding = false;
-                                    if (Player_Inventory.Contains("+хп"))
+                                    if (Player_Inventory.Contains("Батарейка"))
                                     {
                                         Image.Heals_Was_Changed_To_Bandage(Player_Name);
                                         for (int i = 0; i < Player_Inventory.Length; i++)
                                         {
-                                            if (Player_Inventory[i] == "+хп")
+                                            if (Player_Inventory[i] == "Батарейка")
                                             {
-                                                Player_Inventory[i] = "бинт";
+                                                Player_Inventory[i] = "Бинт";
                                             }
                                         }
                                     }
@@ -2354,13 +2344,13 @@ namespace USG
                             {
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                Image.Dead_Of_Bleeding_Out();
                             }
                             else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                             {
                                 Opponent_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                Image.Dead_Of_Bleeding_Out(true);
                             }
                             DBShotgun[0] = "null";
                             DBShotgun[1] = "null";
@@ -2450,14 +2440,14 @@ namespace USG
                                 if (Opponent_First_Time_Bleeding)
                                 {
                                     Opponent_First_Time_Bleeding = false;
-                                    if (Opponent_Inventory.Contains("+хп"))
+                                    if (Opponent_Inventory.Contains("Батарейка"))
                                     {
                                         Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                         for (int i = 0; i < Opponent_Inventory.Length; i++)
                                         {
-                                            if (Opponent_Inventory[i] == "+хп")
+                                            if (Opponent_Inventory[i] == "Батарейка")
                                             {
-                                                Opponent_Inventory[i] = "бинт";
+                                                Opponent_Inventory[i] = "Бинт";
                                             }
                                         }
                                     }
@@ -2560,14 +2550,14 @@ namespace USG
                                 if (Opponent_First_Time_Bleeding)
                                 {
                                     Opponent_First_Time_Bleeding = false;
-                                    if (Opponent_Inventory.Contains("+хп"))
+                                    if (Opponent_Inventory.Contains("Батарейка"))
                                     {
                                         Image.Heals_Was_Changed_To_Bandage(Opponent_Name);
                                         for (int i = 0; i < Opponent_Inventory.Length; i++)
                                         {
-                                            if (Opponent_Inventory[i] == "+хп")
+                                            if (Opponent_Inventory[i] == "Батарейка")
                                             {
-                                                Opponent_Inventory[i] = "бинт";
+                                                Opponent_Inventory[i] = "Бинт";
                                             }
                                         }
                                     }
@@ -2609,13 +2599,13 @@ namespace USG
                             {
                                 Player_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out());
+                                Image.Dead_Of_Bleeding_Out();
                             }
                             else if (Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Count_Of_Opponent_Bleedings == 0 || Opponent_Bleeding_Phase && Opponent_Lives <= 1 && Opponent_Bleeding_Turns <= 0)
                             {
                                 Opponent_Lives = -1;
                                 Turn_To_Play = 3;
-                                Console_WriteReadClear(Image.Dead_Of_Bleeding_Out(true));
+                                Image.Dead_Of_Bleeding_Out(true);
                             }
                             if (Opponent_HandCuffed == 0 && Player_Bleeding_Turns % 2 == 0)
                             {
@@ -2637,41 +2627,35 @@ namespace USG
                                 bool Items_Menu = true;
                                 while (Items_Menu)
                                 {
-                                    Console.SetCursorPosition(0, 0);
-                                    Console.Write(Image.All_Player_Items(Player_Bleeding_Phase, false, true));
-                                    for (int i = 0; i < Max_Of_Player_Inventory; i++)
-                                    {
-                                        Console.Write(Player_Inventory[i] + ", ");
-                                    }
-                                    Console.Write("и все.                                                                                                                              ");
+                                    Image.All_Player_Items(Max_Of_Player_Inventory, Player_Inventory, Player_Bleeding_Phase, false, true);
                                     switch (Convert.ToInt32(Console.ReadLine()))
                                     {
                                         case 1:
-                                            if (Player_Bleeding_Phase && Player_Inventory.Contains("бинт") == true)
+                                            if (Player_Bleeding_Phase && Player_Inventory.Contains("Бинт") == true)
                                             {
                                                 Player_Bleeding_Phase = false;
                                                 Count_Of_Player_Bleedings--;
                                                 Player_Bleeding_Turns = 0;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("бинт"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Бинт"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
                                                 Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
-                                            else if (Player_Inventory.Contains("+хп") == true)
+                                            else if (Player_Inventory.Contains("Батарейка") == true)
                                             {
                                                 Player_Lives++;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("+хп"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Батарейка"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
                                                 Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
                                             }
-                                            else if (Player_Inventory.Contains("бинт") == true)
+                                            else if (Player_Inventory.Contains("Бинт") == true)
                                             {
                                                 Image.You_Dont_Bleeding_Out();
                                             }
@@ -2681,7 +2665,7 @@ namespace USG
                                             }
                                             break;
                                         case 2:
-                                            if (Player_Inventory.Contains("наручники") == true)
+                                            if (Player_Inventory.Contains("Сыворотка обездвижения") == true)
                                             {
                                                 if (Opponent_HandCuffed > 0)
                                                 {
@@ -2691,7 +2675,7 @@ namespace USG
                                                 {
                                                     Opponent_HandCuffed = 2;
                                                     List<string> Remove_List = new List<string>(Player_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("наручники"));
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Сыворотка обездвижения"));
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
@@ -2706,14 +2690,14 @@ namespace USG
                                             }
                                             break;
                                         case 3:
-                                            if (Player_Inventory.Contains("инвертор") == true)
+                                            if (Player_Inventory.Contains("Реверс") == true)
                                             {
                                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                                 {
                                                     DBShotgun[0] = "Холостой";
                                                     DBShotgun[1] = "Холостой";
                                                     List<string> Remove_List = new List<string>(Player_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Реверс"));
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
@@ -2739,7 +2723,7 @@ namespace USG
                                                         DBShotgun[1] = "Холостой";
                                                     }
                                                     List<string> Remove_List = new List<string>(Player_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Реверс"));
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
@@ -2751,7 +2735,7 @@ namespace USG
                                                     DBShotgun[0] = "Боевой";
                                                     DBShotgun[1] = "Боевой";
                                                     List<string> Remove_List = new List<string>(Player_Inventory);
-                                                    Remove_List.RemoveAt(Remove_List.IndexOf("инвертор"));
+                                                    Remove_List.RemoveAt(Remove_List.IndexOf("Реверс"));
                                                     Remove_List.Add("");
                                                     Player_Inventory = Remove_List.ToArray();
                                                     Max_Of_Player_Inventory--;
@@ -2765,16 +2749,20 @@ namespace USG
                                             }
                                             break;
                                         case 4:
-                                            if (Player_Inventory.Contains("удвоитель урона") == true)
+                                            if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == false)
                                             {
                                                 Player_Double_Damage = true;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
-                                                Remove_List.RemoveAt(Remove_List.IndexOf("удвоитель урона"));
+                                                Remove_List.RemoveAt(Remove_List.IndexOf("Удвоитель урона"));
                                                 Remove_List.Add("");
                                                 Player_Inventory = Remove_List.ToArray();
                                                 Max_Of_Player_Inventory--;
                                                 Player_Money_Factor += 0.5;
                                                 Items_Menu = false;
+                                            }
+                                            else if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == true)
+                                            {
+                                                Image.You_Alredy_Have_Double_Damage();
                                             }
                                             else
                                             {
@@ -2799,7 +2787,7 @@ namespace USG
                     case 0:
                         if (Player_Lives == 1)
                         {
-                            Console_WriteReadClear(Image.You_Choose_To_Die());
+                            Image.You_Choose_To_Die();
                             Player_Lives = -1;
                             Turn_To_Play = 3;
                             Ending(Opponent_Name, Opponent_Money_Factor, true);
