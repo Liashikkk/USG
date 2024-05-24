@@ -96,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="All_Images.cs" />
-    <Compile Include="All_Sounds.cs" />
     <Compile Include="Game_Modes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -172,6 +172,7 @@ namespace USG
                             Image.Will_Be_Fired_At(Who_To_Shoot_At);
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
+                                Live_Shot();
                                 if (Player_Double_Damage)
                                 {
                                     Player_Double_Damage = false;
@@ -229,7 +230,7 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                 }
-                                else
+                                else if (Player_Bleeding_Phase && Count_Of_Player_Bleedings > 0 && Player_Lives < 1)
                                 {
                                     Player_Lives = 1;
                                 }
@@ -281,6 +282,7 @@ namespace USG
                             }
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
+                                Blanks_Shot();
                                 Player_Money_Factor += 1.0;
                                 if (Opponent_HandCuffed > 0)
                                 {
@@ -312,6 +314,7 @@ namespace USG
                             Image.Will_Be_Fired_At(Who_To_Shoot_At);
                             if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                             {
+                                Live_Shot();
                                 if (Player_Double_Damage)
                                 {
                                     Player_Double_Damage = false;
@@ -369,7 +372,7 @@ namespace USG
                                 {
                                     Opponent_Lives = -1;
                                 }
-                                else
+                                else if (Opponent_Bleeding_Phase && Count_Of_Opponent_Bleedings > 0 && Opponent_Lives < 1)
                                 {
                                     Opponent_Lives = 1;
                                 }
@@ -421,6 +424,7 @@ namespace USG
                             }
                             else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                             {
+                                Blanks_Shot();
                                 Image.Blank_Shoot(true);
                                 Count_Not_Fired_Shells--;
                                 Player_Money_Factor -= 0.5;
@@ -459,6 +463,7 @@ namespace USG
                         }
                         if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                         {
+                            Live_Shot();
                             if (Player_Double_Damage)
                             {
                                 Player_Double_Damage = false;
@@ -516,7 +521,7 @@ namespace USG
                             {
                                 Player_Lives = -1;
                             }
-                            else
+                            else if (Player_Bleeding_Phase && Count_Of_Player_Bleedings > 0 && Player_Lives < 1)
                             {
                                 Player_Lives = 1;
                             }
@@ -568,6 +573,7 @@ namespace USG
                         }
                         else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                         {
+                            Blanks_Shot();
                             Player_Money_Factor += 1.0;
                             if (Opponent_HandCuffed > 0)
                             {
@@ -601,6 +607,7 @@ namespace USG
                         }
                         if (Magazine[Count_Not_Fired_Shells] == "Боевой")
                         {
+                            Live_Shot();
                             if (Player_Double_Damage)
                             {
                                 Player_Double_Damage = false;
@@ -658,7 +665,7 @@ namespace USG
                             {
                                 Opponent_Lives = -1;
                             }
-                            else
+                            else if (Opponent_Bleeding_Phase && Count_Of_Opponent_Bleedings > 0 && Opponent_Lives < 1)
                             {
                                 Opponent_Lives = 1;
                             }
@@ -710,6 +717,7 @@ namespace USG
                         }
                         else if (Magazine[Count_Not_Fired_Shells] == "Холостой")
                         {
+                            Blanks_Shot();
                             Image.Blank_Shoot(true);
                             Count_Not_Fired_Shells--;
                             Player_Money_Factor -= 0.5;
@@ -741,6 +749,7 @@ namespace USG
                         }
                         break;
                     case 4:
+                        Button_Sound();
                         if (Count_Of_Items != 0)
                         {
                             if (Max_Of_Player_Inventory == 0)
@@ -758,6 +767,7 @@ namespace USG
                                         case 1:
                                             if (Player_Bleeding_Phase && Player_Inventory.Contains("Бинт") == true)
                                             {
+                                                Bandage();
                                                 Player_Bleeding_Phase = false;
                                                 Count_Of_Player_Bleedings--;
                                                 Player_Bleeding_Turns = 0;
@@ -771,6 +781,7 @@ namespace USG
                                             }
                                             else if (Player_Inventory.Contains("Батарейка") == true)
                                             {
+                                                Battery_Insert();
                                                 Player_Lives++;
                                                 List<string> Remove_List = new List<string>(Player_Inventory);
                                                 Remove_List.RemoveAt(Remove_List.IndexOf("Батарейка"));
@@ -782,18 +793,22 @@ namespace USG
                                             }
                                             else if (Player_Inventory.Contains("Бинт") == true)
                                             {
+                                                Error();
                                                 Image.You_Dont_Bleeding_Out();
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 2:
+                                            Button_Sound();
                                             if (Player_Inventory.Contains("Сыворотка обездвижения") == true)
                                             {
                                                 if (Opponent_HandCuffed > 0)
                                                 {
+                                                    Error();
                                                     Image.Opponent_Already_HandCuffed();
                                                 }
                                                 else
@@ -811,10 +826,12 @@ namespace USG
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 3:
+                                            Button_Sound();
                                             if (Player_Inventory.Contains("Сканер") == true)
                                             {
                                                 Image.What_Is_Shell_In_Shotgun(Magazine[Count_Not_Fired_Shells], 0);
@@ -828,10 +845,12 @@ namespace USG
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 4:
+                                            Button_Sound();
                                             if (Player_Inventory.Contains("Подпорченный сканер") == true)
                                             {
                                                 int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
@@ -846,10 +865,12 @@ namespace USG
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 5:
+                                            Button_Sound();
                                             if (Player_Inventory.Contains("Реверс") == true)
                                             {
                                                 if (Magazine[Count_Not_Fired_Shells] == "Боевой")
@@ -870,10 +891,12 @@ namespace USG
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 6:
+                                            Button_Sound();
                                             if (Player_Inventory.Contains("Боевой патрон") == true && Player_Inventory.Contains("Холостой патрон") == true)
                                             {
                                                 if (Count_Not_Fired_Shells < 8)
@@ -913,16 +936,18 @@ namespace USG
                                                                     Items_Menu = false;
                                                                     break;
                                                                 default:
+                                                                    Error();
                                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                                     break;
                                                             }
                                                         }
-                                                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                        catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
 
                                                     }
                                                 }
                                                 else
                                                 {
+                                                    Error();
                                                     Image.Magazine_Full();
                                                 }
                                             }
@@ -960,15 +985,18 @@ namespace USG
                                                 }
                                                 else
                                                 {
+                                                    Error();
                                                     Image.Magazine_Full();
                                                 }
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 7:
+                                            Button_Sound();
                                             if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == false)
                                             {
                                                 Player_Double_Damage = true;
@@ -982,17 +1010,21 @@ namespace USG
                                             }
                                             else if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == true)
                                             {
+                                                Error();
                                                 Image.You_Alredy_Have_Double_Damage();
                                             }
                                             else
                                             {
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             }
                                             break;
                                         case 8:
+                                            Button_Sound();
                                             Items_Menu = false;
                                             break;
                                         default:
+                                            Error();
                                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                             break;
                                     }
@@ -1001,10 +1033,12 @@ namespace USG
                         }
                         else
                         {
+                            Error();
                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         }
                         break;
                     case 0:
+                        Button_Sound();
                         if (Player_Lives == 1)
                         {
                             Image.You_Choose_To_Die();
@@ -1014,15 +1048,17 @@ namespace USG
                         }
                         else
                         {
+                            Error();
                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         }
                         break;
                     default:
+                        Error();
                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                         break;
                 }
             }
-            catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+            catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
         }
         private void DoubleBarrel_Shotgun_Insert_Shells(ref int Player_Bleeding_Turns, ref bool Player_Bleeding_Phase, ref int Count_Of_Items, ref int Opponent_HandCuffed, ref string Opponent_Name, ref int Player_Lives, ref double Player_Money_Factor, ref string[] DBShotgun, ref string[] Handful_Of_Shells, ref string Player_Name, ref string[] Player_Inventory, ref int Max_Of_Player_Inventory, ref int Count_Not_Fired_Shells)
         {
@@ -1048,6 +1084,7 @@ namespace USG
                             switch (Convert.ToInt32(Console.ReadLine()))
                             {
                                 case 1:
+                                    Button_Sound();
                                     bool Items_Menu = true;
                                     if (Player_Inventory.Contains("Холостой патрон") || Player_Inventory.Contains("Боевой патрон") || Player_Inventory.Contains("Подпорченный сканер") || Player_Inventory.Contains("Сканер"))
                                     {
@@ -1057,6 +1094,7 @@ namespace USG
                                             switch (Convert.ToInt32(Console.ReadLine()))
                                             {
                                                 case 1:
+                                                    Button_Sound();
                                                     if (Player_Inventory.Contains("Сканер") == true)
                                                     {
                                                         bool Number_Has_Choosen = false;
@@ -1066,70 +1104,79 @@ namespace USG
                                                             switch (Convert.ToInt32(Console.ReadLine()))
                                                             {
                                                                 case 1:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[0], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 2:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[1], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 3:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[2], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 4:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[3], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 5:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[4], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 6:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[5], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 7:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[6], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 case 8:
+                                                                    Button_Sound();
                                                                     try
                                                                     {
                                                                         Image.What_Is_Shell_In_Shotgun(Handful_Of_Shells[7], 0, false, true);
                                                                         Number_Has_Choosen = true;
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                     break;
                                                                 default:
+                                                                    Error();
                                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                                     break;
                                                             }
@@ -1144,10 +1191,12 @@ namespace USG
                                                     }
                                                     else
                                                     {
+                                                        Error();
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case 2:
+                                                    Button_Sound();
                                                     if (Player_Inventory.Contains("Подпорченный сканер") == true)
                                                     {
                                                         int Index_Of_Shell = Random_Number.Next(0, Count_Not_Fired_Shells);
@@ -1162,10 +1211,12 @@ namespace USG
                                                     }
                                                     else
                                                     {
+                                                        Error();
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case 3:
+                                                    Button_Sound();
                                                     if (Player_Inventory.Contains("Боевой патрон") == true && Player_Inventory.Contains("Холостой патрон") == true)
                                                     {
                                                         bool Shell_Choosen = false;
@@ -1181,18 +1232,21 @@ namespace USG
                                                                     {
                                                                         if (Convert.ToInt32(Console.ReadLine()) == 1)
                                                                         {
+                                                                            Button_Sound();
                                                                             Side = 0; //левая сторона
                                                                         }
                                                                         else if (Convert.ToInt32(Console.ReadLine()) == 2)
                                                                         {
+                                                                            Button_Sound();
                                                                             Side = 1; //правая сторона
                                                                         }
                                                                         else
                                                                         {
+                                                                            Error();
                                                                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                                         }
                                                                     }
-                                                                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                                 }
                                                             }
                                                             Image.Which_Shell_Will_Be_Inserted();
@@ -1200,6 +1254,7 @@ namespace USG
                                                             {
                                                                 if (Convert.ToInt32(Console.ReadLine()) == 1)
                                                                 {
+                                                                    Button_Sound();
                                                                     if (Side > -1)
                                                                     {
                                                                         DBShotgun[Side] = "Боевой";
@@ -1245,6 +1300,7 @@ namespace USG
                                                                 }
                                                                 else if (Convert.ToInt32(Console.ReadLine()) == 2)
                                                                 {
+                                                                    Button_Sound();
                                                                     if (Side > -1)
                                                                     {
                                                                         DBShotgun[Side] = "Холостой";
@@ -1290,10 +1346,11 @@ namespace USG
                                                                 }
                                                                 else
                                                                 {
+                                                                    Error();
                                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                                 }
                                                             }
-                                                            catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                                            catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                                         }
                                                     }
                                                     else if (Player_Inventory.Contains("Боевой патрон") == true || Player_Inventory.Contains("Холостой патрон") == true)
@@ -1355,14 +1412,17 @@ namespace USG
                                                     }
                                                     else
                                                     {
+                                                        Error();
                                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     }
                                                     break;
                                                 case 4:
+                                                    Button_Sound();
                                                     Player_Want_Use_Items = false;
                                                     Items_Menu = false;
                                                     break;
                                                 default:
+                                                    Error();
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                     break;
                                             }
@@ -1370,14 +1430,16 @@ namespace USG
                                     }
                                     break;
                                 case 2:
+                                    Button_Sound();
                                     Player_Want_Use_Items = false;
                                     break;
                                 default:
+                                    Error();
                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                     break;
                             }
                         }
-                        catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                        catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                     }
                     else
                     {
@@ -1405,6 +1467,7 @@ namespace USG
                         switch (Convert.ToInt32(Console.ReadLine()))
                         {
                             case 1:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[0].Contains("Холостой") || Handful_Of_Shells[0].Contains("Боевой"))
@@ -1423,9 +1486,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 2:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[1].Contains("Холостой") || Handful_Of_Shells[1].Contains("Боевой"))
@@ -1444,9 +1508,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 3:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[2].Contains("Холостой") || Handful_Of_Shells[2].Contains("Боевой"))
@@ -1465,9 +1530,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 4:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[3].Contains("Холостой") || Handful_Of_Shells[3].Contains("Боевой"))
@@ -1486,9 +1552,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 5:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[4].Contains("Холостой") || Handful_Of_Shells[4].Contains("Боевой"))
@@ -1507,9 +1574,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 6:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[5].Contains("Холостой") || Handful_Of_Shells[5].Contains("Боевой"))
@@ -1528,9 +1596,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 7:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[6].Contains("Холостой") || Handful_Of_Shells[6].Contains("Боевой"))
@@ -1549,9 +1618,10 @@ namespace USG
                                         }
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             case 8:
+                                Double_Barrel_Shell_Insert();
                                 try
                                 {
                                     if (Handful_Of_Shells[7].Contains("Холостой") || Handful_Of_Shells[7].Contains("Боевой"))
@@ -1571,14 +1641,15 @@ namespace USG
 
                                     }
                                 }
-                                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                                 break;
                             default:
+                                Error();
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                 break;
                         }
                     }
-                    catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                    catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
                 }
             }
         }
@@ -1611,6 +1682,7 @@ namespace USG
                                 Image.Will_Be_Fired_At(Who_To_Shoot_At);
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
+                                    Live_Shot();
                                     if (Player_Double_Damage)
                                     {
                                         Player_Double_Damage = false;
@@ -1668,7 +1740,7 @@ namespace USG
                                     {
                                         Player_Lives = -1;
                                     }
-                                    else
+                                    else if (Player_Bleeding_Phase && Count_Of_Player_Bleedings > 0 && Player_Lives < 1)
                                     {
                                         Player_Lives = 1;
                                     }
@@ -1721,6 +1793,7 @@ namespace USG
                                 }
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                 {
+                                    Live_Shot();
                                     if (Player_Double_Damage)
                                     {
                                         Player_Double_Damage = false;
@@ -1778,7 +1851,7 @@ namespace USG
                                     {
                                         Player_Lives = -1;
                                     }
-                                    else
+                                    else if (Player_Bleeding_Phase && Count_Of_Player_Bleedings > 0 && Player_Lives < 1)
                                     {
                                         Player_Lives = 1;
                                     }
@@ -1831,6 +1904,7 @@ namespace USG
                                 }
                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
+                                    Blanks_Shot();
                                     Player_Money_Factor += 1.5;
                                     Image.Blank_Shoot();
                                     if (Player_Bleeding_Turns > 0)
@@ -1864,6 +1938,7 @@ namespace USG
                                 Image.Will_Be_Fired_At(Who_To_Shoot_At);
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                                 {
+                                    Live_Shot();
                                     if (Player_Double_Damage)
                                     {
                                         Player_Double_Damage = false;
@@ -1921,7 +1996,7 @@ namespace USG
                                     {
                                         Opponent_Lives = -1;
                                     }
-                                    else
+                                    else if (Opponent_Bleeding_Phase && Count_Of_Opponent_Bleedings > 0 && Opponent_Lives < 1)
                                     {
                                         Opponent_Lives = 1;
                                     }
@@ -1974,6 +2049,7 @@ namespace USG
                                 }
                                 if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                                 {
+                                    Live_Shot();
                                     if (Player_Double_Damage)
                                     {
                                         Player_Double_Damage = false;
@@ -2031,7 +2107,7 @@ namespace USG
                                     {
                                         Opponent_Lives = -1;
                                     }
-                                    else
+                                    else if (Opponent_Bleeding_Phase && Count_Of_Opponent_Bleedings > 0 && Opponent_Lives < 1)
                                     {
                                         Opponent_Lives = 1;
                                     }
@@ -2084,6 +2160,7 @@ namespace USG
                                 }
                                 else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                                 {
+                                    Blanks_Shot();
                                     Player_Money_Factor -= 1.0;
                                     Image.Blank_Shoot(true);
                                     Opponent_First_Time_Bleeding = false;
@@ -2124,6 +2201,7 @@ namespace USG
                             Menu = false;
                             if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                             {
+                                Live_Shot();
                                 if (Player_Double_Damage)
                                 {
                                     Player_Double_Damage = false;
@@ -2181,7 +2259,7 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                 }
-                                else
+                                else if (Player_Bleeding_Phase && Count_Of_Player_Bleedings > 0 && Player_Lives < 1)
                                 {
                                     Player_Lives = 1;
                                 }
@@ -2234,6 +2312,7 @@ namespace USG
                             }
                             if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                             {
+                                Live_Shot();
                                 if (Player_Double_Damage)
                                 {
                                     Player_Double_Damage = false;
@@ -2291,7 +2370,7 @@ namespace USG
                                 {
                                     Player_Lives = -1;
                                 }
-                                else
+                                else if (Player_Bleeding_Phase && Count_Of_Player_Bleedings > 0 && Player_Lives < 1)
                                 {
                                     Player_Lives = 1;
                                 }
@@ -2344,6 +2423,7 @@ namespace USG
                             }
                             else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                             {
+                                Blanks_Shot();
                                 Player_Money_Factor += 1.5;
                                 Image.Blank_Shoot();
                                 if (Player_Bleeding_Turns > 0)
@@ -2379,6 +2459,7 @@ namespace USG
                             Menu = false;
                             if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
                             {
+                                Live_Shot();
                                 if (Player_Double_Damage)
                                 {
                                     Player_Double_Damage = false;
@@ -2436,7 +2517,7 @@ namespace USG
                                 {
                                     Opponent_Lives = -1;
                                 }
-                                else
+                                else if (Opponent_Bleeding_Phase && Count_Of_Opponent_Bleedings > 0 && Opponent_Lives < 1)
                                 {
                                     Opponent_Lives = 1;
                                 }
@@ -2489,6 +2570,7 @@ namespace USG
                             }
                             if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Холостой" || DBShotgun[0] == "Холостой" && DBShotgun[1] == "Боевой")
                             {
+                                Live_Shot();
                                 if (Player_Double_Damage)
                                 {
                                     Player_Double_Damage = false;
@@ -2546,7 +2628,7 @@ namespace USG
                                 {
                                     Opponent_Lives = -1;
                                 }
-                                else
+                                else if (Opponent_Bleeding_Phase && Count_Of_Opponent_Bleedings > 0 && Opponent_Lives < 1)
                                 {
                                     Opponent_Lives = 1;
                                 }
@@ -2599,6 +2681,7 @@ namespace USG
                             }
                             else if (DBShotgun[0] == "Холостой" && DBShotgun[1] == "Холостой")
                             {
+                                Blanks_Shot();
                                 Player_Money_Factor -= 1.0;
                                 Image.Blank_Shoot(true);
                                 Opponent_First_Time_Bleeding = false;
@@ -2631,6 +2714,7 @@ namespace USG
                             }
                             break;
                         case 4:
+                            Button_Sound();
                             if (Count_Of_Items != 0)
                             {
                                 if (Max_Of_Player_Inventory == 0)
@@ -2648,6 +2732,7 @@ namespace USG
                                             case 1:
                                                 if (Player_Bleeding_Phase && Player_Inventory.Contains("Бинт") == true)
                                                 {
+                                                    Bandage();
                                                     Player_Bleeding_Phase = false;
                                                     Count_Of_Player_Bleedings--;
                                                     Player_Bleeding_Turns = 0;
@@ -2661,6 +2746,7 @@ namespace USG
                                                 }
                                                 else if (Player_Inventory.Contains("Батарейка") == true)
                                                 {
+                                                    Battery_Insert();
                                                     Player_Lives++;
                                                     List<string> Remove_List = new List<string>(Player_Inventory);
                                                     Remove_List.RemoveAt(Remove_List.IndexOf("Батарейка"));
@@ -2672,18 +2758,22 @@ namespace USG
                                                 }
                                                 else if (Player_Inventory.Contains("Бинт") == true)
                                                 {
+                                                    Error();
                                                     Image.You_Dont_Bleeding_Out();
                                                 }
                                                 else
                                                 {
+                                                    Error();
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case 2:
+                                                Button_Sound();
                                                 if (Player_Inventory.Contains("Сыворотка обездвижения") == true)
                                                 {
                                                     if (Opponent_HandCuffed > 0)
                                                     {
+                                                        Error();
                                                         Image.Opponent_Already_HandCuffed();
                                                     }
                                                     else
@@ -2701,10 +2791,12 @@ namespace USG
                                                 }
                                                 else
                                                 {
+                                                    Error();
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case 3:
+                                                Button_Sound();
                                                 if (Player_Inventory.Contains("Реверс") == true)
                                                 {
                                                     if (DBShotgun[0] == "Боевой" && DBShotgun[1] == "Боевой")
@@ -2760,10 +2852,12 @@ namespace USG
                                                 }
                                                 else
                                                 {
+                                                    Error();
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case 4:
+                                                Button_Sound();
                                                 if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == false)
                                                 {
                                                     Player_Double_Damage = true;
@@ -2777,17 +2871,21 @@ namespace USG
                                                 }
                                                 else if (Player_Inventory.Contains("Удвоитель урона") == true && Player_Double_Damage == true)
                                                 {
+                                                    Error();
                                                     Image.You_Alredy_Have_Double_Damage();
                                                 }
                                                 else
                                                 {
+                                                    Error();
                                                     Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 }
                                                 break;
                                             case 5:
+                                                Button_Sound();
                                                 Items_Menu = false;
                                                 break;
                                             default:
+                                                Error();
                                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                                 break;
                                         }
@@ -2796,10 +2894,12 @@ namespace USG
                             }
                             else
                             {
+                                Error();
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             }
                             break;
                         case 0:
+                            Button_Sound();
                             if (Player_Lives == 1)
                             {
                                 Image.You_Choose_To_Die();
@@ -2809,15 +2909,17 @@ namespace USG
                             }
                             else
                             {
+                                Error();
                                 Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             }
                             break;
                         default:
+                            Error();
                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             break;
                     }
                 }
-                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
         }
         public void Shotgun_Mode()
@@ -2868,8 +2970,10 @@ namespace USG
                     Console.Write(Image.Choose_Max_Count_Of_Items);
                     Console.SetCursorPosition(98, 16);
                     Count_Of_Items = Convert.ToInt32(Console.ReadLine());
+                    Button_Sound();
                     if (Count_Of_Items > 4 || Count_Of_Items < 0)
                     {
+                        Error();
                         Console.SetCursorPosition(44, 20);
                         Console.Write("Вы указали неправильное количество предметов =)");
                         Console.SetCursorPosition(35, 35);
@@ -2880,7 +2984,7 @@ namespace USG
                         Count_Of_Items_Not_Choosen = false;
                     }
                 }
-                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                catch (Exception e) { Error();  Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
 
             //Bыдача 2-x предметов
@@ -2986,8 +3090,10 @@ namespace USG
                     Console.Write(Image.Choose_Max_Count_Of_Items);
                     Console.SetCursorPosition(98, 16);
                     Count_Of_Items = Convert.ToInt32(Console.ReadLine());
+                    Button_Sound();
                     if (Count_Of_Items > 4 || Count_Of_Items < 0)
                     {
+                        Error();
                         Console.SetCursorPosition(44, 20);
                         Console.Write("Вы указали неправильное количество предметов =)");
                         Console.SetCursorPosition(35, 35);
@@ -2998,7 +3104,7 @@ namespace USG
                         Count_Of_Items_Not_Choosen = false;
                     }
                 }
-                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                catch (Exception e) { Error();  Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
 
             //Bыдача 2-x предметов

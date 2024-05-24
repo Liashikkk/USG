@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,6 +15,7 @@ namespace USG
 {
     internal class Program
     {
+
         const int STD_OUTPUT_HANDLE = -11;
 
         [DllImport("winmm.dll")]
@@ -30,6 +32,7 @@ namespace USG
             SetConsoleDisplayMode(hConsole, 1, IntPtr.Zero);
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
         }
+
         public static void Console_WriteReadClear(string Text, int First_Num = 35, int Second_Num = 35)
         {
             Console.SetCursorPosition(0, 0);
@@ -37,13 +40,45 @@ namespace USG
             Console.SetCursorPosition(First_Num, Second_Num);
             Console.ReadLine();
         }
+        public static void Button_Sound()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Menu_press_button.wav");
+            Player.Play();
+        }
+        public static void Error()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Wrong_button.wav");
+            Player.Play();
+        }
+        public static void Bandage()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Bandage.wav");
+            Player.Play();
+        }
+        public static void Battery_Insert()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\.Battery_insert.wav");
+            Player.Play();
+        }
+        public static void Blanks_Shot()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Blanks_shot.wav");
+            Player.Play();
+        }
+        public static void Double_Barrel_Shell_Insert()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Double_barrel_shell_insert.wav");
+            Player.Play();
+        }
+        public static void Live_Shot()
+        {
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Live_shot.wav");
+            Player.Play();
+        }
         static void Main(string[] args)
         {
             FullScreen();
-
             All_Images Image = new All_Images();
-
-            All_Sounds Sound = new All_Sounds();
 
             Game_Modes Mode = new Game_Modes();
 
@@ -61,6 +96,7 @@ namespace USG
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
                         case 1:
+                            Button_Sound();
                             bool Will = false;
                             while (!Will)
                             {
@@ -70,6 +106,7 @@ namespace USG
                                 switch (Convert.ToInt32(Console.ReadLine()))
                                 {
                                     case 1:
+                                        Button_Sound();
                                         while (!Will)
                                         {
                                             Console.SetCursorPosition(0, 0);
@@ -92,23 +129,27 @@ namespace USG
                                         }
                                         break;
                                     case 2:
+                                        Button_Sound();
                                         Will = true;
                                         break;
                                     default:
+                                        Error();
                                         Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                                         break;
                                 }
                             }
                             break;
                         case 2:
+                            Button_Sound();
                             Environment.Exit(0);
                             break;
                         default:
+                            Error();
                             Console_WriteReadClear(Image.This_Button_Isnt_Exists);
                             break;
                     }
                 }
-                catch (Exception e) { Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
+                catch (Exception e) { Error(); Console_WriteReadClear(Image.This_Button_Isnt_Exists); }
             }
         }
     }
