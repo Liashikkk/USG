@@ -42,37 +42,37 @@ namespace USG
         }
         public static void Button_Sound()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Menu_press_button.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\Menu_press_button.wav");
             Player.Play();
         }
         public static void Error()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Wrong_button.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\Wrong_button.wav");
             Player.Play();
         }
         public static void Bandage()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Bandage.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\Bandage.wav");
             Player.Play();
         }
         public static void Battery_Insert()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\.Battery_insert.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\.Battery_insert.wav");
             Player.Play();
         }
         public static void Blanks_Shot()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Blanks_shot.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\Blanks_shot.wav");
             Player.Play();
         }
         public static void Double_Barrel_Shell_Insert()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Double_barrel_shell_insert.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\Double_barrel_shell_insert.wav");
             Player.Play();
         }
         public static void Live_Shot()
         {
-            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("..Sounds\\Live_shot.wav");
+            System.Media.SoundPlayer Player = new System.Media.SoundPlayer("Sounds\\Live_shot.wav");
             Player.Play();
         }
         static void Main(string[] args)
